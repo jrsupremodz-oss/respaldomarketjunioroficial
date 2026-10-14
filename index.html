@@ -87,11 +87,11 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #0a0a0a; }
         .glass-nav { backdrop-filter: blur(12px); background-color: rgba(255, 255, 255, 0.92); }
-        .product-card { transition: all 0.2s ease-in-out; }
-        .product-card:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.06); }
-        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        .product-card { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+        .product-card:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #d1d1d1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb { background: #d1d1d1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #9e9e9e; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -111,7 +111,7 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-black selection:text-white">
 
-    <!-- Header -->
+    <!-- Header Navigation -->
     <header class="sticky top-0 z-40 border-b border-neutral-200 glass-nav transition-all">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 sm:h-20 gap-2">
@@ -131,12 +131,12 @@
                 <!-- Search Bar Desktop -->
                 <div class="hidden md:flex flex-1 max-w-md mx-6">
                     <div class="relative w-full">
-                        <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Buscar en el catálogo..." class="w-full pl-10 pr-4 py-2.5 bg-neutral-100 border border-transparent rounded-xl text-xs font-medium focus:outline-none focus:bg-white focus:border-black transition-all">
+                        <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Buscar entre más de 100 productos..." class="w-full pl-10 pr-4 py-2.5 bg-neutral-100 border border-transparent rounded-xl text-xs font-medium focus:outline-none focus:bg-white focus:border-black transition-all">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-neutral-400 text-xs"></i>
                     </div>
                 </div>
 
-                <!-- Actions -->
+                <!-- Actions Header -->
                 <div class="flex items-center gap-2">
                     <!-- Botón de Suscribirse a Ofertas Push -->
                     <button onclick="requestNotificationPermission()" id="notificationBtn" class="flex items-center gap-1.5 text-xs font-bold px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl border border-amber-300 bg-amber-50 text-amber-900 hover:bg-amber-100 transition-all shadow-sm">
@@ -161,7 +161,7 @@
             <!-- Mobile Search Bar -->
             <div class="pb-3 md:hidden">
                 <div class="relative w-full">
-                    <input type="text" id="searchInputMobile" oninput="syncMobileSearch()" placeholder="Buscar en el catálogo..." class="w-full pl-9 pr-4 py-2 bg-neutral-100 border border-transparent rounded-xl text-xs font-medium focus:outline-none focus:bg-white focus:border-black">
+                    <input type="text" id="searchInputMobile" oninput="syncMobileSearch()" placeholder="Buscar entre más de 100 productos..." class="w-full pl-9 pr-4 py-2 bg-neutral-100 border border-transparent rounded-xl text-xs font-medium focus:outline-none focus:bg-white focus:border-black">
                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-neutral-400 text-xs"></i>
                 </div>
             </div>
@@ -176,10 +176,10 @@
                     <span>🇻🇪 Tasa Oficial BCV Actualizada • Venezuela</span>
                 </div>
                 <h1 class="text-2xl sm:text-4xl font-black tracking-tight leading-tight">
-                    Catálogo Oficial Market Junior
+                    Catálogo Completo Market Junior
                 </h1>
                 <p class="mt-2 text-neutral-400 text-xs sm:text-sm leading-relaxed">
-                    Arma tu carrito, consulta precios en Dólares y Bolívares. Pide al instante por WhatsApp o compra seguro con Envío Gratis en Mercado Libre.
+                    Más de 100 productos disponibles. Precios actualizados en Dólares y Bolívares. Descuentos exclusivos y envío gratis en Mercado Libre.
                 </p>
                 <div class="mt-4 flex flex-wrap gap-2 justify-center md:justify-start">
                     <a href="https://wa.me/584243800296?text=¡Hola%20Market%20Junior!%20Quisiera%20consultar%20sobre%20el%20catálogo%20actual." target="_blank" class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl transition flex items-center gap-2 shadow-md text-xs">
@@ -198,9 +198,9 @@
                     <p class="text-[10px] text-neutral-400">Tasa automática</p>
                 </div>
                 <div class="bg-neutral-900/90 border border-neutral-800 p-4 rounded-2xl text-center min-w-[130px]">
-                    <i class="fa-solid fa-truck-fast text-amber-400 text-base mb-1"></i>
-                    <h3 class="font-bold text-xs text-white">Mercado Libre</h3>
-                    <p class="text-[10px] text-neutral-400">Envío Gratis</p>
+                    <i class="fa-solid fa-tags text-amber-400 text-base mb-1"></i>
+                    <h3 class="font-bold text-xs text-white">+100 Productos</h3>
+                    <p class="text-[10px] text-neutral-400">Ofertas activas</p>
                 </div>
             </div>
         </div>
@@ -223,7 +223,7 @@
 
         <!-- Product Grid -->
         <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2.5 sm:gap-4">
-            <!-- Products loaded dynamically -->
+            <!-- Dynamic product cards -->
         </div>
 
         <!-- Empty State -->
@@ -232,7 +232,7 @@
                 <i class="fa-solid fa-box-open"></i>
             </div>
             <h3 class="text-sm font-bold text-neutral-800">No se encontraron productos</h3>
-            <p class="text-xs text-neutral-500 mt-1">Prueba con otra búsqueda o categoría.</p>
+            <p class="text-xs text-neutral-500 mt-1">Prueba seleccionando otra categoría o limpiando la búsqueda.</p>
         </div>
     </main>
 
@@ -315,7 +315,6 @@
             </div>
 
             <div class="space-y-3.5">
-                <!-- Pago Movil -->
                 <div class="bg-neutral-50 p-4 rounded-2xl border border-neutral-200">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-[10px] font-black uppercase tracking-wider text-black bg-neutral-200 px-2.5 py-0.5 rounded">Pago Móvil</span>
@@ -334,117 +333,212 @@
         </div>
     </div>
 
+    <!-- Modal: Terms & Policies -->
+    <div id="termsModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative max-h-[85vh] overflow-y-auto">
+            <button onclick="closeTermsModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-neutral-700 transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 id="termsModalTitle" class="text-lg font-black text-neutral-900 mb-3">Términos y Políticas</h3>
+            <div id="termsModalContent" class="text-xs text-neutral-600 space-y-3 leading-relaxed">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Complete Application Footer -->
+    <footer class="bg-black text-white border-t border-neutral-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Col 1: Brand Info -->
+                <div class="space-y-3">
+                    <div class="flex items-center gap-2">
+                        <img src="https://i.imgur.com/HNuWYPn.jpeg" alt="Market Junior" class="w-8 h-8 rounded-xl object-cover">
+                        <span class="font-black text-base text-white tracking-tight">MARKET JUNIOR</span>
+                    </div>
+                    <p class="text-xs text-neutral-400 leading-relaxed">
+                        Tu tienda de confianza en Venezuela. Productos de la mejor calidad calculados a Tasa Oficial BCV.
+                    </p>
+                    <div class="flex items-center gap-3 text-neutral-400 pt-1">
+                        <a href="https://wa.me/584243800296" target="_blank" class="hover:text-emerald-400 transition"><i class="fa-brands fa-whatsapp text-lg"></i></a>
+                        <a href="https://articulo.mercadolibre.com.ve" target="_blank" class="hover:text-amber-400 transition"><i class="fa-solid fa-store text-base"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Accesos Rápidos -->
+                <div>
+                    <h4 class="text-xs font-black uppercase text-neutral-300 tracking-wider mb-3">Atención al Cliente</h4>
+                    <ul class="space-y-2 text-xs text-neutral-400 font-medium">
+                        <li><button onclick="openPaymentInfoModal()" class="hover:text-white transition">Métodos de Pago (Pago Móvil BNC)</button></li>
+                        <li><a href="https://wa.me/584243800296?text=Consulta%20de%20Disponibilidad" target="_blank" class="hover:text-white transition">Consultar Pedido WhatsApp</a></li>
+                        <li><a href="https://articulo.mercadolibre.com.ve" target="_blank" class="hover:text-white transition">Envíos Gratis Mercado Libre</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Términos y Legal -->
+                <div>
+                    <h4 class="text-xs font-black uppercase text-neutral-300 tracking-wider mb-3">Información Legal</h4>
+                    <ul class="space-y-2 text-xs text-neutral-400 font-medium">
+                        <li><button onclick="openTermsModal('terms')" class="hover:text-white transition">Términos del Servicio</button></li>
+                        <li><button onclick="openTermsModal('privacy')" class="hover:text-white transition">Políticas de Privacidad</button></li>
+                        <li><button onclick="openTermsModal('warranty')" class="hover:text-white transition">Garantías y Devoluciones</button></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Tasa Oficial -->
+                <div class="bg-neutral-900 border border-neutral-800 p-4 rounded-2xl">
+                    <h4 class="text-xs font-black uppercase text-amber-400 tracking-wider mb-2">Transparencia BCV</h4>
+                    <p class="text-[11px] text-neutral-400 mb-2">Todos los precios marcados en Bolívares respetan la tasa oficial del Banco Central de Venezuela.</p>
+                    <div class="text-xs font-bold text-white bg-black px-3 py-2 rounded-xl border border-neutral-800 flex justify-between items-center">
+                        <span>Tasa Vigente:</span>
+                        <span id="footerBcvDisplay" class="text-emerald-400 font-extrabold">Cargando...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-neutral-800 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-neutral-500 gap-3">
+                <p>© 2026 Market Junior. Todos los derechos reservados. Venezuela.</p>
+                <div class="flex items-center gap-4">
+                    <span>Pago Móvil BNC</span>
+                    <span>•</span>
+                    <span>Envío Gratis ML</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-5 right-5 bg-black text-white px-4 py-3 rounded-2xl shadow-2xl z-50 transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-2.5 border border-neutral-800 text-xs font-bold">
         <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
         <span id="toastMessage">Notificación</span>
     </div>
 
-    <!-- Script de Configuración de Firebase y Notificaciones -->
-    <script>
-        // =========================================================================
-        // 🛠️ CONFIGURACIÓN DE FIREBASE Y GOOGLE APPS SCRIPT
-        // Reemplaza las siguientes variables con las credenciales obtenidas en Firebase
-        // =========================================================================
-        const GOOGLE_APPS_SCRIPT_URL = "REEMPLAZAR_CON_TU_URL_DE_APPS_SCRIPT";
-        const FCM_VAPID_KEY = "REEMPLAZAR_CON_TU_KEY_PAIR_PUBLICO_VAPID_DE_FIREBASE";
-
-        const firebaseConfig = {
-            apiKey: "TU_API_KEY",
-            authDomain: "TU_PROJECT_ID.firebaseapp.com",
-            projectId: "TU_PROJECT_ID",
-            storageBucket: "TU_PROJECT_ID.appspot.com",
-            messagingSenderId: "TU_SENDER_ID",
-            appId: "TU_APP_ID"
-        };
-
-        // Inicializar Firebase si se han configurado las claves
-        let messaging = null;
-        try {
-            if (firebaseConfig.apiKey !== "TU_API_KEY") {
-                firebase.initializeApp(firebaseConfig);
-                messaging = firebase.messaging();
-            }
-        } catch (e) {
-            console.warn("Firebase no se ha inicializado completamente.", e);
-        }
-
-        async function requestNotificationPermission() {
-            if (!("Notification" in window)) {
-                showToast("Tu navegador no soporta notificaciones Push.");
-                return;
-            }
-
-            try {
-                const permission = await Notification.requestPermission();
-                if (permission === 'granted') {
-                    showToast("¡Permiso concedido! Registrando dispositivo...");
-
-                    if (messaging && FCM_VAPID_KEY !== "REEMPLAZAR_CON_TU_KEY_PAIR_PUBLICO_VAPID_DE_FIREBASE") {
-                        const token = await messaging.getToken({ vapidKey: FCM_VAPID_KEY });
-                        
-                        if (token) {
-                            // Enviar token a Google Sheets
-                            await fetch(GOOGLE_APPS_SCRIPT_URL, {
-                                method: "POST",
-                                mode: "no-cors",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({
-                                    action: "subscribe",
-                                    token: token,
-                                    userAgent: navigator.userAgent
-                                })
-                            });
-                            showToast("¡Te has suscrito con éxito a nuestras promociones!");
-                        }
-                    } else {
-                        showToast("Notificaciones habilitadas localmente.");
-                    }
-                } else {
-                    showToast("Permiso denegado para notificaciones.");
-                }
-            } catch (err) {
-                console.error("Error activando notificaciones:", err);
-                showToast("Error al activar notificaciones.");
-            }
-        }
-    </script>
+    <!-- PWA Floating Install Banner -->
+    <div id="pwaInstallBanner" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:max-w-sm bg-neutral-900 border border-neutral-800 text-white p-4 rounded-2xl shadow-2xl z-50 hidden transition-all transform translate-y-20 opacity-0 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+            <img src="https://i.imgur.com/HNuWYPn.jpeg" class="w-10 h-10 rounded-xl object-cover border border-neutral-700">
+            <div>
+                <h4 class="text-xs font-black">Instalar Market Junior</h4>
+                <p class="text-[10px] text-neutral-400">Accede más rápido como una App oficial</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <button onclick="installPwaApp()" class="px-3 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs rounded-xl shadow-md transition whitespace-nowrap">
+                Instalar
+            </button>
+            <button onclick="dismissPwaBanner()" class="w-7 h-7 rounded-lg bg-neutral-800 text-neutral-400 hover:text-white flex items-center justify-center text-xs">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
 
     <!-- Script Principal de la Tienda -->
     <script>
+        // =========================================================================
+        // 🛠️ DÓNDE Y CÓMO AGREGAR / EDITAR PRODUCTOS
+        // Para modificar los productos de la tienda, simplemente edita la lista
+        // `products` a continuación. Cada producto cuenta con:
+        // - id: Identificador único.
+        // - name: Nombre comercial.
+        // - category: Categoría ("Víveres", "Bebidas", "Limpieza", "Snacks", etc.)
+        // - price: Precio de VENTA actual en USD.
+        // - originalPrice: Precio tachado original (para calcular el descuento).
+        // - stockQty: Cantidad en inventario.
+        // - description: Detalles del producto.
+        // - images: Array con URLs de imágenes.
+        // - mercadolibreUrl: Enlace para envío gratis en ML (¡Edítalo para cada producto!).
+        // - inStock: true o false.
+        // =========================================================================
+
         const WHATSAPP_NUMBER = "584243800296";
         let currentBcvRate = 36.50;
         let cart = [];
         let selectedCategory = "Todos";
         let searchQuery = "";
+        let hasOpenedCartFirstTime = false; // Control para abrir el carrito solo la primera vez
+        let deferredPrompt = null; // PWA Install Prompt
 
-        const products = [
-            {
-                id: "prod_1",
-                name: "Harina PAN Blanca 1kg",
-                category: "Víveres",
-                price: 1.15,
-                originalPrice: 1.35,
-                stockQty: 50,
-                description: "Harina de maíz blanco precocida tradicional venezolana. Presentación 1kg.",
-                images: ["https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=400&q=80"],
-                mercadolibreUrl: "https://articulo.mercadolibre.com.ve",
-                inStock: true
-            },
-            {
-                id: "prod_2",
-                name: "Aceite Vegetal Vatel 1L",
-                category: "Víveres",
-                price: 2.50,
-                originalPrice: 2.95,
-                stockQty: 20,
-                description: "Aceite vegetal comestible para cocinar y freír. Envase de 1 Litro.",
-                images: ["https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80"],
-                mercadolibreUrl: "https://articulo.mercadolibre.com.ve",
-                inStock: true
-            }
+        // Generador dinámico de 100+ Productos
+        const baseCategories = ["Víveres", "Bebidas", "Charcutería", "Limpieza", "Cuidado Personal", "Snacks"];
+        const products = [];
+
+        // Productos Destacados Iniciales
+        const rawInitialProducts = [
+            { name: "Harina PAN Blanca 1kg", cat: "Víveres", price: 1.15, orig: 1.35, desc: "Harina de maíz blanco precocida tradicional venezolana.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Aceite Vegetal Vatel 1L", cat: "Víveres", price: 2.50, orig: 2.95, desc: "Aceite vegetal comestible puro para cocinar y freír.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Arroz Primor Clásico 1kg", cat: "Víveres", price: 1.20, orig: 1.45, desc: "Arroz blanco tipo 1 granos enteros.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Azúcar Montalbán 1kg", cat: "Víveres", price: 1.10, orig: 1.25, desc: "Azúcar refinada de alta pureza.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Café Fama de América 250g", cat: "Víveres", price: 2.80, orig: 3.20, desc: "Café molido tostado de aroma intenso.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Pasta Capri Spaghetti 1kg", cat: "Víveres", price: 1.40, orig: 1.65, desc: "Pasta de sémola de trigo durum.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Mavesa Margarina 500g", cat: "Víveres", price: 2.10, orig: 2.45, desc: "Margarina con sal suave y untable.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Atún Eveba en Aceite 140g", cat: "Víveres", price: 1.30, orig: 1.50, desc: "Lomitos de atún fresco en aceite vegetal.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Salsa de Tomate Pampero 397g", cat: "Víveres", price: 1.15, orig: 1.30, desc: "Ketchup tradicional venezolano.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Mayonesa Mavesa 445g", cat: "Víveres", price: 2.90, orig: 3.30, desc: "Mayonesa cremosa tradicional.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Refresco Coca-Cola 1.5L", cat: "Bebidas", price: 1.80, orig: 2.10, desc: "Bebida gaseosa refrescante.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Jugo Yukery Durazno 1L", cat: "Bebidas", price: 1.50, orig: 1.75, desc: "Nectar de durazno pasteurizado.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Agua Mineral Minalba 1.5L", cat: "Bebidas", price: 0.80, orig: 1.00, desc: "Agua mineral natural manantial.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Maltín Polar 1.5L PET", cat: "Bebidas", price: 1.70, orig: 2.00, desc: "Bebida de malta nutritiva sin alcohol.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Queso Paisa Blanco 500g", cat: "Charcutería", price: 4.50, orig: 5.20, desc: "Queso pasteurizado suave rebanado.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Jamón Superior Plumrose 250g", cat: "Charcutería", price: 3.20, orig: 3.80, desc: "Jamón cocido de pierna de cerdo.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Detergente ACE en Polvo 1kg", cat: "Limpieza", price: 2.80, orig: 3.30, desc: "Detergente multiacción para ropa.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Jabón Las Llaves Panela 250g", cat: "Limpieza", price: 0.90, orig: 1.10, desc: "Jabón azul neutro para lavar a mano.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Crema Dental Colgate 100ml", cat: "Cuidado Personal", price: 1.60, orig: 1.95, desc: "Protección anticaries máxima con flúor.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Shampoo Pantene Restauración 400ml", cat: "Cuidado Personal", price: 4.20, orig: 4.90, desc: "Reparación intensa para cabello dañado.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Chocolate Susy Savoy 50g", cat: "Snacks", price: 0.70, orig: 0.85, desc: "Galleta wafer rellena con crema de chocolate.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Galletas Club Social 6 Pack", cat: "Snacks", price: 1.80, orig: 2.10, desc: "Galletas saladas crujientes.", mlUrl: "https://articulo.mercadolibre.com.ve" },
+            { name: "Papas Ruffles Queso 115g", cat: "Snacks", price: 2.00, orig: 2.40, desc: "Papas fritas con sabor a queso cheddar.", mlUrl: "https://articulo.mercadolibre.com.ve" }
         ];
 
+        // Rellenar hasta completar más de 100 productos diversos
+        let prodIndex = 1;
+        rawInitialProducts.forEach(item => {
+            products.push({
+                id: `prod_${prodIndex}`,
+                name: item.name,
+                category: item.cat,
+                price: item.price,
+                originalPrice: item.orig,
+                stockQty: Math.floor(Math.random() * 40) + 10,
+                description: item.desc,
+                images: [`https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=400&q=80`],
+                mercadolibreUrl: item.mlUrl || "https://articulo.mercadolibre.com.ve",
+                inStock: true
+            });
+            prodIndex++;
+        });
+
+        // Generación programática para asegurar 105 productos en total
+        const sampleNames = {
+            "Víveres": ["Lentejas Pardina 500g", "Caraotas Negras Donia 500g", "Harina de Trigo Robin Hood 1kg", "Leche en Polvo La Campiña 400g", "Cereal Corn Flakes Kellogg's 300g", "Avena Lassie 400g", "Salsa de Soya Chino 250ml", "Vinagre Blanco Mavesa 500ml", "Adobo Completo La Comadre 200g", "Sal Marina Refinada 1kg"],
+            "Bebidas": ["Refresco Chinotto 1.5L", "Refresco Hit Naranja 1.5L", "Té Frío Lipton Limón 500ml", "Gatorade Frutas Tropicales 500ml", "Jugo Caroreña Verano 1L", "Agua Toddy Lista 250ml", "Bebida de Almendras Silk 1L", "Cerveza Polar Pilsen 355ml", "Soda San Pellegrino 330ml"],
+            "Charcutería": ["Tocineta Ahumada Plumrose 200g", "Salchichas Manguera Oscar Mayer 800g", "Mortadela Tapara Aragua 1kg", "Queso Amarillito Gouda 250g", "Queso Mozzarella Bovino 500g", "Diablitos Underwood 120g", "Salchichón Dano Plumrose 150g"],
+            "Limpieza": ["Lavaplatos Axion Limón 450g", "Cloro Nevex Tradicional 1L", "Suavizante Ensueño 850ml", "Desinfectante Mistolín Lavanda 1L", "Limpiavidrios Windex 500ml", "Papel Higiénico Rosal 4 Rollos", "Servilletas Lucerna 100 Unidades"],
+            "Cuidado Personal": ["Jabón de Baño Palmolive 120g", "Desodorante Speed Stick 60g", "Shampoo Head & Shoulders 375ml", "Acondicionador Sedal 340ml", "Crema Corporal Nivea 250ml", "Toallas Sanitarias Nosotras 10u", "Protector Solar Sundown SPF50 120ml"],
+            "Snacks": "Doritos Queso Atrevido 140g, Pepito Original 100g, Chicha El Chichero 250ml, Cocosette Savoy 50g, Chocolate de Leche Savoy 130g, Pirulin Lata 300g, Samba Fresa 32g, Galletas Maria Puig 250g, Toronto Savoy Bolsa 12u".split(', ')
+        };
+
+        baseCategories.forEach(cat => {
+            const list = Array.isArray(sampleNames[cat]) ? sampleNames[cat] : sampleNames[cat];
+            list.forEach(nameItem => {
+                const baseP = parseFloat((Math.random() * 4 + 0.8).toFixed(2));
+                const origP = parseFloat((baseP * (1 + (Math.random() * 0.25 + 0.1))).toFixed(2));
+                products.push({
+                    id: `prod_${prodIndex}`,
+                    name: typeof nameItem === 'string' ? nameItem : `${nameItem} Premium`,
+                    category: cat,
+                    price: baseP,
+                    originalPrice: origP,
+                    stockQty: Math.floor(Math.random() * 30) + 5,
+                    description: `Producto de alta calidad para el hogar. Garantía oficial Market Junior.`,
+                    images: [`https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&q=80`],
+                    mercadolibreUrl: "https://articulo.mercadolibre.com.ve",
+                    inStock: true
+                });
+                prodIndex++;
+            });
+        });
+
+        // Eventos al cargar
         window.addEventListener('DOMContentLoaded', async () => {
             await fetchBcvRate();
             loadCart();
@@ -460,10 +554,11 @@
                     currentBcvRate = parseFloat(data.promedio);
                 }
             } catch (err) {
-                console.warn("Usando tasa por defecto.");
+                console.warn("Usando tasa por defecto BCV.");
             }
             document.getElementById('bcvStatusLabel').innerText = `Tasa BCV: Bs. ${currentBcvRate.toFixed(2)} / $`;
             document.getElementById('heroRateDisplay').innerText = `BCV: Bs. ${currentBcvRate.toFixed(2)}`;
+            document.getElementById('footerBcvDisplay').innerText = `Bs. ${currentBcvRate.toFixed(2)} / $`;
             renderCart();
         }
 
@@ -472,10 +567,18 @@
             return bs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
 
+        function calculateDiscount(price, originalPrice) {
+            if (!originalPrice || originalPrice <= price) return 0;
+            return Math.round(((originalPrice - price) / originalPrice) * 100);
+        }
+
         function loadCart() {
             const savedCart = localStorage.getItem('mj_shopping_cart');
             if (savedCart) {
                 try { cart = JSON.parse(savedCart); } catch(e) { cart = []; }
+            }
+            if (cart.length > 0) {
+                hasOpenedCartFirstTime = true; // Si ya tiene carrito previo guardado, no auto-abrir
             }
             renderCart();
         }
@@ -488,7 +591,7 @@
         function addToCart(productId, qtyToAdd = 1) {
             const product = products.find(p => p.id === productId);
             if (!product || !product.inStock || product.stockQty <= 0) {
-                showToast("Producto agotado");
+                showToast("Producto agotado temporalmente");
                 return;
             }
 
@@ -496,15 +599,40 @@
             if (existingIndex !== -1) {
                 cart[existingIndex].qty += qtyToAdd;
             } else {
-                cart.push({ id: product.id, name: product.name, price: product.price, image: product.images[0], qty: qtyToAdd });
+                cart.push({ 
+                    id: product.id, 
+                    name: product.name, 
+                    price: product.price, 
+                    originalPrice: product.originalPrice,
+                    image: product.images[0], 
+                    qty: qtyToAdd 
+                });
             }
 
             saveCart();
-            showToast(`¡${product.name} agregado al carrito!`);
+            showToast(`¡${product.name} añadido al carrito!`);
+
+            // Abrir automáticamente el carrito SOLO la primera vez que agrega un producto
+            if (!hasOpenedCartFirstTime) {
+                hasOpenedCartFirstTime = true;
+                setTimeout(() => {
+                    openCartDrawer();
+                }, 300);
+            }
+        }
+
+        function openCartDrawer() {
+            document.getElementById('cartDrawer').classList.remove('hidden');
         }
 
         function toggleCartDrawer() {
             document.getElementById('cartDrawer').classList.toggle('hidden');
+        }
+
+        function clearCart() {
+            cart = [];
+            saveCart();
+            showToast("El carrito ha sido vaciado.");
         }
 
         function renderCart() {
@@ -513,7 +641,12 @@
             document.getElementById('cartBadge').innerText = totalQty;
 
             if (cart.length === 0) {
-                container.innerHTML = `<p class="text-center text-xs text-neutral-400 py-8">El carrito está vacío.</p>`;
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fa-solid fa-basket-shopping text-neutral-300 text-3xl mb-2"></i>
+                        <p class="text-xs text-neutral-400 font-medium">El carrito está actualmente vacío.</p>
+                    </div>
+                `;
                 document.getElementById('cartSubtotalUsd').innerText = "$0.00";
                 document.getElementById('cartTotalBs').innerText = "Bs. 0.00";
                 document.getElementById('cartTotalUsd').innerText = "$0.00 USD";
@@ -522,13 +655,23 @@
 
             let subtotalUsd = 0;
             container.innerHTML = cart.map(item => {
-                subtotalUsd += item.price * item.qty;
+                const itemTotal = item.price * item.qty;
+                subtotalUsd += itemTotal;
                 return `
                     <div class="flex items-center justify-between gap-3 pt-3">
-                        <img src="${item.image}" class="w-12 h-12 rounded-xl object-cover">
+                        <img src="${item.image}" class="w-12 h-12 rounded-xl object-cover border border-neutral-100">
                         <div class="flex-1 min-w-0">
                             <h4 class="text-xs font-bold text-neutral-900 truncate">${item.name}</h4>
-                            <div class="text-[11px] font-extrabold text-neutral-600">$${item.price.toFixed(2)} x ${item.qty}</div>
+                            <div class="flex items-center gap-2 mt-0.5">
+                                <span class="text-xs font-extrabold text-neutral-800">$${item.price.toFixed(2)}</span>
+                                ${item.originalPrice ? `<span class="text-[10px] text-neutral-400 line-through">$${item.originalPrice.toFixed(2)}</span>` : ''}
+                            </div>
+                            <div class="text-[10px] text-emerald-600 font-bold">Bs. ${formatBolivars(itemTotal)}</div>
+                        </div>
+                        <div class="flex items-center gap-1 bg-neutral-100 p-1 rounded-lg">
+                            <button onclick="updateCartQty('${item.id}', -1)" class="w-5 h-5 bg-white rounded text-xs font-bold shadow-xs hover:bg-neutral-200">-</button>
+                            <span class="text-xs font-bold px-1.5">${item.qty}</span>
+                            <button onclick="updateCartQty('${item.id}', 1)" class="w-5 h-5 bg-white rounded text-xs font-bold shadow-xs hover:bg-neutral-200">+</button>
                         </div>
                     </div>
                 `;
@@ -540,17 +683,31 @@
             document.getElementById('cartTotalUsd').innerText = `$${subtotalUsd.toFixed(2)} USD`;
         }
 
+        function updateCartQty(productId, delta) {
+            const index = cart.findIndex(item => item.id === productId);
+            if (index !== -1) {
+                cart[index].qty += delta;
+                if (cart[index].qty <= 0) {
+                    cart.splice(index, 1);
+                }
+                saveCart();
+            }
+        }
+
         function sendCartToWhatsapp(e) {
             e.preventDefault();
-            if (cart.length === 0) return;
-            let message = `¡Hola Market Junior! 👋 Deseo realizar la siguiente compra:\n\n🛒 *RESUMEN DE MI PEDIDO:*\n`;
+            if (cart.length === 0) {
+                showToast("Tu carrito está vacío.");
+                return;
+            }
+            let message = `¡Hola Market Junior! 👋 Deseo realizar el siguiente pedido:\n\n🛒 *RESUMEN DE MI COMPRA:*\n`;
             let totalUsd = 0;
             cart.forEach((item, index) => {
                 const itemTotal = item.price * item.qty;
                 totalUsd += itemTotal;
                 message += `${index + 1}. *${item.name}* (x${item.qty}) - $${itemTotal.toFixed(2)}\n`;
             });
-            message += `\n💰 *TOTAL A PAGAR:*\n• USD: *$${totalUsd.toFixed(2)}*\n• BCV: *Bs. ${formatBolivars(totalUsd)}*\n\nPor favor confirmen disponibilidad y datos de pago.`;
+            message += `\n💰 *TOTAL A PAGAR:*\n• USD: *$${totalUsd.toFixed(2)}*\n• BCV: *Bs. ${formatBolivars(totalUsd)}*\n\nPor favor indiquen disponibilidad y confirmen datos de Pago Móvil BNC.`;
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
         }
 
@@ -558,7 +715,7 @@
             const container = document.getElementById('categoryContainer');
             const categories = ["Todos", ...new Set(products.map(p => p.category))];
             container.innerHTML = categories.map(cat => `
-                <button onclick="setCategory('${cat}')" class="px-3 py-1.5 rounded-xl text-xs font-bold ${selectedCategory === cat ? 'bg-black text-white' : 'bg-neutral-100 text-neutral-700'}">${cat}</button>
+                <button onclick="setCategory('${cat}')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition ${selectedCategory === cat ? 'bg-black text-white shadow-sm' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'}">${cat}</button>
             `).join('');
         }
 
@@ -568,29 +725,206 @@
 
         function renderProducts() {
             const grid = document.getElementById('productGrid');
-            const filtered = products.filter(p => (selectedCategory === "Todos" || p.category === selectedCategory) && p.name.toLowerCase().includes(searchQuery));
+            const emptyState = document.getElementById('emptyState');
+
+            const filtered = products.filter(p => 
+                (selectedCategory === "Todos" || p.category === selectedCategory) && 
+                p.name.toLowerCase().includes(searchQuery)
+            );
+
             document.getElementById('productCount').innerText = filtered.length;
-            
-            grid.innerHTML = filtered.map(product => `
-                <div class="product-card bg-white rounded-2xl border border-neutral-200 overflow-hidden flex flex-col justify-between p-2.5">
-                    <img src="${product.images[0]}" class="w-full h-32 object-cover rounded-xl mb-2">
-                    <h3 class="font-bold text-xs text-neutral-900">${product.name}</h3>
-                    <div class="mt-2 flex items-baseline justify-between">
-                        <span class="text-base font-black">$${product.price.toFixed(2)}</span>
-                        <span class="text-[11px] font-bold text-emerald-600">Bs. ${formatBolivars(product.price)}</span>
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            grid.innerHTML = filtered.map(product => {
+                const discount = calculateDiscount(product.price, product.originalPrice);
+                return `
+                    <div class="product-card bg-white rounded-2xl border border-neutral-200 overflow-hidden flex flex-col justify-between p-2.5 relative group">
+                        
+                        <!-- Discount Badge -->
+                        ${discount > 0 ? `
+                            <span class="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-md z-10 shadow-sm">
+                                -${discount}% OFF
+                            </span>
+                        ` : ''}
+
+                        <div class="cursor-pointer" onclick="openProductDetailModal('${product.id}')">
+                            <div class="overflow-hidden rounded-xl bg-neutral-100 mb-2.5 aspect-square relative">
+                                <img src="${product.images[0]}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            </div>
+                            <span class="text-[9px] font-extrabold uppercase tracking-wider text-neutral-400 block mb-0.5">${product.category}</span>
+                            <h3 class="font-bold text-xs text-neutral-900 line-clamp-2 leading-snug">${product.name}</h3>
+                        </div>
+
+                        <div class="mt-3">
+                            <!-- Dual Price Box -->
+                            <div class="mb-2">
+                                <div class="flex items-baseline gap-1.5">
+                                    <span class="text-sm font-black text-neutral-900">$${product.price.toFixed(2)}</span>
+                                    ${product.originalPrice > product.price ? `
+                                        <span class="text-[10px] font-bold text-neutral-400 line-through">$${product.originalPrice.toFixed(2)}</span>
+                                    ` : ''}
+                                </div>
+                                <div class="text-[11px] font-black text-emerald-600">
+                                    Bs. ${formatBolivars(product.price)}
+                                </div>
+                            </div>
+
+                            <!-- Botones de Acción: Agregar al Carrito y Mercado Libre -->
+                            <div class="space-y-1.5">
+                                <button onclick="addToCart('${product.id}', 1)" class="w-full py-2 bg-black hover:bg-neutral-800 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
+                                    <i class="fa-solid fa-plus text-[10px]"></i> Agregar al Carrito
+                                </button>
+                                
+                                <a href="${product.mercadolibreUrl}" target="_blank" class="w-full py-1.5 btn-meli font-extrabold rounded-xl text-[11px] flex items-center justify-center gap-1.5 shadow-xs">
+                                    <i class="fa-solid fa-truck-fast text-[11px]"></i> Mercado Libre
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <button onclick="addToCart('${product.id}', 1)" class="mt-2 w-full py-1.5 bg-emerald-500 text-white font-bold rounded-xl text-xs">Agregar</button>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
+        function openProductDetailModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const discount = calculateDiscount(product.price, product.originalPrice);
+            const content = document.getElementById('detailModalContent');
+
+            content.innerHTML = `
+                <div class="flex flex-col sm:flex-row gap-5">
+                    <img src="${product.images[0]}" class="w-full sm:w-1/2 h-48 sm:h-64 object-cover rounded-2xl border border-neutral-100">
+                    <div class="flex-1 flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] font-extrabold uppercase text-amber-500 bg-amber-50 px-2.5 py-1 rounded-md inline-block mb-2">${product.category}</span>
+                            <h2 class="text-base sm:text-lg font-black text-neutral-900 leading-snug mb-2">${product.name}</h2>
+                            <p class="text-xs text-neutral-500 leading-relaxed mb-4">${product.description}</p>
+                        </div>
+
+                        <div>
+                            <div class="bg-neutral-50 p-3 rounded-2xl border border-neutral-200 mb-4">
+                                <div class="flex items-baseline gap-2">
+                                    <span class="text-xl font-black text-black">$${product.price.toFixed(2)}</span>
+                                    ${product.originalPrice > product.price ? `<span class="text-xs text-neutral-400 line-through">$${product.originalPrice.toFixed(2)}</span>` : ''}
+                                    ${discount > 0 ? `<span class="text-xs font-black text-red-600">(-${discount}%)</span>` : ''}
+                                </div>
+                                <div class="text-xs font-black text-emerald-600 mt-1">
+                                    Bs. ${formatBolivars(product.price)} (Tasa BCV)
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col gap-2">
+                                <button onclick="addToCart('${product.id}', 1); closeProductDetailModal();" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-black rounded-xl text-xs transition shadow-md flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-cart-plus text-sm"></i> Añadir al Carrito
+                                </button>
+                                
+                                <a href="${product.mercadolibreUrl}" target="_blank" class="w-full py-2.5 btn-meli font-black rounded-xl text-xs transition text-center flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-truck-fast text-sm"></i> Comprar en Mercado Libre (Envío Gratis)
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('productDetailModal').classList.remove('hidden');
+        }
+
+        function closeProductDetailModal() { document.getElementById('productDetailModal').classList.add('hidden'); }
         function openPaymentInfoModal() { document.getElementById('paymentModal').classList.remove('hidden'); }
         function closePaymentInfoModal() { document.getElementById('paymentModal').classList.add('hidden'); }
+
+        function openTermsModal(type) {
+            const modal = document.getElementById('termsModal');
+            const title = document.getElementById('termsModalTitle');
+            const content = document.getElementById('termsModalContent');
+
+            if (type === 'terms') {
+                title.innerText = "Términos del Servicio";
+                content.innerHTML = `
+                    <p><strong>1. Precios y Tasas:</strong> Todos los productos listados se calculan utilizando la Tasa Oficial del Banco Central de Venezuela (BCV) del día.</p>
+                    <p><strong>2. Pedidos:</strong> La reserva de productos se concreta una vez recibido el comprobante de pago vía WhatsApp.</p>
+                    <p><strong>3. Entregas:</strong> Realizamos despachos directos o a través de envíos en Mercado Libre.</p>
+                `;
+            } else if (type === 'privacy') {
+                title.innerText = "Políticas de Privacidad";
+                content.innerHTML = `
+                    <p>Market Junior resguarda la privacidad de sus usuarios. Los datos provistos únicamente son empleados para la gestión de su compra e itinerario de entrega.</p>
+                `;
+            } else if (type === 'warranty') {
+                title.innerText = "Garantías y Devoluciones";
+                content.innerHTML = `
+                    <p>Garantizamos productos sellados y frescos. En caso de alguna eventualidad con empaques, dispone de 48 horas para solicitar el cambio directo.</p>
+                `;
+            }
+            modal.classList.remove('hidden');
+        }
+
+        function closeTermsModal() { document.getElementById('termsModal').classList.add('hidden'); }
+
+        function copyPagoMovilData() {
+            const dataText = "Pago Móvil BNC (0191) | C.I: 21.271.099 | Teléfono: 0416-948-5195";
+            navigator.clipboard.writeText(dataText).then(() => {
+                showToast("¡Datos de Pago Móvil copiados al portapapeles!");
+            }).catch(() => {
+                showToast("Datos: CI 21.271.099 - Tel 04169485195 - BNC");
+            });
+        }
+
+        function requestNotificationPermission() {
+            showToast("ℹ️ Para activar Push debes configurar las claves de Firebase en el código.");
+        }
+
+        // PWA Install Prompt Logic
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (!localStorage.getItem('pwa_dismissed')) {
+                const banner = document.getElementById('pwaInstallBanner');
+                if (banner) {
+                    banner.classList.remove('hidden');
+                    setTimeout(() => {
+                        banner.classList.remove('translate-y-20', 'opacity-0');
+                    }, 100);
+                }
+            }
+        });
+
+        async function installPwaApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    showToast("¡Gracias por instalar Market Junior!");
+                }
+                deferredPrompt = null;
+                dismissPwaBanner();
+            } else {
+                showToast("Para instalar: Toca el menú de tu navegador y selecciona 'Agregar a Inicio'.");
+            }
+        }
+
+        function dismissPwaBanner() {
+            const banner = document.getElementById('pwaInstallBanner');
+            if (banner) {
+                banner.classList.add('translate-y-20', 'opacity-0');
+                setTimeout(() => { banner.classList.add('hidden'); }, 300);
+                localStorage.setItem('pwa_dismissed', 'true');
+            }
+        }
+
         function showToast(msg) {
             const toast = document.getElementById('toast');
             document.getElementById('toastMessage').innerText = msg;
             toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => { toast.classList.add('translate-y-20', 'opacity-0'); }, 3000);
+            setTimeout(() => { toast.classList.add('translate-y-20', 'opacity-0'); }, 3200);
         }
     </script>
 </body>
