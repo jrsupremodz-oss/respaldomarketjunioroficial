@@ -209,12 +209,12 @@
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-6 flex-grow w-full">
 
-        <!-- Filter Tabs & Stats -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-neutral-200">
-            <div class="flex items-center gap-1.5 overflow-x-auto pb-2 sm:pb-0 no-scrollbar" id="categoryContainer">
-                <!-- Dynamic categories loaded here -->
-            </div>
-            <div class="flex items-center justify-between sm:justify-end gap-3 text-xs font-bold text-neutral-500">
+        <!-- Stats Bar -->
+        <div class="flex items-center justify-between pb-4 mb-4 border-b border-neutral-200">
+            <span class="text-xs font-bold text-neutral-500">
+                Catálogo de Productos
+            </span>
+            <div class="flex items-center gap-3 text-xs font-bold text-neutral-500">
                 <span class="bg-neutral-200/60 px-3 py-1.5 rounded-xl text-black">
                     Mostrando <strong id="productCount" class="font-black text-black">0</strong> productos
                 </span>
@@ -232,7 +232,7 @@
                 <i class="fa-solid fa-box-open"></i>
             </div>
             <h3 class="text-sm font-bold text-neutral-800">No se encontraron productos</h3>
-            <p class="text-xs text-neutral-500 mt-1">Prueba seleccionando otra categoría o limpiando la búsqueda.</p>
+            <p class="text-xs text-neutral-500 mt-1">Prueba realizando otra búsqueda.</p>
         </div>
     </main>
 
@@ -435,86 +435,68 @@
     <!-- Script Principal de la Tienda -->
     <script>
         // =========================================================================
-        // 🛠️ GUÍA FÁCIL PARA EDITAR PRODUCTOS
-        // Para modificar, cambiar imagen o agregar nuevos productos a la tienda:
+        // ⚙️ CONFIGURACIÓN APIS (FIREBASE Y GOOGLE SHEETS)
+        // PEGA AQUÍ TUS CLAVES DE APIS Y LINKS DIRECTOS
+        // =========================================================================
+        
+        const APIS_CONFIG = {
+            // 1. Google Apps Script URL (El enlace del Webhook de tu Hoja de Google Sheets)
+            googleAppsScriptUrl: "AQUI_PEGA_TU_URL_DE_APPS_SCRIPT",
+
+            // 2. Claves de Firebase FCM Push
+            firebase: {
+                apiKey: "AQUI_PEGA_TU_API_KEY_DE_FIREBASE",
+                projectId: "AQUI_PEGA_TU_PROJECT_ID",
+                messagingSenderId: "AQUI_PEGA_TU_MESSAGING_SENDER_ID",
+                appId: "AQUI_PEGA_TU_APP_ID",
+                vapidKey: "AQUI_PEGA_TU_CLAVE_VAPID_PUBLIC_KEY"
+            }
+        };
+
+        // =========================================================================
+        // 🛠️ EDICIÓN DE PRODUCTOS Y INVENTARIO / STOCK
         // - name: Nombre del producto.
-        // - category: Categoría ("Víveres", "Bebidas", "Charcutería", "Limpieza", "Cuidado Personal", "Snacks").
-        // - price: Precio de venta en USD (usará Tasa BCV automáticamente para Bs).
-        // - originalPrice: Precio tachado anterior (deja igual al price si no hay descuento).
-        // - image: URL directa de la imagen de tu producto (pega aquí tu enlace).
-        // - description: Descripción breve del producto.
-        // - mercadolibreUrl: Enlace de Mercado Libre para envío gratis.
-        // - inStock: true (disponible) o false (agotado).
+        // - price: Precio de venta en USD.
+        // - originalPrice: Precio anterior tachado.
+        // - stock: Cantidad de unidades disponibles en inventario.
+        // - image: Enlace de la foto.
+        // - description: Detalles del producto.
+        // - mercadolibreUrl: Link de Mercado Libre.
         // =========================================================================
 
         const WHATSAPP_NUMBER = "584243800296";
         let currentBcvRate = 36.50;
         let cart = [];
-        let selectedCategory = "Todos";
         let searchQuery = "";
         let hasOpenedCartFirstTime = false;
         let deferredPrompt = null;
 
-        // LISTA ÚNICA Y COMPLETA DE TODOS LOS PRODUCTOS
+        // LISTA ÚNICA Y COMPLETA DE TODOS LOS PRODUCTOS (SIN CATEGORÍAS)
         const products = [
-            // --- VÍVERES ---
-            { id: "prod_1", name: "Harina PAN Blanca 1kg", category: "Víveres", price: 1.15, originalPrice: 1.35, image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=400&q=80", description: "Harina de maíz blanco precocida tradicional venezolana.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_2", name: "Aceite Vegetal Vatel 1L", category: "Víveres", price: 2.50, originalPrice: 2.95, image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80", description: "Aceite vegetal comestible puro para cocinar y freír.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_3", name: "Arroz Primor Clásico 1kg", category: "Víveres", price: 1.20, originalPrice: 1.45, image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=400&q=80", description: "Arroz blanco tipo 1 granos enteros.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_4", name: "Azúcar Montalbán 1kg", category: "Víveres", price: 1.10, originalPrice: 1.25, image: "https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=400&q=80", description: "Azúcar refinada de alta pureza.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_5", name: "Café Fama de América 250g", category: "Víveres", price: 2.80, originalPrice: 3.20, image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=400&q=80", description: "Café molido tostado de aroma intenso.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_6", name: "Pasta Capri Spaghetti 1kg", category: "Víveres", price: 1.40, originalPrice: 1.65, image: "https://images.unsplash.com/photo-1621996346565-e3d5d6281216?auto=format&fit=crop&w=400&q=80", description: "Pasta de sémola de trigo durum.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_7", name: "Mavesa Margarina 500g", category: "Víveres", price: 2.10, originalPrice: 2.45, image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=400&q=80", description: "Margarina con sal suave y untable.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_8", name: "Atún Eveba en Aceite 140g", category: "Víveres", price: 1.30, originalPrice: 1.50, image: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=400&q=80", description: "Lomitos de atún fresco en aceite vegetal.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_9", name: "Salsa de Tomate Pampero 397g", category: "Víveres", price: 1.15, originalPrice: 1.30, image: "https://images.unsplash.com/photo-1528751014936-863e6e7a319c?auto=format&fit=crop&w=400&q=80", description: "Ketchup tradicional venezolano.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_10", name: "Mayonesa Mavesa 445g", category: "Víveres", price: 2.90, originalPrice: 3.30, image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=400&q=80", description: "Mayonesa cremosa tradicional.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_11", name: "Lentejas Pardina 500g", category: "Víveres", price: 1.35, originalPrice: 1.50, image: "https://images.unsplash.com/photo-1515543237350-b3eea1ec8082?auto=format&fit=crop&w=400&q=80", description: "Grano seleccionado rico en proteína.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_12", name: "Caraotas Negras Donia 500g", category: "Víveres", price: 1.25, originalPrice: 1.40, image: "https://images.unsplash.com/photo-1551462147-ff29053bfc14?auto=format&fit=crop&w=400&q=80", description: "Caraotas negras seleccionadas.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_13", name: "Harina de Trigo Robin Hood 1kg", category: "Víveres", price: 1.60, originalPrice: 1.80, image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=400&q=80", description: "Harina de trigo leudante ideal para repostería.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_14", name: "Leche en Polvo La Campiña 400g", category: "Víveres", price: 4.20, originalPrice: 4.80, image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=400&q=80", description: "Leche completa instantánea.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_15", name: "Cereal Corn Flakes 300g", category: "Víveres", price: 3.10, originalPrice: 3.50, image: "https://images.unsplash.com/photo-1521483451569-e33803c0330c?auto=format&fit=crop&w=400&q=80", description: "Hojuelas de maíz tostadas.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-
-            // --- BEBIDAS ---
-            { id: "prod_16", name: "Refresco Coca-Cola 1.5L", category: "Bebidas", price: 1.80, originalPrice: 2.10, image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=400&q=80", description: "Bebida gaseosa refrescante.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_17", name: "Jugo Yukery Durazno 1L", category: "Bebidas", price: 1.50, originalPrice: 1.75, image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=400&q=80", description: "Néctar de durazno pasteurizado.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_18", name: "Agua Mineral Minalba 1.5L", category: "Bebidas", price: 0.80, originalPrice: 1.00, image: "https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=400&q=80", description: "Agua mineral natural manantial.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_19", name: "Maltín Polar 1.5L PET", category: "Bebidas", price: 1.70, originalPrice: 2.00, image: "https://images.unsplash.com/photo-1608270586620-248524c67de9?auto=format&fit=crop&w=400&q=80", description: "Bebida de malta nutritiva sin alcohol.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_20", name: "Refresco Chinotto 1.5L", category: "Bebidas", price: 1.75, originalPrice: 2.00, image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=400&q=80", description: "Refresco con sabor a lima-limón.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_21", name: "Refresco Hit Naranja 1.5L", category: "Bebidas", price: 1.75, originalPrice: 2.00, image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=400&q=80", description: "Refresco gaseoso con sabor a naranja.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_22", name: "Té Frío Lipton Limón 500ml", category: "Bebidas", price: 1.20, originalPrice: 1.40, image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=400&q=80", description: "Bebida de té helado sabor a limón.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_23", name: "Gatorade Frutas Tropicales 500ml", category: "Bebidas", price: 1.50, originalPrice: 1.80, image: "https://images.unsplash.com/photo-1527960471264-932f39eb5846?auto=format&fit=crop&w=400&q=80", description: "Bebida hidratante para deportistas.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-
-            // --- CHARCUTERÍA ---
-            { id: "prod_24", name: "Queso Paisa Blanco 500g", category: "Charcutería", price: 4.50, originalPrice: 5.20, image: "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=400&q=80", description: "Queso pasteurizado suave rebanado.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_25", name: "Jamón Superior Plumrose 250g", category: "Charcutería", price: 3.20, originalPrice: 3.80, image: "https://images.unsplash.com/photo-1524182576066-1d963e940027?auto=format&fit=crop&w=400&q=80", description: "Jamón cocido de pierna de cerdo.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_26", name: "Tocineta Ahumada Plumrose 200g", category: "Charcutería", price: 3.90, originalPrice: 4.50, image: "https://images.unsplash.com/photo-1606851094655-b2593a9af63f?auto=format&fit=crop&w=400&q=80", description: "Cortes finos de tocineta ahumada.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_27", name: "Diablitos Underwood 120g", category: "Charcutería", price: 1.65, originalPrice: 1.90, image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=400&q=80", description: "Jamon endiablado untable original.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_28", name: "Queso Amarillito Gouda 250g", category: "Charcutería", price: 3.80, originalPrice: 4.20, image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&w=400&q=80", description: "Queso madurado sabor característico.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-
-            // --- LIMPIEZA ---
-            { id: "prod_29", name: "Detergente ACE en Polvo 1kg", category: "Limpieza", price: 2.80, originalPrice: 3.30, image: "https://images.unsplash.com/photo-1585842378054-ee2e52f94ba2?auto=format&fit=crop&w=400&q=80", description: "Detergente multiacción para ropa.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_30", name: "Jabón Las Llaves Panela 250g", category: "Limpieza", price: 0.90, originalPrice: 1.10, image: "https://images.unsplash.com/photo-1607006344380-b6775a0824a7?auto=format&fit=crop&w=400&q=80", description: "Jabón azul neutro para lavar a mano.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_31", name: "Lavaplatos Axion Limón 450g", category: "Limpieza", price: 2.10, originalPrice: 2.50, image: "https://images.unsplash.com/photo-1585842378054-ee2e52f94ba2?auto=format&fit=crop&w=400&q=80", description: "Crema arrancagrasa concentrada.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_32", name: "Cloro Nevex Tradicional 1L", category: "Limpieza", price: 1.30, originalPrice: 1.60, image: "https://images.unsplash.com/photo-1584813470613-5b1c1cad3d69?auto=format&fit=crop&w=400&q=80", description: "Desinfectante y blanqueador para el hogar.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-
-            // --- CUIDADO PERSONAL ---
-            { id: "prod_33", name: "Crema Dental Colgate 100ml", category: "Cuidado Personal", price: 1.60, originalPrice: 1.95, image: "https://images.unsplash.com/photo-1559598467-f8b76c8155d0?auto=format&fit=crop&w=400&q=80", description: "Protección anticaries máxima con flúor.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_34", name: "Shampoo Pantene 400ml", category: "Cuidado Personal", price: 4.20, originalPrice: 4.90, image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&w=400&q=80", description: "Reparación intensa para cabello dañado.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_35", name: "Jabón de Baño Palmolive 120g", category: "Cuidado Personal", price: 0.95, originalPrice: 1.20, image: "https://images.unsplash.com/photo-1607006344380-b6775a0824a7?auto=format&fit=crop&w=400&q=80", description: "Jabón corporal humectante.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-
-            // --- SNACKS ---
-            { id: "prod_36", name: "Chocolate Susy Savoy 50g", category: "Snacks", price: 0.70, originalPrice: 0.85, image: "https://images.unsplash.com/photo-1582176647444-30588e3328e2?auto=format&fit=crop&w=400&q=80", description: "Galleta wafer rellena de chocolate.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_37", name: "Galletas Club Social 6 Pack", category: "Snacks", price: 1.80, originalPrice: 2.10, image: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=400&q=80", description: "Galletas saladas crujientes.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_38", name: "Papas Ruffles Queso 115g", category: "Snacks", price: 2.00, originalPrice: 2.40, image: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=400&q=80", description: "Papas fritas con sabor a queso cheddar.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_39", name: "Cocosette Savoy 50g", category: "Snacks", price: 0.70, originalPrice: 0.85, image: "https://images.unsplash.com/photo-1582176647444-30588e3328e2?auto=format&fit=crop&w=400&q=80", description: "Wafer relleno de crema de coco.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true },
-            { id: "prod_40", name: "Pirulin Lata 300g", category: "Snacks", price: 5.50, originalPrice: 6.20, image: "https://images.unsplash.com/photo-1582176647444-30588e3328e2?auto=format&fit=crop&w=400&q=80", description: "Barquillas crujientes rellenas de avellana.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve", inStock: true }
+            { id: "prod_1", name: "Harina PAN Blanca 1kg", price: 1.15, originalPrice: 1.35, stock: 24, image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=400&q=80", description: "Harina de maíz blanco precocida tradicional venezolana.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_2", name: "Aceite Vegetal Vatel 1L", price: 2.50, originalPrice: 2.95, stock: 15, image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80", description: "Aceite vegetal comestible puro para cocinar y freír.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_3", name: "Arroz Primor Clásico 1kg", price: 1.20, originalPrice: 1.45, stock: 40, image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=400&q=80", description: "Arroz blanco tipo 1 granos enteros.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_4", name: "Azúcar Montalbán 1kg", price: 1.10, originalPrice: 1.25, stock: 30, image: "https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=400&q=80", description: "Azúcar refinada de alta pureza.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_5", name: "Café Fama de América 250g", price: 2.80, originalPrice: 3.20, stock: 12, image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=400&q=80", description: "Café molido tostado de aroma intenso.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_6", name: "Pasta Capri Spaghetti 1kg", price: 1.40, originalPrice: 1.65, stock: 50, image: "https://images.unsplash.com/photo-1621996346565-e3d5d6281216?auto=format&fit=crop&w=400&q=80", description: "Pasta de sémola de trigo durum.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_7", name: "Mavesa Margarina 500g", price: 2.10, originalPrice: 2.45, stock: 18, image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=400&q=80", description: "Margarina con sal suave y untable.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_8", name: "Atún Eveba en Aceite 140g", price: 1.30, originalPrice: 1.50, stock: 25, image: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=400&q=80", description: "Lomitos de atún fresco en aceite vegetal.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_9", name: "Salsa de Tomate Pampero 397g", price: 1.15, originalPrice: 1.30, stock: 20, image: "https://images.unsplash.com/photo-1528751014936-863e6e7a319c?auto=format&fit=crop&w=400&q=80", description: "Ketchup tradicional venezolano.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_10", name: "Mayonesa Mavesa 445g", price: 2.90, originalPrice: 3.30, stock: 0, image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=400&q=80", description: "Mayonesa cremosa tradicional.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_11", name: "Refresco Coca-Cola 1.5L", price: 1.80, originalPrice: 2.10, stock: 35, image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=400&q=80", description: "Bebida gaseosa refrescante.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_12", name: "Jugo Yukery Durazno 1L", price: 1.50, originalPrice: 1.75, stock: 10, image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=400&q=80", description: "Néctar de durazno pasteurizado.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_13", name: "Queso Paisa Blanco 500g", price: 4.50, originalPrice: 5.20, stock: 8, image: "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=400&q=80", description: "Queso pasteurizado suave rebanado.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_14", name: "Diablitos Underwood 120g", price: 1.65, originalPrice: 1.90, stock: 45, image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=400&q=80", description: "Jamon endiablado untable original.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_15", name: "Detergente ACE en Polvo 1kg", price: 2.80, originalPrice: 3.30, stock: 16, image: "https://images.unsplash.com/photo-1585842378054-ee2e52f94ba2?auto=format&fit=crop&w=400&q=80", description: "Detergente multiacción para ropa.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_16", name: "Crema Dental Colgate 100ml", price: 1.60, originalPrice: 1.95, stock: 22, image: "https://images.unsplash.com/photo-1559598467-f8b76c8155d0?auto=format&fit=crop&w=400&q=80", description: "Protección anticaries máxima con flúor.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_17", name: "Chocolate Susy Savoy 50g", price: 0.70, originalPrice: 0.85, stock: 60, image: "https://images.unsplash.com/photo-1582176647444-30588e3328e2?auto=format&fit=crop&w=400&q=80", description: "Galleta wafer rellena de chocolate.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_18", name: "Pirulin Lata 300g", price: 5.50, originalPrice: 6.20, stock: 5, image: "https://images.unsplash.com/photo-1582176647444-30588e3328e2?auto=format&fit=crop&w=400&q=80", description: "Barquillas crujientes rellenas de avellana.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" }
         ];
 
         // Eventos al cargar
         window.addEventListener('DOMContentLoaded', async () => {
             await fetchBcvRate();
             loadCart();
-            renderCategories();
             renderProducts();
         });
 
@@ -562,12 +544,19 @@
 
         function addToCart(productId, qtyToAdd = 1) {
             const product = products.find(p => p.id === productId);
-            if (!product || !product.inStock) {
+            if (!product || product.stock <= 0) {
                 showToast("Producto agotado temporalmente");
                 return;
             }
 
             const existingIndex = cart.findIndex(item => item.id === productId);
+            const currentQtyInCart = existingIndex !== -1 ? cart[existingIndex].qty : 0;
+
+            if (currentQtyInCart + qtyToAdd > product.stock) {
+                showToast(`Solo quedan ${product.stock} unidades disponibles`);
+                return;
+            }
+
             if (existingIndex !== -1) {
                 cart[existingIndex].qty += qtyToAdd;
             } else {
@@ -586,19 +575,12 @@
 
             if (!hasOpenedCartFirstTime) {
                 hasOpenedCartFirstTime = true;
-                setTimeout(() => {
-                    openCartDrawer();
-                }, 300);
+                setTimeout(() => { openCartDrawer(); }, 300);
             }
         }
 
-        function openCartDrawer() {
-            document.getElementById('cartDrawer').classList.remove('hidden');
-        }
-
-        function toggleCartDrawer() {
-            document.getElementById('cartDrawer').classList.toggle('hidden');
-        }
+        function openCartDrawer() { document.getElementById('cartDrawer').classList.remove('hidden'); }
+        function toggleCartDrawer() { document.getElementById('cartDrawer').classList.toggle('hidden'); }
 
         function clearCart() {
             cart = [];
@@ -657,6 +639,11 @@
         function updateCartQty(productId, delta) {
             const index = cart.findIndex(item => item.id === productId);
             if (index !== -1) {
+                const product = products.find(p => p.id === productId);
+                if (delta > 0 && product && cart[index].qty + delta > product.stock) {
+                    showToast(`Límite alcanzado (${product.stock} disponibles)`);
+                    return;
+                }
                 cart[index].qty += delta;
                 if (cart[index].qty <= 0) {
                     cart.splice(index, 1);
@@ -682,15 +669,6 @@
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
         }
 
-        function renderCategories() {
-            const container = document.getElementById('categoryContainer');
-            const categories = ["Todos", ...new Set(products.map(p => p.category))];
-            container.innerHTML = categories.map(cat => `
-                <button onclick="setCategory('${cat}')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition ${selectedCategory === cat ? 'bg-black text-white shadow-sm' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'}">${cat}</button>
-            `).join('');
-        }
-
-        function setCategory(cat) { selectedCategory = cat; renderCategories(); renderProducts(); }
         function filterProducts() { searchQuery = document.getElementById('searchInput').value.toLowerCase(); renderProducts(); }
         function syncMobileSearch() { document.getElementById('searchInput').value = document.getElementById('searchInputMobile').value; filterProducts(); }
 
@@ -698,10 +676,7 @@
             const grid = document.getElementById('productGrid');
             const emptyState = document.getElementById('emptyState');
 
-            const filtered = products.filter(p => 
-                (selectedCategory === "Todos" || p.category === selectedCategory) && 
-                p.name.toLowerCase().includes(searchQuery)
-            );
+            const filtered = products.filter(p => p.name.toLowerCase().includes(searchQuery));
 
             document.getElementById('productCount').innerText = filtered.length;
 
@@ -715,6 +690,8 @@
 
             grid.innerHTML = filtered.map(product => {
                 const discount = calculateDiscount(product.price, product.originalPrice);
+                const hasStock = product.stock > 0;
+
                 return `
                     <div class="product-card bg-white rounded-2xl border border-neutral-200 overflow-hidden flex flex-col justify-between p-2.5 relative group">
                         
@@ -728,7 +705,15 @@
                             <div class="overflow-hidden rounded-xl bg-neutral-100 mb-2.5 aspect-square relative">
                                 <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                             </div>
-                            <span class="text-[9px] font-extrabold uppercase tracking-wider text-neutral-400 block mb-0.5">${product.category}</span>
+                            
+                            <!-- Stock Indicator -->
+                            <div class="flex items-center gap-1.5 mb-1">
+                                <span class="w-2 h-2 rounded-full ${hasStock ? 'bg-emerald-500' : 'bg-red-500'}"></span>
+                                <span class="text-[10px] font-bold ${hasStock ? 'text-neutral-500' : 'text-red-500'}">
+                                    ${hasStock ? `Stock: ${product.stock} unids.` : 'Agotado'}
+                                </span>
+                            </div>
+
                             <h3 class="font-bold text-xs text-neutral-900 line-clamp-2 leading-snug">${product.name}</h3>
                         </div>
 
@@ -746,8 +731,8 @@
                             </div>
 
                             <div class="space-y-1.5">
-                                <button onclick="addToCart('${product.id}', 1)" class="w-full py-2 bg-black hover:bg-neutral-800 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
-                                    <i class="fa-solid fa-plus text-[10px]"></i> Agregar al Carrito
+                                <button onclick="addToCart('${product.id}', 1)" ${!hasStock ? 'disabled' : ''} class="w-full py-2 ${hasStock ? 'bg-black hover:bg-neutral-800 text-white' : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'} font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
+                                    <i class="fa-solid fa-plus text-[10px]"></i> ${hasStock ? 'Agregar al Carrito' : 'Agotado'}
                                 </button>
                                 
                                 <a href="${product.mercadolibreUrl}" target="_blank" class="w-full py-1.5 btn-meli font-extrabold rounded-xl text-[11px] flex items-center justify-center gap-1.5 shadow-xs">
@@ -766,13 +751,19 @@
 
             const discount = calculateDiscount(product.price, product.originalPrice);
             const content = document.getElementById('detailModalContent');
+            const hasStock = product.stock > 0;
 
             content.innerHTML = `
                 <div class="flex flex-col sm:flex-row gap-5">
                     <img src="${product.image}" class="w-full sm:w-1/2 h-48 sm:h-64 object-cover rounded-2xl border border-neutral-100">
                     <div class="flex-1 flex flex-col justify-between">
                         <div>
-                            <span class="text-[10px] font-extrabold uppercase text-amber-500 bg-amber-50 px-2.5 py-1 rounded-md inline-block mb-2">${product.category}</span>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="w-2.5 h-2.5 rounded-full ${hasStock ? 'bg-emerald-500' : 'bg-red-500'}"></span>
+                                <span class="text-xs font-extrabold uppercase ${hasStock ? 'text-emerald-700 bg-emerald-50' : 'text-red-700 bg-red-50'} px-2.5 py-1 rounded-md">
+                                    ${hasStock ? `Disponible (${product.stock} en stock)` : 'Agotado'}
+                                </span>
+                            </div>
                             <h2 class="text-base sm:text-lg font-black text-neutral-900 leading-snug mb-2">${product.name}</h2>
                             <p class="text-xs text-neutral-500 leading-relaxed mb-4">${product.description}</p>
                         </div>
@@ -790,8 +781,8 @@
                             </div>
 
                             <div class="flex flex-col gap-2">
-                                <button onclick="addToCart('${product.id}', 1); closeProductDetailModal();" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-black rounded-xl text-xs transition shadow-md flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-cart-plus text-sm"></i> Añadir al Carrito
+                                <button onclick="addToCart('${product.id}', 1); closeProductDetailModal();" ${!hasStock ? 'disabled' : ''} class="w-full py-3 ${hasStock ? 'bg-emerald-500 hover:bg-emerald-600 text-white' : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'} font-black rounded-xl text-xs transition shadow-md flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-cart-plus text-sm"></i> ${hasStock ? 'Añadir al Carrito' : 'Sin Stock'}
                                 </button>
                                 
                                 <a href="${product.mercadolibreUrl}" target="_blank" class="w-full py-2.5 btn-meli font-black rounded-xl text-xs transition text-center flex items-center justify-center gap-2">
@@ -846,8 +837,13 @@
             });
         }
 
-        function requestNotificationPermission() {
-            showToast("ℹ️ Consulta la guía adjunta para vincular Firebase y Google Sheets.");
+        // Función para conectar a la API Push guardada arriba
+        async function requestNotificationPermission() {
+            if (APIS_CONFIG.googleAppsScriptUrl === "AQUI_PEGA_TU_URL_DE_APPS_SCRIPT") {
+                showToast("⚠️ Debes configurar primero la URL de Google Sheets en el script.");
+                return;
+            }
+            showToast("Solicitando permiso de notificaciones...");
         }
 
         window.addEventListener('beforeinstallprompt', (e) => {
