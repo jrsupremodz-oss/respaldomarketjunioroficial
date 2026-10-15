@@ -436,7 +436,6 @@
     <script>
         // =========================================================================
         // ⚙️ CONFIGURACIÓN APIS (FIREBASE Y GOOGLE SHEETS)
-        // PEGA AQUÍ TUS CLAVES DE APIS Y LINKS DIRECTOS
         // =========================================================================
         
         const APIS_CONFIG = {
@@ -453,25 +452,31 @@
             }
         };
 
+        // Inicialización Segura de Firebase Push
+        let messaging = null;
+        try {
+            if (firebase && firebase.apps && !firebase.apps.length) {
+                firebase.initializeApp(APIS_CONFIG.firebase);
+                if (firebase.messaging.isSupported()) {
+                    messaging = firebase.messaging();
+                }
+            }
+        } catch (e) {
+            console.warn("Firebase no se pudo inicializar en este entorno:", e);
+        }
+
         // =========================================================================
         // 🛠️ EDICIÓN DE PRODUCTOS Y INVENTARIO / STOCK
-        // - name: Nombre del producto.
-        // - price: Precio de venta en USD.
-        // - originalPrice: Precio anterior tachado.
-        // - stock: Cantidad de unidades disponibles en inventario.
-        // - image: Enlace de la foto.
-        // - description: Detalles del producto.
-        // - mercadolibreUrl: Link de Mercado Libre.
         // =========================================================================
 
-        const WHATSAPP_NUMBER = "584243800296";. Alternatively
+        const WHATSAPP_NUMBER = "584243800296";
         let currentBcvRate = 36.50;
         let cart = [];
         let searchQuery = "";
         let hasOpenedCartFirstTime = false;
         let deferredPrompt = null;
 
-        // LISTA ÚNICA Y COMPLETA DE TODOS LOS PRODUCTOS (SIN CATEGORÍAS)
+        // LISTA ÚNICA Y COMPLETA DE TODOS LOS PRODUCTOS
         const products = [
             { id: "prod_1", name: "Harina PAN Blanca 1kg", price: 1.15, originalPrice: 1.35, stock: 24, image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=400&q=80", description: "Harina de maíz blanco precocida tradicional venezolana.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
             { id: "prod_2", name: "Aceite Vegetal Vatel 1L", price: 2.50, originalPrice: 2.95, stock: 15, image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80", description: "Aceite vegetal comestible puro para cocinar y freír.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
@@ -493,11 +498,15 @@
             { id: "prod_18", name: "Pirulin Lata 300g", price: 5.50, originalPrice: 6.20, stock: 5, image: "https://images.unsplash.com/photo-1582176647444-30588e3328e2?auto=format&fit=crop&w=400&q=80", description: "Barquillas crujientes rellenas de avellana.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" }
         ];
 
-        // Eventos al cargar
+        // Eventos al cargar con protección contra bloqueos
         window.addEventListener('DOMContentLoaded', async () => {
-            await fetchBcvRate();
-            loadCart();
-            renderProducts();
+            try {
+                loadCart();
+                renderProducts();
+                await fetchBcvRate();
+            } catch (err) {
+                console.error("Error al iniciar la aplicación:", err);
+            }
         });
 
         async function fetchBcvRate() {
@@ -514,6 +523,7 @@
             document.getElementById('heroRateDisplay').innerText = `BCV: Bs. ${currentBcvRate.toFixed(2)}`;
             document.getElementById('footerBcvDisplay').innerText = `Bs. ${currentBcvRate.toFixed(2)} / $`;
             renderCart();
+            renderProducts();
         }
 
         function formatBolivars(usdPrice) {
@@ -788,62 +798,62 @@
                                 <a href="${product.mercadolibreUrl}" target="_blank" class="w-full py-2.5 btn-meli font-black rounded-xl text-xs transition text-center flex items-center justify-center gap-2">
                                     <i class="fa-solid fa-truck-fast text-sm"></i> Comprar en Mercado Libre (Envío Gratis)
                                 </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.getElementById('productDetailModal').classList.remove('hidden');
-        }
-
-        function closeProductDetailModal() { document.getElementById('productDetailModal').classList.add('hidden'); }
-        function openPaymentInfoModal() { document.getElementById('paymentModal').classList.remove('hidden'); }
-        function closePaymentInfoModal() { document.getElementById('paymentModal').classList.add('hidden'); }
-
-        function openTermsModal(type) {
-            const modal = document.getElementById('termsModal');
-            const title = document.getElementById('termsModalTitle');
-            const content = document.getElementById('termsModalContent');
-
-            if (type === 'terms') {
-                title.innerText = "Términos del Servicio";
-                content.innerHTML = `
-                    <p><strong>1. Precios y Tasas:</strong> Todos los productos listados se calculan utilizando la Tasa Oficial del Banco Central de Venezuela (BCV) del día.</p>
-                    <p><strong>2. Pedidos:</strong> La reserva de productos se concreta una vez recibido el comprobante de pago vía WhatsApp.</p>
-                    <p><strong>3. Entregas:</strong> Realizamos despachos directos o a través de envíos en Mercado Libre.</p>
-                `;
-            } else if (type === 'privacy') {
-                title.innerText = "Políticas de Privacidad";
-                content.innerHTML = `
-                    <p>Market Junior resguarda la privacidad de sus usuarios. Los datos provistos únicamente son empleados para la gestión de su compra e itinerario de entrega.</p>
-                `;
-            } else if (type === 'warranty') {
-                title.innerText = "Garantías y Devoluciones";
-                content.innerHTML = `
-                    <p>Garantizamos productos sellados y frescos. En caso de alguna eventualidad con empaques, dispone de 48 horas para solicitar el cambio directo.</p>
-                `;
-            }
-            modal.classList.remove('hidden');
-        }
-
-        function closeTermsModal() { document.getElementById('termsModal').classList.add('hidden'); }
-
-        function copyPagoMovilData() {
-            const dataText = "Pago Móvil BNC (0191) | C.I: 21.271.099 | Teléfono: 0416-948-5195";
-            navigator.clipboard.writeText(dataText).then(() => {
-                showToast("¡Datos de Pago Móvil copiados al portapapeles!");
-            }).catch(() => {
-                showToast("Datos: CI 21.271.099 - Tel 04169485195 - BNC");
-            });
-        }
-
-        // Función para conectar a la API Push guardada arriba
+        // Función conectada para solicitar permisos Push y enviar el token a Google Sheets
         async function requestNotificationPermission() {
-            if (APIS_CONFIG.googleAppsScriptUrl === "AQUI_PEGA_TU_URL_DE_APPS_SCRIPT") {
-                showToast("⚠️ Debes configurar primero la URL de Google Sheets en el script.");
+            const notifBtnText = document.getElementById('notifBtnText');
+            
+            if (!("Notification" in window)) {
+                showToast("Tu navegador no soporta notificaciones.");
                 return;
             }
-            showToast("Solicitando permiso de notificaciones...");
+
+            try {
+                showToast("Solicitando permiso de notificaciones...");
+                const permission = await Notification.requestPermission();
+                
+                if (permission !== 'granted') {
+                    showToast("Permiso de notificaciones denegado.");
+                    return;
+                }
+
+                if (!messaging) {
+                    showToast("Notificaciones no soportadas en este navegador o modo.");
+                    return;
+                }
+
+                if (notifBtnText) notifBtnText.innerText = "Obteniendo Token...";
+
+                // Obtener Token de FCM
+                const currentToken = await messaging.getToken({ vapidKey: APIS_CONFIG.firebase.vapidKey });
+
+                if (!currentToken) {
+                    showToast("No se pudo obtener el token del dispositivo.");
+                    if (notifBtnText) notifBtnText.innerText = "Activar Ofertas Push";
+                    return;
+                }
+
+                showToast("Registrando en Google Sheets...");
+
+                // Registrar token en Google Apps Script
+                await fetch(APIS_CONFIG.googleAppsScriptUrl, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        action: "subscribe",
+                        token: currentToken,
+                        userAgent: navigator.userAgent
+                    })
+                });
+
+                if (notifBtnText) notifBtnText.innerText = "¡Suscrito a Ofertas!";
+                showToast("¡Te has suscrito exitosamente a las ofertas!");
+
+            } catch (err) {
+                console.error("Error al registrar notificaciones Push:", err);
+                showToast("Error al activar notificaciones. Intenta de nuevo.");
+                if (notifBtnText) notifBtnText.innerText = "Activar Ofertas Push";
+            }
         }
 
         window.addEventListener('beforeinstallprompt', (e) => {
