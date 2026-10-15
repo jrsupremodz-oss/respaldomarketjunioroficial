@@ -55,7 +55,7 @@
     <!-- Google Fonts Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- Firebase SDK Compat v8.10.1 (Requeridos para Push Notifications Web) -->
+    <!-- Firebase SDK Compat v8.10.1 -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js"></script>
     
@@ -111,7 +111,6 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-black selection:text-white">
 
-    <!-- Header Navigation -->
     <header class="sticky top-0 z-40 border-b border-neutral-200 glass-nav transition-all">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 sm:h-20 gap-2">
@@ -168,7 +167,6 @@
         </div>
     </header>
 
-    <!-- Hero Banner -->
     <section class="bg-black text-white py-8 sm:py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="max-w-xl text-center md:text-left">
@@ -206,10 +204,7 @@
         </div>
     </section>
 
-    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-6 flex-grow w-full">
-
-        <!-- Stats Bar -->
         <div class="flex items-center justify-between pb-4 mb-4 border-b border-neutral-200">
             <span class="text-xs font-bold text-neutral-500">
                 Catálogo de Productos
@@ -221,12 +216,10 @@
             </div>
         </div>
 
-        <!-- Product Grid -->
         <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2.5 sm:gap-4">
             <!-- Dynamic product cards -->
         </div>
 
-        <!-- Empty State -->
         <div id="emptyState" class="hidden text-center py-16">
             <div class="w-12 h-12 bg-neutral-100 rounded-2xl flex items-center justify-center mx-auto mb-3 text-neutral-400 text-xl">
                 <i class="fa-solid fa-box-open"></i>
@@ -236,12 +229,10 @@
         </div>
     </main>
 
-    <!-- Cart Slide-over Drawer -->
     <div id="cartDrawer" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden transition-opacity">
         <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
             <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between">
                 
-                <!-- Drawer Header -->
                 <div class="p-4 sm:p-5 bg-black text-white flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <i class="fa-solid fa-cart-shopping text-emerald-400 text-base"></i>
@@ -252,12 +243,10 @@
                     </button>
                 </div>
 
-                <!-- Cart Items Container -->
                 <div id="cartItemsContainer" class="p-4 flex-1 overflow-y-auto space-y-3 divide-y divide-neutral-100">
                     <!-- Dynamic cart items -->
                 </div>
 
-                <!-- Drawer Footer & Order Trigger -->
                 <div class="p-4 sm:p-5 bg-neutral-50 border-t border-neutral-200 space-y-3">
                     <div class="space-y-1.5">
                         <div class="flex justify-between text-xs text-neutral-500 font-semibold">
@@ -346,11 +335,9 @@
         </div>
     </div>
 
-    <!-- Complete Application Footer -->
     <footer class="bg-black text-white border-t border-neutral-800 mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- Col 1: Brand Info -->
                 <div class="space-y-3">
                     <div class="flex items-center gap-2">
                         <img src="https://i.imgur.com/HNuWYPn.jpeg" alt="Market Junior" class="w-8 h-8 rounded-xl object-cover">
@@ -365,7 +352,6 @@
                     </div>
                 </div>
 
-                <!-- Col 2: Accesos Rápidos -->
                 <div>
                     <h4 class="text-xs font-black uppercase text-neutral-300 tracking-wider mb-3">Atención al Cliente</h4>
                     <ul class="space-y-2 text-xs text-neutral-400 font-medium">
@@ -375,7 +361,6 @@
                     </ul>
                 </div>
 
-                <!-- Col 3: Términos y Legal -->
                 <div>
                     <h4 class="text-xs font-black uppercase text-neutral-300 tracking-wider mb-3">Información Legal</h4>
                     <ul class="space-y-2 text-xs text-neutral-400 font-medium">
@@ -385,7 +370,6 @@
                     </ul>
                 </div>
 
-                <!-- Col 4: Tasa Oficial -->
                 <div class="bg-neutral-900 border border-neutral-800 p-4 rounded-2xl">
                     <h4 class="text-xs font-black uppercase text-amber-400 tracking-wider mb-2">Transparencia BCV</h4>
                     <p class="text-[11px] text-neutral-400 mb-2">Todos los precios marcados en Bolívares respetan la tasa oficial del Banco Central de Venezuela.</p>
@@ -432,17 +416,9 @@
         </div>
     </div>
 
-    <!-- Script Principal de la Tienda -->
     <script>
-        // =========================================================================
-        // ⚙️ CONFIGURACIÓN APIS (FIREBASE Y GOOGLE SHEETS)
-        // =========================================================================
-        
         const APIS_CONFIG = {
-            // 1. Google Apps Script URL (El enlace del Webhook de tu Hoja de Google Sheets)
             googleAppsScriptUrl: "https://script.google.com/macros/s/AKfycbyYUPkHSQg1FYsGt2nfBNQP0_DNgP7fWX18wOQ3l0woAsjkQwT-oBDBXZIKnm82NR07xg/exec",
-
-            // 2. Claves de Firebase FCM Push
             firebase: {
                 apiKey: "AIzaSyDtueeQGpggDTYYJhaZ2Cyrqwi3k7llTB4",
                 projectId: "market-junior-push",
@@ -452,10 +428,9 @@
             }
         };
 
-        // Inicialización Segura de Firebase Push
         let messaging = null;
         try {
-            if (firebase && firebase.apps && !firebase.apps.length) {
+            if (typeof firebase !== 'undefined' && firebase.apps && !firebase.apps.length) {
                 firebase.initializeApp(APIS_CONFIG.firebase);
                 if (firebase.messaging.isSupported()) {
                     messaging = firebase.messaging();
@@ -465,10 +440,6 @@
             console.warn("Firebase no se pudo inicializar en este entorno:", e);
         }
 
-        // =========================================================================
-        // 🛠️ EDICIÓN DE PRODUCTOS Y INVENTARIO / STOCK
-        // =========================================================================
-
         const WHATSAPP_NUMBER = "584243800296";
         let currentBcvRate = 36.50;
         let cart = [];
@@ -476,7 +447,6 @@
         let hasOpenedCartFirstTime = false;
         let deferredPrompt = null;
 
-        // LISTA ÚNICA Y COMPLETA DE TODOS LOS PRODUCTOS
         const products = [
             { id: "prod_1", name: "Harina PAN Blanca 1kg", price: 1.15, originalPrice: 1.35, stock: 24, image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=400&q=80", description: "Harina de maíz blanco precocida tradicional venezolana.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
             { id: "prod_2", name: "Aceite Vegetal Vatel 1L", price: 2.50, originalPrice: 2.95, stock: 15, image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80", description: "Aceite vegetal comestible puro para cocinar y freír.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
@@ -498,7 +468,6 @@
             { id: "prod_18", name: "Pirulin Lata 300g", price: 5.50, originalPrice: 6.20, stock: 5, image: "https://images.unsplash.com/photo-1582176647444-30588e3328e2?auto=format&fit=crop&w=400&q=80", description: "Barquillas crujientes rellenas de avellana.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" }
         ];
 
-        // Eventos al cargar con protección contra bloqueos
         window.addEventListener('DOMContentLoaded', async () => {
             try {
                 loadCart();
@@ -687,7 +656,6 @@
             const emptyState = document.getElementById('emptyState');
 
             const filtered = products.filter(p => p.name.toLowerCase().includes(searchQuery));
-
             document.getElementById('productCount').innerText = filtered.length;
 
             if (filtered.length === 0) {
@@ -704,7 +672,6 @@
 
                 return `
                     <div class="product-card bg-white rounded-2xl border border-neutral-200 overflow-hidden flex flex-col justify-between p-2.5 relative group">
-                        
                         ${discount > 0 ? `
                             <span class="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-md z-10 shadow-sm">
                                 -${discount}% OFF
@@ -716,7 +683,6 @@
                                 <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                             </div>
                             
-                            <!-- Stock Indicator -->
                             <div class="flex items-center gap-1.5 mb-1">
                                 <span class="w-2 h-2 rounded-full ${hasStock ? 'bg-emerald-500' : 'bg-red-500'}"></span>
                                 <span class="text-[10px] font-bold ${hasStock ? 'text-neutral-500' : 'text-red-500'}">
@@ -741,11 +707,11 @@
                             </div>
 
                             <div class="space-y-1.5">
-                                <button onclick="addToCart('${product.id}', 1)" ${!hasStock ? 'disabled' : ''} class="w-full py-2 ${hasStock ? 'bg-black hover:bg-neutral-800 text-white' : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'} font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
+                                <button onclick="event.stopPropagation(); addToCart('${product.id}', 1)" ${!hasStock ? 'disabled' : ''} class="w-full py-2 ${hasStock ? 'bg-black hover:bg-neutral-800 text-white' : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'} font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
                                     <i class="fa-solid fa-plus text-[10px]"></i> ${hasStock ? 'Agregar al Carrito' : 'Agotado'}
                                 </button>
                                 
-                                <a href="${product.mercadolibreUrl}" target="_blank" class="w-full py-1.5 btn-meli font-extrabold rounded-xl text-[11px] flex items-center justify-center gap-1.5 shadow-xs">
+                                <a href="${product.mercadolibreUrl}" target="_blank" onclick="event.stopPropagation()" class="w-full py-1.5 btn-meli font-extrabold rounded-xl text-[11px] flex items-center justify-center gap-1.5 shadow-xs">
                                     <i class="fa-solid fa-truck-fast text-[11px]"></i> Mercado Libre
                                 </a>
                             </div>
@@ -798,7 +764,65 @@
                                 <a href="${product.mercadolibreUrl}" target="_blank" class="w-full py-2.5 btn-meli font-black rounded-xl text-xs transition text-center flex items-center justify-center gap-2">
                                     <i class="fa-solid fa-truck-fast text-sm"></i> Comprar en Mercado Libre (Envío Gratis)
                                 </a>
-        // Función conectada para solicitar permisos Push y enviar el token a Google Sheets
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('productDetailModal').classList.remove('hidden');
+        }
+
+        function closeProductDetailModal() {
+            document.getElementById('productDetailModal').classList.add('hidden');
+        }
+
+        function openPaymentInfoModal() {
+            document.getElementById('paymentModal').classList.remove('hidden');
+        }
+
+        function closePaymentInfoModal() {
+            document.getElementById('paymentModal').classList.add('hidden');
+        }
+
+        function openTermsModal(type) {
+            const modal = document.getElementById('termsModal');
+            const titleEl = document.getElementById('termsModalTitle');
+            const contentEl = document.getElementById('termsModalContent');
+
+            if (type === 'terms') {
+                titleEl.innerText = 'Términos del Servicio';
+                contentEl.innerHTML = '<p>Bienvenido a Market Junior. Al utilizar nuestra tienda online en Venezuela, aceptas nuestros términos de despacho, condiciones de pago a tasa BCV oficial y disponibilidad de inventario sujeto a confirmación por WhatsApp o Mercado Libre.</p>';
+            } else if (type === 'privacy') {
+                titleEl.innerText = 'Políticas de Privacidad';
+                contentEl.innerHTML = '<p>Garantizamos la confidencialidad de tus datos de contacto y direcciones de envío. No compartimos información personal con terceros bajo ninguna circunstancia.</p>';
+            } else if (type === 'warranty') {
+                titleEl.innerText = 'Garantías y Devoluciones';
+                contentEl.innerHTML = '<p>Todos nuestros productos cuentan con garantía de calidad al momento de la entrega. Las reclamaciones deben realizarse dentro de las primeras 24 horas posteriores a la recepción.</p>';
+            }
+            modal.classList.remove('hidden');
+        }
+
+        function closeTermsModal() {
+            document.getElementById('termsModal').classList.add('hidden');
+        }
+
+        function copyPagoMovilData() {
+            const text = "Banco: BNC (0191)\nCédula: 21.271.099\nTeléfono: 0416-948-5195";
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast("¡Datos de Pago Móvil copiados!");
+                });
+            } else {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast("¡Datos de Pago Móvil copiados!");
+            }
+        }
+
         async function requestNotificationPermission() {
             const notifBtnText = document.getElementById('notifBtnText');
             
@@ -817,13 +841,12 @@
                 }
 
                 if (!messaging) {
-                    showToast("Notificaciones no soportadas en este navegador o modo.");
+                    showToast("Notificaciones no soportadas en este navegador o entorno.");
                     return;
                 }
 
                 if (notifBtnText) notifBtnText.innerText = "Obteniendo Token...";
 
-                // Obtener Token de FCM
                 const currentToken = await messaging.getToken({ vapidKey: APIS_CONFIG.firebase.vapidKey });
 
                 if (!currentToken) {
@@ -834,7 +857,6 @@
 
                 showToast("Registrando en Google Sheets...");
 
-                // Registrar token en Google Apps Script
                 await fetch(APIS_CONFIG.googleAppsScriptUrl, {
                     method: "POST",
                     mode: "no-cors",
