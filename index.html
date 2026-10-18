@@ -264,36 +264,34 @@
             <div class="space-y-3 text-xs">
                <!-- Pago Móvil BNC -->
 <div class="bg-neutral-50 border border-neutral-200 p-3.5 rounded-2xl space-y-2">
-    <div class="flex justify-between font-bold text-neutral-900 border-b border-neutral-200 pb-1.5 mb-1.5">
-        <span class="text-emerald-600 font-black"><i class="fa-solid fa-mobile-screen"></i> Pago Móvil </span>
-        <span class="text-[10px] bg-neutral-200 px-2 py-0.5 rounded-md">Bs. Tasa BCV</span>
+    <!-- Cabecera con el botón de Copiar Todo -->
+    <div class="flex justify-between items-center font-bold text-neutral-900 border-b border-neutral-200 pb-1.5 mb-1.5">
+        <span class="text-emerald-600 font-black"><i class="fa-solid fa-mobile-screen"></i> Pago Móvil</span>
+        
+        <div class="flex items-center gap-2">
+            <span class="text-[10px] bg-neutral-200 px-2 py-0.5 rounded-md">Bs. Tasa BCV</span>
+            <button onclick="copiarTodoPagoMovil(this)" class="text-[11px] bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded-md transition-colors font-semibold flex items-center gap-1">
+                📋 Copiar Todo
+            </button>
+        </div>
     </div>
     
     <!-- Cédula -->
     <div class="flex justify-between items-center text-neutral-600">
         <span>Cedula:</span> 
-        <div class="flex items-center gap-2">
-            <strong id="pago-cedula" class="text-neutral-900">21271099</strong>
-            <button onclick="copiarTexto('#pago-cedula', this)" class="text-[11px] bg-neutral-200 hover:bg-neutral-300 text-neutral-700 px-2 py-0.5 rounded transition-colors" title="Copiar Cédula">📋 Copiar</button>
-        </div>
+        <strong id="pago-cedula" class="text-neutral-900">21271099</strong>
     </div>
 
     <!-- Banco -->
     <div class="flex justify-between items-center text-neutral-600">
         <span>Banco:</span> 
-        <div class="flex items-center gap-2">
-            <strong id="pago-banco" class="text-neutral-900">BNC (0191)</strong>
-            <button onclick="copiarTexto('#pago-banco', this)" class="text-[11px] bg-neutral-200 hover:bg-neutral-300 text-neutral-700 px-2 py-0.5 rounded transition-colors" title="Copiar Banco">📋 Copiar</button>
-        </div>
+        <strong id="pago-banco" class="text-neutral-900">BNC (0191)</strong>
     </div>
 
     <!-- Teléfono -->
     <div class="flex justify-between items-center text-neutral-600">
         <span>Teléfono:</span> 
-        <div class="flex items-center gap-2">
-            <strong id="pago-telefono" class="text-neutral-900 font-mono">04169485195</strong>
-            <button onclick="copiarTexto('#pago-telefono', this)" class="text-[11px] bg-neutral-200 hover:bg-neutral-300 text-neutral-700 px-2 py-0.5 rounded transition-colors" title="Copiar Teléfono">📋 Copiar</button>
-        </div>
+        <strong id="pago-telefono" class="text-neutral-900 font-mono">04169485195</strong>
     </div>
 </div>
 
@@ -838,25 +836,30 @@
         }
     </script>
     <script>
-    function copiarTexto(selector, boton) {
-        const elemento = document.querySelector(selector);
-        if (!elemento) return;
-        
-        const texto = elemento.innerText.trim();
-        
-        navigator.clipboard.writeText(texto).then(() => {
+    function copiarTodoPagoMovil(boton) {
+        // Extraer los textos de cada elemento usando sus IDs
+        const cedula = document.getElementById('pago-cedula').innerText.trim();
+        const banco = document.getElementById('pago-banco').innerText.trim();
+        const telefono = document.getElementById('pago-telefono').innerText.trim();
+
+        // Estructurar el mensaje listo y ordenado para copiar
+        const textoCompleto = `Datos de Pago Móvil:\n- Banco: ${banco}\n- Cédula: ${cedula}\n- Teléfono: ${telefono}`;
+
+        // Copiar al portapapeles
+        navigator.clipboard.writeText(textoCompleto).then(() => {
             const textoOriginal = boton.innerHTML;
-            boton.innerHTML = "✅ Copiado";
-            boton.classList.remove('bg-neutral-200', 'hover:bg-neutral-300', 'text-neutral-700');
-            boton.classList.add('bg-emerald-600', 'text-white');
-            
+            boton.innerHTML = "✅ ¡Copiado Todo!";
+            boton.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+            boton.classList.add('bg-neutral-800');
+
             setTimeout(() => {
                 boton.innerHTML = textoOriginal;
-                boton.classList.remove('bg-emerald-600', 'text-white');
-                boton.classList.add('bg-neutral-200', 'hover:bg-neutral-300', 'text-neutral-700');
-            }, 1500);
+                boton.classList.remove('bg-neutral-800');
+                boton.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
+            }, 2000);
         }).catch(err => {
             console.error("Error al copiar: ", err);
+            alert("No se pudo copiar automáticamente.");
         });
     }
 </script>
