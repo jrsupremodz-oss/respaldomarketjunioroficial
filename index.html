@@ -262,16 +262,40 @@
             </div>
 
             <div class="space-y-3 text-xs">
-                <!-- Pago Móvil BNC -->
-                <div class="bg-neutral-50 border border-neutral-200 p-3.5 rounded-2xl space-y-1">
-                    <div class="flex justify-between font-bold text-neutral-900 border-b border-neutral-200 pb-1.5 mb-1.5">
-                        <span class="text-emerald-600 font-black"><i class="fa-solid fa-mobile-screen"></i> Pago Móvil </span>
-                        <span class="text-[10px] bg-neutral-200 px-2 py-0.5 rounded-md">Bs. Tasa BCV</span>
-                    </div>
-                    <div class="flex justify-between text-neutral-600"><span>Cedula:</span> <strong class="text-neutral-900">21271099</strong></div>
-                    <div class="flex justify-between text-neutral-600"><span>Banco:</span> <strong class="text-neutral-900">BNC (0191)</strong></div>
-                    <div class="flex justify-between text-neutral-600"><span>Teléfono:</span> <strong class="text-neutral-900 font-mono">04169485195</strong></div>
-                </div>
+               <!-- Pago Móvil BNC -->
+<div class="bg-neutral-50 border border-neutral-200 p-3.5 rounded-2xl space-y-2">
+    <div class="flex justify-between font-bold text-neutral-900 border-b border-neutral-200 pb-1.5 mb-1.5">
+        <span class="text-emerald-600 font-black"><i class="fa-solid fa-mobile-screen"></i> Pago Móvil </span>
+        <span class="text-[10px] bg-neutral-200 px-2 py-0.5 rounded-md">Bs. Tasa BCV</span>
+    </div>
+    
+    <!-- Cédula -->
+    <div class="flex justify-between items-center text-neutral-600">
+        <span>Cedula:</span> 
+        <div class="flex items-center gap-2">
+            <strong id="pago-cedula" class="text-neutral-900">21271099</strong>
+            <button onclick="copiarTexto('#pago-cedula', this)" class="text-[11px] bg-neutral-200 hover:bg-neutral-300 text-neutral-700 px-2 py-0.5 rounded transition-colors" title="Copiar Cédula">📋 Copiar</button>
+        </div>
+    </div>
+
+    <!-- Banco -->
+    <div class="flex justify-between items-center text-neutral-600">
+        <span>Banco:</span> 
+        <div class="flex items-center gap-2">
+            <strong id="pago-banco" class="text-neutral-900">BNC (0191)</strong>
+            <button onclick="copiarTexto('#pago-banco', this)" class="text-[11px] bg-neutral-200 hover:bg-neutral-300 text-neutral-700 px-2 py-0.5 rounded transition-colors" title="Copiar Banco">📋 Copiar</button>
+        </div>
+    </div>
+
+    <!-- Teléfono -->
+    <div class="flex justify-between items-center text-neutral-600">
+        <span>Teléfono:</span> 
+        <div class="flex items-center gap-2">
+            <strong id="pago-telefono" class="text-neutral-900 font-mono">04169485195</strong>
+            <button onclick="copiarTexto('#pago-telefono', this)" class="text-[11px] bg-neutral-200 hover:bg-neutral-300 text-neutral-700 px-2 py-0.5 rounded transition-colors" title="Copiar Teléfono">📋 Copiar</button>
+        </div>
+    </div>
+</div>
 
                 <!-- Divisas -->
                 <div class="bg-neutral-50 border border-neutral-200 p-3.5 rounded-2xl space-y-1">
@@ -813,5 +837,28 @@
             setTimeout(() => { toast.classList.add('translate-y-20', 'opacity-0'); }, 3200);
         }
     </script>
+    <script>
+    function copiarTexto(selector, boton) {
+        const elemento = document.querySelector(selector);
+        if (!elemento) return;
+        
+        const texto = elemento.innerText.trim();
+        
+        navigator.clipboard.writeText(texto).then(() => {
+            const textoOriginal = boton.innerHTML;
+            boton.innerHTML = "✅ Copiado";
+            boton.classList.remove('bg-neutral-200', 'hover:bg-neutral-300', 'text-neutral-700');
+            boton.classList.add('bg-emerald-600', 'text-white');
+            
+            setTimeout(() => {
+                boton.innerHTML = textoOriginal;
+                boton.classList.remove('bg-emerald-600', 'text-white');
+                boton.classList.add('bg-neutral-200', 'hover:bg-neutral-300', 'text-neutral-700');
+            }, 1500);
+        }).catch(err => {
+            console.error("Error al copiar: ", err);
+        });
+    }
+</script>
 </body>
 </html>
