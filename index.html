@@ -49,7 +49,7 @@
         document.head.appendChild(manifestLink);
     </script>
 
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -108,11 +108,12 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-black selection:text-white">
 
+    <!-- Header / Navbar Principal -->
     <header class="sticky top-0 z-40 border-b border-neutral-200 glass-nav transition-all">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 sm:h-20 gap-2">
                 
-                <!-- Brand Logo -->
+                <!-- Brand Logo & Tasa BCV Indicator -->
                 <div class="flex items-center gap-2.5 cursor-pointer group select-none" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
                     <img src="https://i.imgur.com/HNuWYPn.jpeg" alt="Market Junior Logo" class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl object-cover shadow-md group-hover:scale-105 transition-transform border border-neutral-200">
                     <div>
@@ -124,7 +125,7 @@
                     </div>
                 </div>
 
-                <!-- Search Bar Desktop -->
+                <!-- Desktop Search Bar -->
                 <div class="hidden md:flex flex-1 max-w-md mx-6">
                     <div class="relative w-full">
                         <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Buscar entre más de 100 productos..." class="w-full pl-10 pr-4 py-2.5 bg-neutral-100 border border-transparent rounded-xl text-xs font-medium focus:outline-none focus:bg-white focus:border-black transition-all">
@@ -132,15 +133,20 @@
                     </div>
                 </div>
 
-                <!-- Actions Header -->
-                <div class="flex items-center gap-2">
-                    <button onclick="openPaymentInfoModal()" class="flex items-center gap-1.5 text-xs font-bold px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl border border-neutral-300 bg-white hover:bg-black hover:text-white transition-all shadow-sm">
+                <!-- Header Action Buttons -->
+                <div class="flex items-center gap-1.5 sm:gap-2">
+                    <button onclick="shareStore()" class="flex items-center gap-1.5 text-xs font-bold px-2.5 py-2 sm:px-4 sm:py-2.5 rounded-xl border border-neutral-300 bg-white hover:bg-black hover:text-white transition-all shadow-sm" title="Compartir tienda">
+                        <i class="fa-solid fa-share-nodes text-xs"></i>
+                        <span class="hidden sm:inline text-[11px] sm:text-xs">Compartir</span>
+                    </button>
+
+                    <button onclick="openPaymentInfoModal()" class="flex items-center gap-1.5 text-xs font-bold px-2.5 py-2 sm:px-4 sm:py-2.5 rounded-xl border border-neutral-300 bg-white hover:bg-black hover:text-white transition-all shadow-sm">
                         <i class="fa-solid fa-wallet text-xs"></i>
                         <span class="hidden sm:inline text-[11px] sm:text-xs">Pagos Bs / $</span>
                     </button>
 
                     <!-- Cart Trigger Button -->
-                    <button onclick="toggleCartDrawer()" class="relative flex items-center gap-2 text-xs font-bold px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl bg-black text-white hover:bg-neutral-800 transition-all shadow-md">
+                    <button onclick="toggleCartDrawer()" class="relative flex items-center gap-2 text-xs font-bold px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl bg-black text-white hover:bg-neutral-800 transition-all shadow-md">
                         <i class="fa-solid fa-cart-shopping text-sm"></i>
                         <span class="hidden sm:inline">Carrito</span>
                         <span id="cartBadge" class="bg-emerald-500 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center">0</span>
@@ -151,13 +157,14 @@
             <!-- Mobile Search Bar -->
             <div class="pb-3 md:hidden">
                 <div class="relative w-full">
-                    <input type="text" id="searchInputMobile" oninput="syncMobileSearch()" placeholder="Buscar entre más de 100 productos..." class="w-full pl-9 pr-4 py-2 bg-neutral-100 border border-transparent rounded-xl text-xs font-medium focus:outline-none focus:bg-white focus:border-black">
+                    <input type="text" id="searchInputMobile" oninput="syncMobileSearch()" placeholder="Buscar en el catálogo..." class="w-full pl-9 pr-4 py-2 bg-neutral-100 border border-transparent rounded-xl text-xs font-medium focus:outline-none focus:bg-white focus:border-black">
                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-neutral-400 text-xs"></i>
                 </div>
             </div>
         </div>
     </header>
 
+    <!-- Hero Banner Promocional -->
     <section class="bg-black text-white py-8 sm:py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="max-w-xl text-center md:text-left">
@@ -168,12 +175,15 @@
                     Catálogo Completo Market Junior
                 </h1>
                 <p class="mt-2 text-neutral-400 text-xs sm:text-sm leading-relaxed">
-                    Más de 100 productos disponibles. Precios actualizados en Dólares y Bolívares. Descuentos exclusivos y envío gratis en Mercado Libre.
+                    Explora nuestros productos con conversión en tiempo real a Bolívares. Realiza tu compra por WhatsApp o disfruta de envíos nacionales por Mercado Libre.
                 </p>
                 <div class="mt-4 flex flex-wrap gap-2 justify-center md:justify-start">
                     <a href="https://wa.me/584243800296?text=¡Hola%20Market%20Junior!%20Quisiera%20consultar%20sobre%20el%20catálogo%20actual." target="_blank" class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl transition flex items-center gap-2 shadow-md text-xs">
-                        <i class="fa-brands fa-whatsapp text-sm"></i> Escribir a WhatsApp
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Atencion WhatsApp
                     </a>
+                    <button onclick="shareStore()" class="px-4 py-2.5 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-white font-bold rounded-xl transition flex items-center gap-2 text-xs">
+                        <i class="fa-solid fa-share-nodes text-xs"></i> Compartir Catálogo
+                    </button>
                     <button onclick="openPaymentInfoModal()" class="px-4 py-2.5 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-white font-bold rounded-xl transition text-xs">
                         Datos Pago Móvil BNC
                     </button>
@@ -195,6 +205,7 @@
         </div>
     </section>
 
+    <!-- Seccion Principal del Catálogo -->
     <main class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-6 flex-grow w-full">
         <div class="flex items-center justify-between pb-4 mb-4 border-b border-neutral-200">
             <span class="text-xs font-bold text-neutral-500">
@@ -207,10 +218,12 @@
             </div>
         </div>
 
+        <!-- Grid de Tarjetas de Productos -->
         <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2.5 sm:gap-4">
-            <!-- Dynamic product cards -->
+            <!-- Renderizado dinámico vía JavaScript -->
         </div>
 
+        <!-- Estado Vacio de Búsqueda -->
         <div id="emptyState" class="hidden text-center py-16">
             <div class="w-12 h-12 bg-neutral-100 rounded-2xl flex items-center justify-center mx-auto mb-3 text-neutral-400 text-xl">
                 <i class="fa-solid fa-box-open"></i>
@@ -220,10 +233,106 @@
         </div>
     </main>
 
+    <!-- MODAL DETALLE DE PRODUCTO EXPANDIDO -->
+    <div id="productDetailModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto transition-all">
+        <div class="bg-white w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden relative border border-neutral-200 my-auto">
+            <button onclick="closeProductDetailModal()" class="absolute top-3 right-3 z-20 w-8 h-8 sm:w-9 sm:h-9 bg-neutral-900/80 hover:bg-black text-white rounded-full flex items-center justify-center transition shadow-md">
+                <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+            <div id="detailModalContent" class="p-4 sm:p-6">
+                <!-- Contenido Dinámico -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DATOS DE PAGO MÓVIL Y BANCOS -->
+    <div id="paymentInfoModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto transition-all">
+        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden relative border border-neutral-200 my-auto p-5 sm:p-6">
+            <button onclick="closePaymentInfoModal()" class="absolute top-3 right-3 z-20 w-8 h-8 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 rounded-full flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+                <div>
+                    <h3 class="font-black text-base text-neutral-900">Métodos de Pago</h3>
+                    <p class="text-xs text-neutral-500">Aceptamos Bolívares Tasa BCV y Dólares</p>
+                </div>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <!-- Pago Móvil BNC -->
+                <div class="bg-neutral-50 border border-neutral-200 p-3.5 rounded-2xl space-y-1">
+                    <div class="flex justify-between font-bold text-neutral-900 border-b border-neutral-200 pb-1.5 mb-1.5">
+                        <span class="text-emerald-600 font-black"><i class="fa-solid fa-mobile-screen"></i> Pago Móvil BNC</span>
+                        <span class="text-[10px] bg-neutral-200 px-2 py-0.5 rounded-md">Bs. Tasa BCV</span>
+                    </div>
+                    <div class="flex justify-between text-neutral-600"><span>Banco:</span> <strong class="text-neutral-900">BNC (0191)</strong></div>
+                    <div class="flex justify-between text-neutral-600"><span>Teléfono:</span> <strong class="text-neutral-900 font-mono">0424-3800296</strong></div>
+                </div>
+
+                <!-- Divisas -->
+                <div class="bg-neutral-50 border border-neutral-200 p-3.5 rounded-2xl space-y-1">
+                    <div class="font-bold text-neutral-900 border-b border-neutral-200 pb-1.5 mb-1.5 flex justify-between">
+                        <span class="text-amber-600 font-black"><i class="fa-solid fa-dollar-sign"></i> Divisas y Efectivo</span>
+                        <span class="text-[10px] bg-neutral-200 px-2 py-0.5 rounded-md">$ USD</span>
+                    </div>
+                    <p class="text-[11px] text-neutral-600 leading-snug">Efectivo para entregas personales o acuerdos directos. Consulta disponibilidad al confirmar tu orden vía WhatsApp.</p>
+                </div>
+            </div>
+
+            <button onclick="closePaymentInfoModal()" class="w-full mt-5 py-3 bg-black text-white font-bold rounded-xl text-xs hover:bg-neutral-800 transition">
+                Entendido
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL INTEGRADO DE POLÍTICAS DE PRIVACIDAD Y TÉRMINOS -->
+    <div id="policyModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto transition-all">
+        <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden relative border border-neutral-200 my-auto flex flex-col max-h-[85vh]">
+            <div class="p-4 sm:p-5 border-b border-neutral-200 flex items-center justify-between bg-neutral-50">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-shield-halved text-emerald-600 text-lg"></i>
+                    <h3 class="font-black text-base text-neutral-900">Políticas de Privacidad y Términos de Servicio</h3>
+                </div>
+                <button onclick="closePolicyModal()" class="w-8 h-8 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-full flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+            
+            <div class="p-5 sm:p-6 overflow-y-auto space-y-5 text-xs text-neutral-700 leading-relaxed">
+                <div>
+                    <h4 class="font-black text-sm text-neutral-900 mb-2">1. POLÍTICA DE PRIVACIDAD</h4>
+                    <p class="mb-2">En <strong>Market Junior Venezuela</strong> nos tomamos muy en serio la seguridad y privacidad de nuestros clientes. No requerimos registro previo ni contraseñas para interactuar con la tienda.</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li><strong>Procesamiento de Pedidos:</strong> Al armar tu carrito y pulsar "Enviar Pedido por WhatsApp", la aplicación genera una plantilla de texto formateada con tus artículos y montos calculados en $ USD y Bolívares (Tasa BCV). Esta información se transmite exclusivamente a nuestra línea oficial de atención.</li>
+                        <li><strong>Almacenamiento Local (LocalStorage):</strong> Tu navegador guarda temporalmente los productos seleccionados en el carrito para evitar que se pierdan al recargar la página.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-black text-sm text-neutral-900 mb-2">2. TÉRMINOS Y CONDICIONES DE USO</h4>
+                    <ul class="list-disc pl-5 space-y-1.5">
+                        <li><strong>Precios y Tasa BCV:</strong> Los precios de los productos están fijados en Dólares ($) y se convierten de forma automática a Bolívares (Bs.) según la tasa oficial del Banco Central de Venezuela (BCV) del día.</li>
+                        <li><strong>Disponibilidad e Inventario:</strong> Agregar productos al carrito no garantiza la reserva exclusiva del stock hasta tanto la orden sea recibida y confirmada por nuestro equipo por WhatsApp.</li>
+                        <li><strong>Envíos y Entregas:</strong> Las compras gestionadas vía Mercado Libre se ajustan a las políticas de envío y garantías de dicha plataforma. Las entregas personales o locales se coordinan directamente vía WhatsApp.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-neutral-200 bg-neutral-50 text-right">
+                <button onclick="closePolicyModal()" class="px-5 py-2.5 bg-black text-white font-bold rounded-xl text-xs hover:bg-neutral-800 transition">
+                    Entendido y Acepto
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DRAWER LATERAL CARRITO DE COMPRAS -->
     <div id="cartDrawer" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden transition-opacity">
-        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
-            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between">
-                
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-6">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between overflow-hidden">
                 <div class="p-4 sm:p-5 bg-black text-white flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <i class="fa-solid fa-cart-shopping text-emerald-400 text-base"></i>
@@ -235,20 +344,20 @@
                 </div>
 
                 <div id="cartItemsContainer" class="p-4 flex-1 overflow-y-auto space-y-3 divide-y divide-neutral-100">
-                    <!-- Dynamic cart items -->
+                    <!-- Productos del carrito dinámicos -->
                 </div>
 
                 <div class="p-4 sm:p-5 bg-neutral-50 border-t border-neutral-200 space-y-3">
                     <div class="space-y-1.5">
-                        <div class="flex justify-between text-xs text-neutral-500 font-semibold">
+                        <div class="flex justify-between items-center text-xs text-neutral-500 font-semibold">
                             <span>Subtotal en Dólares:</span>
                             <span id="cartSubtotalUsd" class="font-black text-black">$0.00</span>
                         </div>
-                        <div class="flex justify-between text-sm font-extrabold text-neutral-900 border-t border-neutral-200 pt-2">
-                            <span>Total Estimado (BCV):</span>
-                            <div class="text-right">
-                                <span id="cartTotalBs" class="block text-emerald-600 font-black text-base">Bs. 0.00</span>
-                                <span id="cartTotalUsd" class="text-[11px] text-neutral-400 font-bold">$0.00 USD</span>
+                        <div class="flex justify-between items-end text-sm font-extrabold text-neutral-900 border-t border-neutral-200 pt-2 gap-2">
+                            <span class="text-xs sm:text-sm">Total Estimado (BCV):</span>
+                            <div class="text-right min-w-0 flex-1 overflow-hidden">
+                                <span id="cartTotalBs" class="block text-emerald-600 font-black text-sm sm:text-base truncate">Bs. 0,00</span>
+                                <span id="cartTotalUsd" class="block text-[11px] text-neutral-400 font-bold truncate">$0.00 USD</span>
                             </div>
                         </div>
                     </div>
@@ -265,160 +374,49 @@
         </div>
     </div>
 
-    <!-- Modal: Product Details -->
-    <div id="productDetailModal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-6">
-        <div class="bg-white rounded-3xl max-w-xl w-full p-5 sm:p-7 shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeProductDetailModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-neutral-700 transition z-10">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div id="detailModalContent">
-                <!-- Dynamically populated product details -->
-            </div>
+    <!-- TOAST NOTIFICACIONES -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-black text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-neutral-800">
+            <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+            <span id="toastMessage" class="text-xs font-bold">Mensaje de notificación</span>
         </div>
     </div>
 
-    <!-- Modal: Payment Info -->
-    <div id="paymentModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full p-5 sm:p-7 shadow-2xl relative">
-            <button onclick="closePaymentInfoModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-neutral-700 transition">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+    <!-- FOOTER -->
+    <footer class="bg-black text-white border-t border-neutral-800 py-8 px-4 sm:px-6 lg:px-8 mt-12">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+            <div class="flex items-center gap-3">
+                <img src="https://i.imgur.com/HNuWYPn.jpeg" class="w-8 h-8 rounded-lg border border-neutral-700">
+                <div>
+                    <span class="font-black text-sm block leading-none">MARKET JUNIOR</span>
+                    <span class="text-[10px] text-neutral-400">Tienda Online Oficial en Venezuela</span>
+                </div>
+            </div>
             
-            <div class="flex items-center gap-3 mb-5">
-                <div class="w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center text-lg shadow-md">
-                    <i class="fa-solid fa-wallet"></i>
-                </div>
-                <div>
-                    <h3 class="text-lg font-black text-neutral-900">Métodos de Pago</h3>
-                    <p class="text-[11px] text-neutral-500 font-medium">Market Junior • Tasa BCV Oficial</p>
-                </div>
-            </div>
+            <p class="text-[11px] text-neutral-500">
+                Tasa referencial: <strong id="footerBcvDisplay" class="text-neutral-300">Cargando...</strong> • Todos los derechos reservados.
+            </p>
 
-            <div class="space-y-3.5">
-                <div class="bg-neutral-50 p-4 rounded-2xl border border-neutral-200">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-[10px] font-black uppercase tracking-wider text-black bg-neutral-200 px-2.5 py-0.5 rounded">Pago Móvil</span>
-                        <span class="text-[11px] font-bold text-neutral-600">BNC (0191)</span>
-                    </div>
-                    <div class="text-xs space-y-1.5 font-mono text-neutral-800 bg-white p-3 rounded-xl border border-neutral-200">
-                        <div class="flex justify-between items-center"><span class="text-neutral-500 font-sans text-[11px]">Cédula:</span> <strong class="select-all">21.271.099</strong></div>
-                        <div class="flex justify-between items-center"><span class="text-neutral-500 font-sans text-[11px]">Teléfono:</span> <strong class="select-all">0416-948-5195</strong></div>
-                        <div class="flex justify-between items-center"><span class="text-neutral-500 font-sans text-[11px]">Banco:</span> <strong>Banco Nacional de Crédito</strong></div>
-                    </div>
-                    <button onclick="copyPagoMovilData()" class="mt-3 w-full py-2.5 bg-black hover:bg-neutral-800 text-white text-xs font-bold rounded-xl transition flex items-center justify-center gap-2 shadow-sm">
-                        <i class="fa-regular fa-copy"></i> Copiar Datos de Pago Móvil
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal: Terms & Policies -->
-    <div id="termsModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative max-h-[85vh] overflow-y-auto">
-            <button onclick="closeTermsModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-neutral-700 transition">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <h3 id="termsModalTitle" class="text-lg font-black text-neutral-900 mb-3">Términos y Políticas</h3>
-            <div id="termsModalContent" class="text-xs text-neutral-600 space-y-3 leading-relaxed">
-                <!-- Populated dynamically -->
-            </div>
-        </div>
-    </div>
-
-    <footer class="bg-black text-white border-t border-neutral-800 mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="space-y-3">
-                    <div class="flex items-center gap-2">
-                        <img src="https://i.imgur.com/HNuWYPn.jpeg" alt="Market Junior" class="w-8 h-8 rounded-xl object-cover">
-                        <span class="font-black text-base text-white tracking-tight">MARKET JUNIOR</span>
-                    </div>
-                    <p class="text-xs text-neutral-400 leading-relaxed">
-                        Tu tienda de confianza en Venezuela. Productos de la mejor calidad calculados a Tasa Oficial BCV.
-                    </p>
-                    <div class="flex items-center gap-3 text-neutral-400 pt-1">
-                        <a href="https://wa.me/584243800296" target="_blank" class="hover:text-emerald-400 transition"><i class="fa-brands fa-whatsapp text-lg"></i></a>
-                        <a href="https://articulo.mercadolibre.com.ve" target="_blank" class="hover:text-amber-400 transition"><i class="fa-solid fa-store text-base"></i></a>
-                    </div>
-                </div>
-
-                <div>
-                    <h4 class="text-xs font-black uppercase text-neutral-300 tracking-wider mb-3">Atención al Cliente</h4>
-                    <ul class="space-y-2 text-xs text-neutral-400 font-medium">
-                        <li><button onclick="openPaymentInfoModal()" class="hover:text-white transition">Métodos de Pago (Pago Móvil BNC)</button></li>
-                        <li><a href="https://wa.me/584243800296?text=Consulta%20de%20Disponibilidad" target="_blank" class="hover:text-white transition">Consultar Pedido WhatsApp</a></li>
-                        <li><a href="https://articulo.mercadolibre.com.ve" target="_blank" class="hover:text-white transition">Envíos Gratis Mercado Libre</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-xs font-black uppercase text-neutral-300 tracking-wider mb-3">Información Legal</h4>
-                    <ul class="space-y-2 text-xs text-neutral-400 font-medium">
-                        <li><button onclick="openTermsModal('terms')" class="hover:text-white transition">Términos del Servicio</button></li>
-                        <li><button onclick="openTermsModal('privacy')" class="hover:text-white transition">Políticas de Privacidad</button></li>
-                        <li><button onclick="openTermsModal('warranty')" class="hover:text-white transition">Garantías y Devoluciones</button></li>
-                    </ul>
-                </div>
-
-                <div class="bg-neutral-900 border border-neutral-800 p-4 rounded-2xl">
-                    <h4 class="text-xs font-black uppercase text-amber-400 tracking-wider mb-2">Transparencia BCV</h4>
-                    <p class="text-[11px] text-neutral-400 mb-2">Todos los precios marcados en Bolívares respetan la tasa oficial del Banco Central de Venezuela.</p>
-                    <div class="text-xs font-bold text-white bg-black px-3 py-2 rounded-xl border border-neutral-800 flex justify-between items-center">
-                        <span>Tasa Vigente:</span>
-                        <span id="footerBcvDisplay" class="text-emerald-400 font-extrabold">Cargando...</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="border-t border-neutral-800 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-neutral-500 gap-3">
-                <p>© 2026 Market Junior. Todos los derechos reservados. Venezuela.</p>
-                <div class="flex items-center gap-4">
-                    <span>Pago Móvil BNC</span>
-                    <span>•</span>
-                    <span>Envío Gratis ML</span>
-                </div>
+            <div class="flex items-center gap-4 text-xs font-bold">
+                <button onclick="openPolicyModal()" class="text-neutral-400 hover:text-white transition">Políticas y Términos</button>
+                <a href="https://wa.me/584243800296" target="_blank" class="text-emerald-400 hover:text-emerald-300">WhatsApp</a>
+                <a href="https://mercadolibre.com.ve" target="_blank" class="text-amber-400 hover:text-amber-300">Mercado Libre</a>
             </div>
         </div>
     </footer>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-5 right-5 bg-black text-white px-4 py-3 rounded-2xl shadow-2xl z-50 transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-2.5 border border-neutral-800 text-xs font-bold">
-        <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
-        <span id="toastMessage">Notificación</span>
-    </div>
-
-    <!-- PWA Floating Install Banner -->
-    <div id="pwaInstallBanner" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:max-w-sm bg-neutral-900 border border-neutral-800 text-white p-4 rounded-2xl shadow-2xl z-50 hidden transition-all transform translate-y-20 opacity-0 flex items-center justify-between gap-3">
-        <div class="flex items-center gap-3">
-            <img src="https://i.imgur.com/HNuWYPn.jpeg" class="w-10 h-10 rounded-xl object-cover border border-neutral-700">
-            <div>
-                <h4 class="text-xs font-black">Instalar Market Junior</h4>
-                <p class="text-[10px] text-neutral-400">Accede más rápido como una App oficial</p>
-            </div>
-        </div>
-        <div class="flex items-center gap-2">
-            <button onclick="installPwaApp()" class="px-3 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-black text-xs rounded-xl shadow-md transition whitespace-nowrap">
-                Instalar
-            </button>
-            <button onclick="dismissPwaBanner()" class="w-7 h-7 rounded-lg bg-neutral-800 text-neutral-400 hover:text-white flex items-center justify-center text-xs">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-    </div>
-
+    <!-- LÓGICA JAVASCRIPT INTEGRADA -->
     <script>
         const WHATSAPP_NUMBER = "584243800296";
         let currentBcvRate = 36.50;
         let cart = [];
         let searchQuery = "";
         let hasOpenedCartFirstTime = false;
-        let deferredPrompt = null;
 
         const products = [
-            { id: "prod_1", name: "Pinceles Liner Para Manicure Arte Ultradelgado 5 Piezas", price: 7.99, originalPrice: 0, stock: 8, image: "https://i.imgur.com/JferB8c.png ", description: "Eleva tus habilidades de manicure con los Pinceles Liner para Arte Ultradelgado. Este conjunto de 5 pinceles está diseñado para proporcionar la precisión necesaria en detalles finos y elaboraciones intricadas, permitiendo que tu creativida fluya.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-813269324-pinceles-liner-para-manicure-arte-ultradelgado-5-piezas-_JM" },
-            { id: "prod_2", name: "Espejos Punto Ciego 360 Grados Retrovisor Ojo De Pez 2 Pcs", price: 7.59, originalPrice: 7.99, stock: 3, image: "https://i.imgur.com/Om7BjRR.png", description: "Potencia tu seguridad al conducir con los espejos punto ciego 360 grados. Este set incluye dos espejos de retrovisor tipo ojo de pez, diseñados para proporcionarte una visión amplia y sin obstáculos en cada cambio de carril. La marca Nueva garantiza un acabado de alta calidad, con una superficie de espejo que minimiza distorsiones y amplía el campo de visión.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1015300394-espejos-punto-ciego-360-grados-retrovisor-ojo-de-pez-2-pcs-_JM" },
-            { id: "prod_3", name: "Peluche De Jesús Que Respira, Música, Y Luz", price: 45.99, originalPrice: 0, stock: 2, image: "https://i.imgur.com/d7Q8WEa.png", description: "Experimenta la magia de un peluche que cobra vida con el Peluche de Jesús que respira. Con un diseño encantador, este peluche de 30 cm combina calidez y ternura, convirtiéndose en el compañero ideal para niños y adultos que buscan un toque especia", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-874302818-peluche-de-jesus-que-respira-musica-y-luz-_JM" },
+            { id: "prod_1", name: "Harina PAN Blanca 1kg", price: 1.15, originalPrice: 1.35, stock: 24, image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&w=400&q=80", description: "Harina de maíz blanco precocida tradicional venezolana.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_2", name: "Aceite Vegetal Vatel 1L", price: 2.50, originalPrice: 2.95, stock: 15, image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80", description: "Aceite vegetal comestible puro para cocinar y freír.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
+            { id: "prod_3", name: "Arroz Primor Clásico 1kg", price: 1.20, originalPrice: 1.45, stock: 40, image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=400&q=80", description: "Arroz blanco tipo 1 granos enteros.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
             { id: "prod_4", name: "Azúcar Montalbán 1kg", price: 1.10, originalPrice: 1.25, stock: 30, image: "https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=400&q=80", description: "Azúcar refinada de alta pureza.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
             { id: "prod_5", name: "Café Fama de América 250g", price: 2.80, originalPrice: 3.20, stock: 12, image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=400&q=80", description: "Café molido tostado de aroma intenso.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
             { id: "prod_6", name: "Pasta Capri Spaghetti 1kg", price: 1.40, originalPrice: 1.65, stock: 50, image: "https://images.unsplash.com/photo-1621996346565-e3d5d6281216?auto=format&fit=crop&w=400&q=80", description: "Pasta de sémola de trigo durum.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve" },
@@ -528,6 +526,10 @@
 
         function openCartDrawer() { document.getElementById('cartDrawer').classList.remove('hidden'); }
         function toggleCartDrawer() { document.getElementById('cartDrawer').classList.toggle('hidden'); }
+        function openPaymentInfoModal() { document.getElementById('paymentInfoModal').classList.remove('hidden'); }
+        function closePaymentInfoModal() { document.getElementById('paymentInfoModal').classList.add('hidden'); }
+        function openPolicyModal() { document.getElementById('policyModal').classList.remove('hidden'); }
+        function closePolicyModal() { document.getElementById('policyModal').classList.add('hidden'); }
 
         function clearCart() {
             cart = [];
@@ -548,7 +550,7 @@
                     </div>
                 `;
                 document.getElementById('cartSubtotalUsd').innerText = "$0.00";
-                document.getElementById('cartTotalBs').innerText = "Bs. 0.00";
+                document.getElementById('cartTotalBs').innerText = "Bs. 0,00";
                 document.getElementById('cartTotalUsd').innerText = "$0.00 USD";
                 return;
             }
@@ -558,20 +560,22 @@
                 const itemTotal = item.price * item.qty;
                 subtotalUsd += itemTotal;
                 return `
-                    <div class="flex items-center justify-between gap-3 pt-3">
-                        <img src="${item.image}" class="w-12 h-12 rounded-xl object-cover border border-neutral-100">
+                    <div class="flex items-center justify-between gap-2 pt-3">
+                        <div class="w-12 h-12 rounded-xl bg-neutral-100 border border-neutral-200 overflow-hidden shrink-0 p-1 flex items-center justify-center">
+                            <img src="${item.image}" class="w-full h-full object-contain">
+                        </div>
                         <div class="flex-1 min-w-0">
                             <h4 class="text-xs font-bold text-neutral-900 truncate">${item.name}</h4>
                             <div class="flex items-center gap-2 mt-0.5">
                                 <span class="text-xs font-extrabold text-neutral-800">$${item.price.toFixed(2)}</span>
                                 ${item.originalPrice ? `<span class="text-[10px] text-neutral-400 line-through">$${item.originalPrice.toFixed(2)}</span>` : ''}
                             </div>
-                            <div class="text-[10px] text-emerald-600 font-bold">Bs. ${formatBolivars(itemTotal)}</div>
+                            <div class="text-[10px] text-emerald-600 font-bold truncate">Bs. ${formatBolivars(itemTotal)}</div>
                         </div>
-                        <div class="flex items-center gap-1 bg-neutral-100 p-1 rounded-lg">
-                            <button onclick="updateCartQty('${item.id}', -1)" class="w-5 h-5 bg-white rounded text-xs font-bold shadow-xs hover:bg-neutral-200">-</button>
-                            <span class="text-xs font-bold px-1.5">${item.qty}</span>
-                            <button onclick="updateCartQty('${item.id}', 1)" class="w-5 h-5 bg-white rounded text-xs font-bold shadow-xs hover:bg-neutral-200">+</button>
+                        <div class="flex items-center gap-1 bg-neutral-100 p-1 rounded-xl shrink-0">
+                            <button onclick="updateCartQty('${item.id}', -1)" class="w-6 h-6 bg-white rounded-lg text-xs font-bold shadow-xs hover:bg-neutral-200 flex items-center justify-center text-neutral-800">-</button>
+                            <span class="text-xs font-black min-w-[20px] text-center px-1 text-neutral-900">${item.qty}</span>
+                            <button onclick="updateCartQty('${item.id}', 1)" class="w-6 h-6 bg-white rounded-lg text-xs font-bold shadow-xs hover:bg-neutral-200 flex items-center justify-center text-neutral-800">+</button>
                         </div>
                     </div>
                 `;
@@ -647,8 +651,8 @@
                         ` : ''}
 
                         <div class="cursor-pointer" onclick="openProductDetailModal('${product.id}')">
-                            <div class="overflow-hidden rounded-xl bg-neutral-100 mb-2.5 aspect-square relative">
-                                <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="overflow-hidden rounded-xl bg-neutral-50 mb-2.5 aspect-square relative border border-neutral-100 flex items-center justify-center p-2">
+                                <img src="${product.image}" alt="${product.name}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
                             </div>
                             
                             <div class="flex items-center gap-1.5 mb-1">
@@ -669,7 +673,7 @@
                                         <span class="text-[10px] font-bold text-neutral-400 line-through">$${product.originalPrice.toFixed(2)}</span>
                                     ` : ''}
                                 </div>
-                                <div class="text-[11px] font-black text-emerald-600">
+                                <div class="text-[11px] font-black text-emerald-600 truncate">
                                     Bs. ${formatBolivars(product.price)}
                                 </div>
                             </div>
@@ -699,38 +703,45 @@
 
             content.innerHTML = `
                 <div class="flex flex-col sm:flex-row gap-5">
-                    <img src="${product.image}" class="w-full sm:w-1/2 h-48 sm:h-64 object-cover rounded-2xl border border-neutral-100">
+                    <div class="w-full sm:w-1/2 h-56 sm:h-72 bg-neutral-50 rounded-2xl border border-neutral-200 p-3 flex items-center justify-center overflow-hidden shrink-0">
+                        <img src="${product.image}" alt="${product.name}" class="max-w-full max-h-full object-contain rounded-xl hover:scale-105 transition-transform duration-300">
+                    </div>
                     <div class="flex-1 flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="w-2.5 h-2.5 rounded-full ${hasStock ? 'bg-emerald-500' : 'bg-red-500'}"></span>
-                                <span class="text-xs font-extrabold uppercase ${hasStock ? 'text-emerald-700 bg-emerald-50' : 'text-red-700 bg-red-50'} px-2.5 py-1 rounded-md">
-                                    ${hasStock ? `Disponible (${product.stock} en stock)` : 'Agotado'}
-                                </span>
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-full ${hasStock ? 'bg-emerald-500' : 'bg-red-500'}"></span>
+                                    <span class="text-xs font-extrabold uppercase ${hasStock ? 'text-emerald-700 bg-emerald-50' : 'text-red-700 bg-red-50'} px-2.5 py-1 rounded-md">
+                                        ${hasStock ? `Disponible (${product.stock} en stock)` : 'Agotado'}
+                                    </span>
+                                </div>
+                                <button onclick="shareProduct('${product.id}')" class="text-xs font-bold px-2.5 py-1.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 rounded-xl transition flex items-center gap-1.5">
+                                    <i class="fa-solid fa-share-nodes"></i> Compartir
+                                </button>
                             </div>
                             <h2 class="text-base sm:text-lg font-black text-neutral-900 leading-snug mb-2">${product.name}</h2>
-                            <p class="text-xs text-neutral-500 leading-relaxed mb-4">${product.description}</p>
+                            <p class="text-xs text-neutral-500 leading-relaxed mb-4">${product.description || 'Producto original con garantía de calidad y el mejor precio del mercado.'}</p>
                         </div>
 
                         <div>
                             <div class="bg-neutral-50 p-3 rounded-2xl border border-neutral-200 mb-4">
                                 <div class="flex items-baseline gap-2">
-                                    <span class="text-xl font-black text-black">$${product.price.toFixed(2)}</span>
+                                    <span class="text-xl sm:text-2xl font-black text-black">$${product.price.toFixed(2)}</span>
                                     ${product.originalPrice > product.price ? `<span class="text-xs text-neutral-400 line-through">$${product.originalPrice.toFixed(2)}</span>` : ''}
-                                    ${discount > 0 ? `<span class="text-xs font-black text-red-600">(-${discount}%)</span>` : ''}
+                                    ${discount > 0 ? `<span class="text-xs font-black text-red-600 bg-red-50 px-2 py-0.5 rounded-md">-${discount}% OFF</span>` : ''}
                                 </div>
-                                <div class="text-xs font-black text-emerald-600 mt-1">
-                                    Bs. ${formatBolivars(product.price)} (Tasa BCV)
+                                <div class="text-xs sm:text-sm font-black text-emerald-600 mt-1">
+                                    Bs. ${formatBolivars(product.price)} <span class="text-[10px] font-semibold text-neutral-400">(Tasa BCV)</span>
                                 </div>
                             </div>
 
                             <div class="flex flex-col gap-2">
-                                <button onclick="addToCart('${product.id}', 1); closeProductDetailModal();" ${!hasStock ? 'disabled' : ''} class="w-full py-3 ${hasStock ? 'bg-emerald-500 hover:bg-emerald-600 text-white' : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'} font-black rounded-xl text-xs transition shadow-md flex items-center justify-center gap-2">
+                                <button onclick="addToCart('${product.id}', 1); closeProductDetailModal();" ${!hasStock ? 'disabled' : ''} class="w-full py-3 ${hasStock ? 'bg-emerald-500 hover:bg-emerald-600 text-white' : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'} font-black rounded-xl text-xs sm:text-sm transition shadow-md flex items-center justify-center gap-2">
                                     <i class="fa-solid fa-cart-plus text-sm"></i> ${hasStock ? 'Añadir al Carrito' : 'Sin Stock'}
                                 </button>
                                 
-                                <a href="${product.mercadolibreUrl}" target="_blank" class="w-full py-2.5 btn-meli font-black rounded-xl text-xs transition text-center flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-truck-fast text-sm"></i> Comprar en Mercado Libre (Envío Gratis)
+                                <a href="${product.mercadolibreUrl}" target="_blank" class="w-full py-2.5 btn-meli font-extrabold rounded-xl text-xs transition text-center flex items-center justify-center gap-2 shadow-xs">
+                                    <i class="fa-solid fa-truck-fast text-sm"></i> Comprar en Mercado Libre
                                 </a>
                             </div>
                         </div>
@@ -744,42 +755,43 @@
             document.getElementById('productDetailModal').classList.add('hidden');
         }
 
-        function openPaymentInfoModal() {
-            document.getElementById('paymentModal').classList.remove('hidden');
-        }
+        function shareStore() {
+            const shareData = {
+                title: 'Market Junior - Tienda Online Venezuela',
+                text: '¡Echa un vistazo al catálogo de Market Junior con precios en Bolívares a Tasa BCV Oficial!',
+                url: window.location.href
+            };
 
-        function closePaymentInfoModal() {
-            document.getElementById('paymentModal').classList.add('hidden');
-        }
-
-        function openTermsModal(type) {
-            const modal = document.getElementById('termsModal');
-            const titleEl = document.getElementById('termsModalTitle');
-            const contentEl = document.getElementById('termsModalContent');
-
-            if (type === 'terms') {
-                titleEl.innerText = 'Términos del Servicio';
-                contentEl.innerHTML = '<p>Bienvenido a Market Junior. Al utilizar nuestra tienda online en Venezuela, aceptas nuestros términos de despacho, condiciones de pago a tasa BCV oficial y disponibilidad de inventario sujeto a confirmación por WhatsApp o Mercado Libre.</p>';
-            } else if (type === 'privacy') {
-                titleEl.innerText = 'Políticas de Privacidad';
-                contentEl.innerHTML = '<p>Garantizamos la confidencialidad de tus datos de contacto y direcciones de envío. No compartimos información personal con terceros bajo ninguna circunstancia.</p>';
-            } else if (type === 'warranty') {
-                titleEl.innerText = 'Garantías y Devoluciones';
-                contentEl.innerHTML = '<p>Todos nuestros productos cuentan con garantía de calidad al momento de la entrega. Las reclamaciones deben realizarse dentro de las primeras 24 horas posteriores a la recepción.</p>';
+            if (navigator.share) {
+                navigator.share(shareData).catch(() => {});
+            } else {
+                copyToClipboard(window.location.href);
+                showToast("¡Enlace de la tienda copiado!");
             }
-            modal.classList.remove('hidden');
         }
 
-        function closeTermsModal() {
-            document.getElementById('termsModal').classList.add('hidden');
+        function shareProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const priceBs = formatBolivars(product.price);
+            const shareData = {
+                title: product.name,
+                text: `¡MIRA ESTE PRODUCTO EN MARKET JUNIOR!\n📦 ${product.name}\n💰 $${product.price.toFixed(2)} (Bs. ${priceBs})\n`,
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData).catch(() => {});
+            } else {
+                copyToClipboard(`${shareData.text} Ver aquí: ${window.location.href}`);
+                showToast("¡Información del producto copiada!");
+            }
         }
 
-        function copyPagoMovilData() {
-            const text = "Banco: BNC (0191)\nCédula: 21.271.099\nTeléfono: 0416-948-5195";
+        function copyToClipboard(text) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => {
-                    showToast("¡Datos de Pago Móvil copiados!");
-                });
+                navigator.clipboard.writeText(text);
             } else {
                 const textarea = document.createElement('textarea');
                 textarea.value = text;
@@ -787,44 +799,6 @@
                 textarea.select();
                 document.execCommand('copy');
                 document.body.removeChild(textarea);
-                showToast("¡Datos de Pago Móvil copiados!");
-            }
-        }
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            if (!localStorage.getItem('pwa_dismissed')) {
-                const banner = document.getElementById('pwaInstallBanner');
-                if (banner) {
-                    banner.classList.remove('hidden');
-                    setTimeout(() => {
-                        banner.classList.remove('translate-y-20', 'opacity-0');
-                    }, 100);
-                }
-            }
-        });
-
-        async function installPwaApp() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    showToast("¡Gracias por instalar Market Junior!");
-                }
-                deferredPrompt = null;
-                dismissPwaBanner();
-            } else {
-                showToast("Para instalar: Toca el menú de tu navegador y selecciona 'Agregar a Inicio'.");
-            }
-        }
-
-        function dismissPwaBanner() {
-            const banner = document.getElementById('pwaInstallBanner');
-            if (banner) {
-                banner.classList.add('translate-y-20', 'opacity-0');
-                setTimeout(() => { banner.classList.add('hidden'); }, 300);
-                localStorage.setItem('pwa_dismissed', 'true');
             }
         }
 
