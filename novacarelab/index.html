@@ -1126,6 +1126,29 @@
             let prepaymentTotal = precioFinalCalculado * 0.95;
             const precioTotalTexto = formatPrice(prepaymentTotal);
 
+            // META PIXEL PURCHASE TRACKING (PAGO ANTICIPADO)
+            if (typeof fbq === 'function') {
+                const cleanPhone = celular.replace(/\D/g, '');
+                
+                fbq('init', '1196814618515553', {
+                    ph: cleanPhone,
+                    fn: nombre.toLowerCase()
+                });
+
+                let valorParaMeta = parseFloat(prepaymentTotal);
+                if (isNaN(valorParaMeta) || valorParaMeta <= 0) {
+                    valorParaMeta = 33725; 
+                }
+
+                fbq('track', 'Purchase', {
+                    value: valorParaMeta,
+                    currency: 'VES',
+                    content_name: productoSeleccionado.name + " (Pago Anticipado)",
+                    content_ids: [currentSelectedValue],
+                    content_type: 'product'
+                });
+            }
+
             // Send to Google Sheets and Telegram as Prepayment order
             const fechaActual = new Date();
             const orderData = {
