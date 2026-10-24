@@ -974,13 +974,29 @@
         const summaryPrepaymentAmount = document.getElementById('summary-prepayment-amount');
         const checkoutModal = document.getElementById('checkoutModal');
 
-        function abrirCheckoutModal(e) {
-            if (e) e.preventDefault();
-            if (checkoutModal) {
-                checkoutModal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            }
-        }
+       function abrirCheckoutModal(e) {
+    if (e) e.preventDefault();
+
+    // 🚀 DISPARAR EVENTO INITIATECHECKOUT DE META PIXEL
+    if (typeof fbq === 'function') {
+        const productoSeleccionado = productos[currentSelectedValue];
+        let precioActual = productoSeleccionado.price;
+        if (descuentoAplicado) precioActual -= VALOR_DESCUENTO;
+
+        fbq('track', 'InitiateCheckout', {
+            value: precioActual,
+            currency: 'VES',
+            content_name: productoSeleccionado.name,
+            content_ids: [currentSelectedValue],
+            content_type: 'product'
+        });
+    }
+
+    if (checkoutModal) {
+        checkoutModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+}
 
         function cerrarCheckoutModal() {
             if (checkoutModal) {
