@@ -907,7 +907,7 @@
         const TELEGRAM_BOT_TOKEN = _p1 + _p2 + _p3 + _p4;
         const TELEGRAM_CHAT_ID = "1829790745";
 
-        const GOOGLE_SHEETS_URL = "AQUI_PEGAS_TU_URL"; // Reemplaza con tu URL de Apps Script
+        const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbwC5iBqCrUShHZdmQD_vRKz7ERrxGK8BJbdmuzLj2EUcFJlPQwKjrtL1PU0k7uBbmDFWQ/exec";
 
         const productos = {
             '1_par': { name: 'Limpiador Inteligente 1 unidad', price: 35500 },
@@ -1164,7 +1164,7 @@
                 }).catch(err => console.log(err));
             }
 
-            if (GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL !== "https://script.google.com/macros/s/AKfycbwC5iBqCrUShHZdmQD_vRKz7ERrxGK8BJbdmuzLj2EUcFJlPQwKjrtL1PU0k7uBbmDFWQ/exec") {
+            if (GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL !== "AQUI_PEGAS_TU_URL") {
                 fetch(GOOGLE_SHEETS_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -1257,7 +1257,7 @@
             const envios = [];
 
             // 1. Google Sheets API
-            if (GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL !== "https://script.google.com/macros/s/AKfycbwC5iBqCrUShHZdmQD_vRKz7ERrxGK8BJbdmuzLj2EUcFJlPQwKjrtL1PU0k7uBbmDFWQ/exec") {
+            if (GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL !== "AQUI_PEGAS_TU_URL") {
                 envios.push(
                     fetch(GOOGLE_SHEETS_URL, {
                         method: 'POST',
