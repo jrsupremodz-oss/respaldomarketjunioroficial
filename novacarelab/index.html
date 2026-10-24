@@ -1164,14 +1164,14 @@
                 }).catch(err => console.log(err));
             }
 
-            if (GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL !== "https://script.google.com/macros/s/AKfycbwC5iBqCrUShHZdmQD_vRKz7ERrxGK8BJbdmuzLj2EUcFJlPQwKjrtL1PU0k7uBbmDFWQ/exec") {
+            if (GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL !== "AQUI_PEGAS_TU_URL") {
                 fetch(GOOGLE_SHEETS_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify(orderData),
                     keepalive: true
-                }).catch(err => console.log(err));
+                }).catch(err => console.log("Error de conexión a Sheet", err));
             }
 
             // WhatsApp Persuasive Message with Payment Mobile Info
@@ -1256,13 +1256,13 @@
 
             const envios = [];
 
-            // 1. Google Sheets API
-            if (GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL !== "https://script.google.com/macros/s/AKfycbwC5iBqCrUShHZdmQD_vRKz7ERrxGK8BJbdmuzLj2EUcFJlPQwKjrtL1PU0k7uBbmDFWQ/exec") {
+            // 1. Google Sheets API (Usando text/plain para omitir restricciones CORS de Google)
+            if (GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL !== "AQUI_PEGAS_TU_URL") {
                 envios.push(
                     fetch(GOOGLE_SHEETS_URL, {
                         method: 'POST',
                         mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                         body: JSON.stringify(orderData),
                         keepalive: true
                     }).catch(err => console.log("Error de conexión a Sheet", err))
@@ -1311,7 +1311,7 @@
             mensaje += `👤 *Datos del Cliente:*\n`;
             mensaje += `*Nombre:* ${nombre}\n`;
             mensaje += `*Celular:* ${celular}\n`;
-            mensaje += `*Estado:* ${estado}\n`;
+            mensaje premature += `*Estado:* ${estado}\n`;
             mensaje += `*Ciudad/Municipio:* ${ciudad}\n`;
             mensaje += `*Dirección exacta:* ${direccion}\n`;
             mensaje += `*Punto de referencia:* ${referencia}\n\n`;
