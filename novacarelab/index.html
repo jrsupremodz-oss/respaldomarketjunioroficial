@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NovaCare Lab® — Limpiador de Oídos Inteligente con Cámara HD - Oferta Exclusiva Venezuela</title>
+    
+    <!-- External Fonts & Libraries -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        :root {
+            --color-primary: #0284c7;
+            --color-primary-dark: #0369a1;
+            --color-price-discount: #0284c7;
+            --color-alert: #d32f2f;
+            --color-price-old: #888888;
+            --color-blue-section-bg: #0284c7;
+            --color-blue-section-text: #ffffff;
+            --color-star: #f39c12;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #f2f4f7;
+            color: #1a1a1a;
+            line-height: 1.5;
+            padding-bottom: 95px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+            object-fit: contain;
+        }
+
+        .page-wrapper {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #ffffff;
+            min-height: 100vh;
+            box-shadow: 0 0 25px rgba(0,0,0,0.08);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Marquee Ticker */
+        .marquee-container {
+            background: #000000;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 9px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+        .marquee-track {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 16s linear infinite;
+        }
+        .marquee-track-fast {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 12s linear infinite;
+        }
+        .marquee-track span, .marquee-track-fast span {
+            margin-right: 35px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Radio option checking state */
+        .product-radio:checked + div {
+            border-color: #ef4444; 
+            background-color: #fef2f2; 
+        }
+
+        /* Pulse & Sacudon Animations */
+        .pulse-text {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .7; }
+        }
+
+        @keyframes sacudon {
+            0%, 100% { transform: translateX(0) scale(1); }
+            5% { transform: translateX(-4px) rotate(-1deg) scale(1.02); }
+            10% { transform: translateX(4px) rotate(1deg) scale(1.02); }
+            15% { transform: translateX(-4px) rotate(-1deg) scale(1.02); }
+            20% { transform: translateX(4px) rotate(1deg) scale(1.02); }
+            25% { transform: translateX(0) scale(1); }
+        }
+        .btn-sacudon {
+            animation: sacudon 4s infinite; 
+            transform-origin: center;
+        }
+
+        /* Shake CTA Animation */
+        @keyframes shakeCTA {
+            0%, 75%, 100% { transform: translateX(0) scale(1); }
+            80% { transform: translateX(-5px) rotate(-1deg) scale(1.02); }
+            85% { transform: translateX(5px) rotate(1deg) scale(1.02); }
+            90% { transform: translateX(-4px) rotate(-0.5deg) scale(1.01); }
+            95% { transform: translateX(3px) scale(1); }
+        }
+
+        .floating-cta-button {
+            animation: shakeCTA 3.5s infinite ease-in-out;
+        }
+
+        /* Accordion Custom Styling */
+        .accordion-item {
+            border-bottom: 1px solid #eaeaea;
+        }
+        .accordion-btn {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 16px 0;
+            font-size: 15px;
+            font-weight: 700;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            color: #111;
+        }
+        .accordion-btn span.icon {
+            transition: transform 0.3s ease;
+            font-size: 12px;
+        }
+        .accordion-btn.active span.icon {
+            transform: rotate(180deg);
+        }
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            font-size: 13.5px;
+            color: #555;
+            line-height: 1.6;
+        }
+        .accordion-body.open {
+            padding-bottom: 16px;
+            max-height: 350px;
+        }
+
+        /* Desire Blue Box */
+        .desire-blue-box {
+            background-color: var(--color-blue-section-bg);
+            color: var(--color-blue-section-text);
+            border-radius: 18px;
+            padding: 26px 20px;
+            margin: 22px 0;
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.25);
+        }
+        .blue-card-item {
+            background: rgba(255, 255, 255, 0.16);
+            backdrop-filter: blur(5px);
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Review Slider */
+        .reviews-slider-wrapper {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 16px;
+            padding: 10px 4px 20px 4px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .reviews-slider-wrapper::-webkit-scrollbar { display: none; }
+        .review-card {
+            min-width: 82%;
+            max-width: 82%;
+            scroll-snap-align: center;
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid #f0f0f0;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+            overflow: hidden;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    
+    fbq('init', '1196814618515553');
+    fbq('set', 'autoConfig', false, '1196814618515553'); 
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1196814618515553&ev=PageView&noscript=1"
+    /></noscript>
+</head>
+<body>
+
+    <!-- Downsell Modal -->
+    <div id="downsellModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity">
+        <div class="bg-gradient-to-br from-yellow-300 to-yellow-500 w-full max-w-sm rounded-3xl p-6 text-center shadow-2xl relative overflow-hidden transform scale-95 transition-transform duration-300" id="downsellContent">
+            <!-- Decorative Elements -->
+            <div class="absolute top-0 left-0 w-24 h-24 bg-yellow-400 rounded-full opacity-60 -translate-x-1/2 -translate-y-1/2"></div>
+            <div class="absolute bottom-10 right-0 w-28 h-28 bg-yellow-600 rounded-full opacity-20 translate-x-1/3"></div>
+            <div class="absolute top-1/4 right-4 w-6 h-6 bg-orange-500 rounded-full opacity-60"></div>
+            <div class="absolute bottom-1/4 left-4 w-8 h-8 bg-red-500 rounded-full opacity-60"></div>
+            
+            <h2 class="text-3xl font-black text-black mb-1 relative z-10">¡Espera!</h2>
+            <p class="text-black font-medium mb-4 relative z-10 text-sm leading-snug">¡Felicidades! ¡Acabas de desbloquear un descuento especial!</p>
+            <h3 class="text-lg font-bold text-black mb-6 relative z-10">Compra ahora, ¡obtén un descuento!</h3>
+            
+            <!-- Discount Badge Star -->
+            <div class="relative w-40 h-40 mx-auto mb-6 flex items-center justify-center z-10">
+                <svg viewBox="0 0 100 100" class="absolute w-full h-full text-red-500 drop-shadow-xl" fill="url(#grad1)">
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#e11d48;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <polygon points="50,0 61,15 79,11 83,28 100,34 94,50 100,66 83,72 79,89 61,85 50,100 39,85 21,89 17,72 0,66 6,50 0,34 17,28 21,11 39,15"></polygon>
+                </svg>
+                <div class="relative text-white font-black text-2xl z-20" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">BS. 700,00</div>
+            </div>
+            
+            <div class="space-y-3 relative z-10">
+                <button type="button" id="btn-accept-discount" class="w-full bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white font-bold rounded-2xl py-3.5 px-4 shadow-lg active:scale-95 transition-transform text-sm sm:text-base">
+                    Completar pedido con BS. 700,00 de DESCUENTO
+                </button>
+                <button type="button" id="btn-decline-discount" class="w-full bg-white text-black border-2 border-black font-bold rounded-2xl py-3 px-4 active:scale-95 transition-transform text-sm">
+                    No, gracias
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container Wrapper -->
+    <div class="page-wrapper">
+
+        <!-- Top Marquee Banner -->
+        <div class="marquee-container">
+            <div class="marquee-track">
+                <span>🇻🇪 ENVÍO A LAS ZONA DISPONIBLES</span>
+                <span>⚡ 50% DE DESCUENTO HASTA HOY</span>
+                <span>📦 POCAS UNIDADES DISPONIBLES</span>
+                <span>🇻🇪 ENVÍO A LAS ZONA DISPONIBLES</span>
+                <span>⚡ 50% DE DESCUENTO HASTA HOY</span>
+                <span>📦 POCAS UNIDADES DISPONIBLES</span>
+            </div>
+        </div>
+
+        <!-- Navbar -->
+        <div class="flex justify-center items-center py-4 px-5 border-b border-gray-100 bg-white">
+            <div class="text-xl font-black uppercase tracking-tight text-black text-center">Market Junior</div>
+        </div>
+
+        <!-- Second Marquee Banner -->
+        <div class="marquee-container">
+            <div class="marquee-track-fast">
+                <span>🔥 OFERTA ESPECIAL DE LANZAMIENTO! ❤️✨</span>
+                <span>🔥 OFERTA ESPECIAL DE LANZAMIENTO! ❤️✨</span>
+                <span>🔥 OFERTA ESPECIAL DE LANZAMIENTO! ❤️✨</span>
+                <span>🔥 OFERTA ESPECIAL DE LANZAMIENTO! ❤️✨</span>
+                <span>🔥 OFERTA ESPECIAL DE LANZAMIENTO! ❤️✨</span>
+                <span>🔥 OFERTA ESPECIAL DE LANZAMIENTO! ❤️✨</span>
+            </div>
+        </div>
+
+        <!-- SECTION 1 - HERO -->
+        <div class="p-5">
+            <!-- Main Hero Image -->
+            <img src="https://i.imgur.com/DjA0FzI.png" alt="Limpiador de Oídos Inteligente HD" class="w-full rounded-xl mb-4 shadow-md">
+
+            <!-- Ratings -->
+            <div class="text-center mb-3 text-xs sm:text-sm text-gray-700 font-semibold">
+                <span class="text-amber-500 text-base">⭐⭐⭐⭐⭐</span> Valoración 4.9/5 (15,000+ Clientes Satisfechos)
+            </div>
+
+            <!-- Main Heading -->
+            <h1 class="text-xl sm:text-2xl font-extrabold leading-snug mb-3 text-gray-900"> NovaCare Lab® / Limpiador de Oídos Inteligente HD – Limpieza Visual Segura y Sin Dolor en tu Celular
+            </h1>
+
+            <!-- Pricing Area -->
+            <div class="flex items-center gap-3 mb-4">
+                <span class="text-xl text-gray-400 line-through font-bold">BS. 71.000,00</span>
+                <span class="text-3xl text-sky-600 font-black">BS. 35.500,00</span>
+            </div>
+
+            <!-- Bullet Points -->
+            <ul class="space-y-3 mb-5">
+                <li class="text-sm text-gray-800 flex items-start gap-2.5">
+                    <span class="text-lg leading-none">✨</span>
+                    <span><b>¡Limpieza segura que sí puedes ver!</b> Evita accidentes y lesiones por no saber qué estás tocando.</span>
+                </li>
+                <li class="text-sm text-gray-800 flex items-start gap-2.5">
+                    <span class="text-lg leading-none">👂🏻</span>
+                    <span><b>Adiós al cerumen sin adivinar nada:</b> Remueve la suciedad suavemente con sus puntas de silicona especial.</span>
+                </li>
+                <li class="text-sm text-gray-800 flex items-start gap-2.5">
+                    <span class="text-lg leading-none">📲</span>
+                    <span><b>Tu teléfono muestra cada detalle claro:</b> Cámara HD en vivo directamente en la pantalla de tu móvil.</span>
+                </li>
+            </ul>
+
+            <!-- Countdown Timer Card -->
+            <div class="bg-red-50 border-2 border-dashed border-red-400 rounded-xl p-4 text-center mb-5">
+                <div class="text-red-600 font-bold text-sm mb-1">Date prisa, la oferta termina en</div>
+                <div class="text-3xl font-black text-red-600 tracking-wider font-mono" id="main-timer">09:59</div>
+            </div>
+
+            <!-- Trust Grid Badges -->
+            <div class="grid grid-cols-3 gap-2 py-4 border-y border-gray-100 text-center">
+                <div>
+                    <div class="text-2xl mb-1">🚚</div>
+                    <div class="text-xs font-bold text-gray-800 leading-tight">Envíos Seguros</div>
+                </div>
+                <div>
+                    <div class="text-2xl mb-1">🛡️</div>
+                    <div class="text-xs font-bold text-gray-800 leading-tight">30 Días Garantía</div>
+                </div>
+                <div>
+                    <div class="text-2xl mb-1">💬</div>
+                    <div class="text-xs font-bold text-gray-800 leading-tight">24/7 Soporte</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2 - INTEREST -->
+        <div class="p-5 pt-0">
+            <!-- Review Highlight Quote -->
+            <div class="bg-sky-50 border-l-4 border-sky-600 p-4 rounded-r-lg text-sm text-gray-800 mb-5 shadow-sm">
+                "Por fin puedo limpiar las orejas de mis hijos sin miedo a lastimarlos. La imagen en el celular se ve increíblemente clara."
+                <div class="font-bold text-xs text-gray-600 mt-2">Elena R., Valencia ⭐⭐⭐⭐⭐</div>
+            </div>
+
+            <!-- Demo Image -->
+            <img src="https://i.imgur.com/rNlGz3E.png" alt="Demostración de Uso Limpiador de Oídos" class="w-full rounded-xl mb-5 shadow-sm">
+
+            <!-- Accordions -->
+            <div class="accordion-item">
+                <button type="button" class="accordion-btn" onclick="toggleAccordion(this)">
+                    <span>🎯 ¿Cómo Funciona?</span> <span class="icon">▼</span>
+                </button>
+                <div class="accordion-body">
+                    Conecta el dispositivo a la red WiFi de tu teléfono y abre la aplicación gratuita para activar la cámara HD en vivo. Suavemente guía la punta de silicona ultra suave mientras observas exactamente lo que limpias en la pantalla de tu móvil. Es un proceso rápido, 100% seguro y sin dolor desde la comodidad de tu hogar.
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button type="button" class="accordion-btn" onclick="toggleAccordion(this)">
+                    <span>💖 Nuestra Garantía de 30 Días</span> <span class="icon">▼</span>
+                </button>
+                <div class="accordion-body">
+                    Prueba tu limpiador de oídos inteligente completamente libre de riesgo. Si no quedas impresionado con la claridad de la imagen y la facilidad de uso durante los primeros 30 días, te devolvemos el 100% de tu dinero sin preguntas complicadas.
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button type="button" class="accordion-btn" onclick="toggleAccordion(this)">
+                    <span>🚚 Tiempos de Envíos</span> <span class="icon">▼</span>
+                </button>
+                <div class="accordion-body">
+                    Despachamos tu pedido en menos de 24 horas hábiles. La entrega demora entre 2 y 4 días según tu zona en Venezuela. ¡Recuerda anotar tu dirección exacta y punto de referencia!
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3 - DESIRE -->
+        <div class="p-5 pt-0">
+            <img src="https://i.imgur.com/OJtFYGj.png" alt="Tecnología Limpiador de Oídos Inteligente" class="w-full rounded-xl mb-5">
+
+            <h2 class="text-center text-xl font-extrabold text-gray-900 mb-3">
+                Claridad HD total para una higiene auditiva impecable
+            </h2>
+            <p class="text-center text-sm text-gray-600 mb-5 leading-relaxed">
+                Olvídate de la limpieza a ciegas que solo empuja la cera hacia el fondo del oído. Gracias al lente de alta definición y su luz LED integrada, ves cada rincón en tiempo real directamente en tu pantalla. Obtienes una tranquilidad absoluta al saber exactamente qué estás limpiando sin correr ningún riesgo.
+            </p>
+
+            <!-- Blue Box Benefits -->
+            <div class="desire-blue-box">
+                <div class="text-2xl font-black text-center mb-5">Por qué lo necesitas HOY</div>
+
+                <div class="blue-card-item">
+                    <h3 class="font-extrabold text-base mb-1.5">Visión en tiempo real</h3>
+                    <p class="text-xs opacity-95 leading-relaxed">Observa la transmisión en vivo en HD directo en tu Smartphone. Evita empujar el cerumen o causar molestias innecesarias en el canal auditivo.</p>
+                </div>
+
+                <div class="blue-card-item">
+                    <h3 class="font-extrabold text-base mb-1.5">Puntas de silicona extra suave</h3>
+                    <p class="text-xs opacity-95 leading-relaxed">Diseñadas con materiales de grado médico que protegen las paredes del oído. Remueven la suciedad con máxima delicadeza y total seguridad.</p>
+                </div>
+
+                <div class="blue-card-item mb-0">
+                    <h3 class="font-extrabold text-base mb-1.5">Luz LED de máxima cobertura</h3>
+                    <p class="text-xs opacity-95 leading-relaxed">Ilumina áreas oscuras sin generar calor incómodo en la zona. Garantiza la mejor visibilidad incluso en canales auditivos estrechos.</p>
+                </div>
+            </div>
+
+            <!-- Step Guide -->
+            <div class="bg-sky-50 border border-sky-200 rounded-2xl p-5 mb-6 text-center">
+                <h3 class="text-base font-extrabold text-sky-800 mb-2">Cómo usar tu limpiador inteligente en 3 pasos</h3>
+                <p class="text-xs text-slate-700 leading-relaxed">
+                    Primero, mantén presionado el botón de encendido para activar el dispositivo y conéctate a su red WiFi desde tu teléfono. A continuación, abre la aplicación para visualizar la cámara e ilumina el interior del oído. Por último, usa las puntas de silicona suaves para retirar suavemente la cera acumulada mientras observas todo en pantalla.
+                </p>
+            </div>
+
+            <!-- Stats -->
+            <h3 class="text-lg font-extrabold text-center mb-2 mt-6">
+                📈 Resultados comprobados por nuestros clientes
+            </h3>
+            <p class="text-center text-xs text-gray-500 mb-5">
+                Realizamos un seguimiento continuo a usuarios que integraron la limpieza visual en sus rutinas de cuidado personal diario.
+            </p>
+
+            <div class="space-y-3 mb-6">
+                <div class="flex items-center gap-4 bg-gray-50 p-3 rounded-xl border border-gray-100">
+                    <div class="w-14 h-14 rounded-full border-4 border-sky-600 flex items-center justify-center font-black text-sky-600 text-base flex-shrink-0 bg-white">94%</div>
+                    <div class="text-xs text-gray-800">Afirmó que <b>redujo por completo el uso de hisopos de algodón tradicionales</b>.</div>
+                </div>
+
+                <div class="flex items-center gap-4 bg-gray-50 p-3 rounded-xl border border-gray-100">
+                    <div class="w-14 h-14 rounded-full border-4 border-sky-600 flex items-center justify-center font-black text-sky-600 text-base flex-shrink-0 bg-white">97%</div>
+                    <div class="text-xs text-gray-800">Reportó <b>sentirse mucho más seguro al limpiar los oídos</b> de su familia.</div>
+                </div>
+
+                <div class="flex items-center gap-4 bg-gray-50 p-3 rounded-xl border border-gray-100">
+                    <div class="w-14 h-14 rounded-full border-4 border-sky-600 flex items-center justify-center font-black text-sky-600 text-base flex-shrink-0 bg-white">96%</div>
+                    <div class="text-xs text-gray-800">Notó una <b>remoción de cera más rápida, efectiva y sin dolor</b>.</div>
+                </div>
+            </div>
+
+            <!-- Comparison Banner Image -->
+            <img src="https://i.imgur.com/qY0axIA.png" alt="Comparativa Limpiador Inteligente HD" class="w-full rounded-xl mb-4">
+
+            <!-- Comparison Table -->
+            <h3 class="text-lg font-extrabold text-center mb-1">Tabla de Comparación</h3>
+            <p class="text-center text-xs text-gray-500 mb-4">Nuestro Limpiador Inteligente HD se diferencia del resto...</p>
+
+            <div class="overflow-hidden rounded-xl border border-gray-200 bg-white mb-6">
+                <table class="w-full text-xs text-center border-collapse">
+                    <thead>
+                        <tr class="bg-gray-50 text-gray-900 font-bold border-b border-gray-200">
+                            <th class="p-3 text-left w-[55%]">Beneficio</th>
+                            <th class="p-3">NovaCare Lab®</th>
+                            <th class="p-3">Hisopos</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 text-gray-700">
+                        <tr>
+                            <td class="p-3 text-left font-bold text-gray-900">Cámara en vivo HD a tu celular</td>
+                            <td class="p-3 font-black text-sky-600 text-sm">✓</td>
+                            <td class="p-3 font-black text-red-500 text-sm">✕</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 text-left font-bold text-gray-900">Puntas de silicona extra suaves (no lastiman)</td>
+                            <td class="p-3 font-black text-sky-600 text-sm">✓</td>
+                            <td class="p-3 font-black text-red-500 text-sm">✕</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 text-left font-bold text-gray-900">Luz LED integrada para iluminar el interior</td>
+                            <td class="p-3 font-black text-sky-600 text-sm">✓</td>
+                            <td class="p-3 font-black text-red-500 text-sm">✕</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 text-left font-bold text-gray-900">Extrae el cerumen sin empujarlo al fondo</td>
+                            <td class="p-3 font-black text-sky-600 text-sm">✓</td>
+                            <td class="p-3 font-black text-red-500 text-sm">✕</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 text-left font-bold text-gray-900">Completamente seguro para bebés y niños</td>
+                            <td class="p-3 font-black text-sky-600 text-sm">✓</td>
+                            <td class="p-3 font-black text-red-500 text-sm">✕</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Guarantee Box -->
+            <div class="bg-gradient-to-r from-sky-600 to-sky-700 text-white text-center p-6 rounded-2xl shadow-md mb-8">
+                <h3 class="text-lg font-extrabold mb-2">Garantía de Satisfacción 30 Días!</h3>
+                <p class="text-xs opacity-95 leading-relaxed">
+                    Prueba tu limpiador de oídos inteligente completamente libre de riesgo. Si no quedas impresionado con la claridad de la imagen y la facilidad de uso durante los primeros 30 días, te devolvemos el 100% de tu dinero sin preguntas complicadas.
+                </p>
+            </div>
+        </div>
+
+        <!-- REVIEWS SLIDER -->
+        <div class="p-5 pt-0">
+            <h2 class="text-2xl font-black text-center text-black mb-1">Comentarios</h2>
+            <div class="text-center text-xs text-gray-500 mb-4 flex items-center justify-center gap-1">
+                👈 Desliza para ver más opiniones 👉
+            </div>
+
+            <div class="reviews-slider-wrapper">
+                <!-- Review Card 1 -->
+                <div class="review-card">
+                    <div class="relative w-full h-[220px] bg-gray-100">
+                        <img src="https://i.imgur.com/9R12CJg.gif" alt="Cliente Elena" class="w-full h-full object-cover rounded-t-2xl">
+                        <div class="absolute -bottom-4 right-4 bg-sky-600 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg font-black shadow-lg">❞</div>
+                    </div>
+                    <div class="p-5 text-center pt-6">
+                        <div class="text-amber-500 text-sm mb-1">⭐⭐⭐⭐⭐</div>
+                        <div class="font-extrabold text-sm text-black mb-2">Súper seguro para mis hijos</div>
+                        <p class="text-xs text-gray-600 mb-3 leading-relaxed">"Por fin puedo limpiar las orejas de mis hijos sin miedo a lastimarlos. La imagen en el celular se ve increíblemente clara."</p>
+                        <div class="text-xs font-bold text-gray-400 border-t border-gray-100 pt-2">Elena R., Valencia</div>
+                    </div>
+                </div>
+
+                <!-- Review Card 2 -->
+                <div class="review-card">
+                    <div class="relative w-full h-[220px] bg-gray-100">
+                        <img src="https://i.imgur.com/KncsrBw.jpeg" alt="Cliente Carlos" class="w-full h-full object-cover rounded-t-2xl">
+                        <div class="absolute -bottom-4 right-4 bg-sky-600 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg font-black shadow-lg">❞</div>
+                    </div>
+                    <div class="p-5 text-center pt-6">
+                        <div class="text-amber-500 text-sm mb-1">⭐⭐⭐⭐⭐</div>
+                        <div class="font-extrabold text-sm text-black mb-2">Se ve TODO súper claro</div>
+                        <p class="text-xs text-gray-600 mb-3 leading-relaxed">"Es impresionante la calidad de la cámara HD. Sientes un alivio total al ver que no te estás lastimando por dentro. ¡Cero hisopos desde hoy!"</p>
+                        <div class="text-xs font-bold text-gray-400 border-t border-gray-100 pt-2">Carlos M., Caracas</div>
+                    </div>
+                </div>
+
+                <!-- Review Card 3 -->
+                <div class="review-card">
+                    <div class="relative w-full h-[220px] bg-gray-100">
+                        <img src="https://i.imgur.com/9nROxmX.jpeg" alt="Cliente Laura" class="w-full h-full object-cover rounded-t-2xl">
+                        <div class="absolute -bottom-4 right-4 bg-sky-600 text-white w-10 h-10 rounded-full flex items-center justify-center text-lg font-black shadow-lg">❞</div>
+                    </div>
+                    <div class="p-5 text-center pt-6">
+                        <div class="text-amber-500 text-sm mb-1">⭐⭐⭐⭐⭐</div>
+                        <div class="font-extrabold text-sm text-black mb-2">Súper fácil de conectar</div>
+                        <p class="text-xs text-gray-600 mb-3 leading-relaxed">"La batería dura muchísimo y la conexión WiFi con la app es inmediata. Las puntitas de silicón no duelen nada. Lo recomiendo a ojos cerrados."</p>
+                        <div class="text-xs font-bold text-gray-400 border-t border-gray-100 pt-2">Laura P., Barquisimeto</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ SECTION -->
+        <div class="p-5 pt-0 mb-6">
+            <h3 class="text-lg font-extrabold text-center text-black mb-4">❓ Preguntas Frecuentes</h3>
+
+            <div class="accordion-item">
+                <button type="button" class="accordion-btn" onclick="toggleAccordion(this)">
+                    <span>¿Es seguro de usar para niños y adultos?</span> <span class="icon">▼</span>
+                </button>
+                <div class="accordion-body">
+                    Sí, el dispositivo está equipado con puntas de silicona de grado médico que previenen rasguños o molestias en la piel. Además, al ver todo en la pantalla del teléfono, eliminas el riesgo de introducirlo demasiado profundo.
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button type="button" class="accordion-btn" onclick="toggleAccordion(this)">
+                    <span>¿Cómo se conecta con mi teléfono móvil?</span> <span class="icon">▼</span>
+                </button>
+                <div class="accordion-body">
+                    El limpiador emite su propia señal WiFi privada que sincronizas directamente desde los ajustes de red de tu teléfono. Funciona de manera rápida, estable y es totalmente compatible con sistemas iOS y Android.
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button type="button" class="accordion-btn" onclick="toggleAccordion(this)">
+                    <span>¿La cámara requiere conexión a internet para funcionar?</span> <span class="icon">▼</span>
+                </button>
+                <div class="accordion-body">
+                    No, no necesitas datos móviles ni conexión a internet hogar para utilizar la cámara en vivo. La señal WiFi la genera el propio dispositivo únicamente para transmitir la imagen HD a tu pantalla.
+                </div>
+            </div>
+            
+            <div class="accordion-item">
+                <button type="button" class="accordion-btn" onclick="toggleAccordion(this)">
+                    <span>¿Afecta la luz LED o genera calor en el oído?</span> <span class="icon">▼</span>
+                </button>
+                <div class="accordion-body">
+                    La luz LED integrada utiliza tecnología de iluminación fría para mantener una temperatura corporal agradable en todo momento. No genera calor molesto ni irritación dentro del canal auditivo durante su uso.
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button type="button" class="accordion-btn" onclick="toggleAccordion(this)">
+                    <span>¿Cómo realizo el pago contra entrega o pago anticipado?</span> <span class="icon">▼</span>
+                </button>
+                <div class="accordion-body">
+                    Puedes elegir Pago Contra Entrega en el formulario o aprovechar el botón de Pago Anticipado (con 5% de descuento adicional) para cancelar vía Pago Móvil BNC.
+                </div>
+            </div>
+        </div>
+
+        <!-- CHECKOUT POP-UP MODAL -->
+        <div id="checkoutModal" class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/70 backdrop-blur-sm p-0 sm:p-4 overflow-y-auto transition-opacity duration-300">
+            <div id="checkout-section" class="bg-white border-t-4 border-red-500 rounded-t-3xl sm:rounded-3xl shadow-2xl relative overflow-hidden w-full max-w-lg max-h-[90vh] overflow-y-auto my-auto">
+                
+                <!-- Close Button for Modal/Checkout -->
+                <button type="button" id="btn-cerrar-checkout" title="Cerrar" aria-label="Cerrar" 
+                        class="absolute top-4 right-4 w-8 h-8 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 text-gray-500 hover:text-gray-800 active:scale-95 rounded-full flex items-center justify-center z-20 transition-all border border-gray-200 focus:outline-none">
+                    <svg class="w-4 h-4 stroke-current" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+
+                <div class="p-5 sm:p-6 pb-8">
+                    <!-- Header -->
+                    <div class="text-center mb-6 pt-1 px-8">
+                        <h1 class="text-xl font-extrabold text-black uppercase tracking-tight mb-1">
+                            POCAS UNIDADES DISPONIBLES! 🔥
+                        </h1>
+                        <h2 class="text-base font-bold text-red-600 uppercase">
+                            ENVÍOS EN VENEZUELA / 50% DE DESCUENTO 💥
+                        </h2>
+                    </div>
+
+                    <form id="checkoutForm">
+                    <div class="space-y-3 mb-6" id="product-selection">
+                        
+                        <!-- Option 1: 1 unit -->
+                        <label class="block cursor-pointer relative">
+                            <input type="radio" name="producto" value="1_par" class="product-radio peer sr-only" checked>
+                            <div class="border-2 border-gray-200 rounded-2xl p-3 flex items-center justify-between transition-all duration-200 hover:border-red-300">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://i.imgur.com/muCP5Mj.png" alt="Limpiador Inteligente HD 1 unidad" class="w-14 h-14 rounded-lg object-cover shadow-sm bg-gray-50">
+                                    <div>
+                                        <h3 class="font-bold text-black text-base leading-none mb-1">Limpiador Inteligente 1 Und</h3>
+                                        <span class="inline-block bg-gradient-to-r from-orange-400 to-red-500 text-white text-[11px] font-bold px-2 py-0.5 rounded shadow-sm">Oferta Exclusiva</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-bold text-black text-lg price-tag">BS. 35.500,00</div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Option 2: 2 units -->
+                        <label class="block cursor-pointer relative">
+                            <input type="radio" name="producto" value="2_pares" class="product-radio peer sr-only">
+                            <div class="border-2 border-gray-200 rounded-2xl p-3 flex items-center justify-between transition-all duration-200 hover:border-red-300">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://i.imgur.com/muCP5Mj.png" alt="2 unidades" class="w-14 h-14 rounded-lg object-cover shadow-sm bg-gray-50">
+                                    <div>
+                                        <h3 class="font-bold text-black text-base leading-none mb-1">Limpiador Inteligente 2 Unds</h3>
+                                        <span class="inline-block bg-red-500 text-white text-[11px] font-bold px-2 py-0.5 rounded shadow-sm">Ahorra 20%</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-xs text-gray-400 line-through mb-0.5">BS. 142.000,00</div>
+                                    <div class="font-bold text-black text-lg price-tag">BS. 63.900,00</div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Option 3: 3 units -->
+                        <label class="block cursor-pointer relative">
+                            <input type="radio" name="producto" value="3_pares" class="product-radio peer sr-only">
+                            <div class="border-2 border-gray-200 rounded-2xl p-3 flex items-center justify-between transition-all duration-200 hover:border-red-300">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://i.imgur.com/muCP5Mj.png" alt="3 unidades" class="w-14 h-14 rounded-lg object-cover shadow-sm bg-gray-50">
+                                    <div>
+                                        <h3 class="font-bold text-black text-base leading-none mb-1">Limpiador Inteligente 3 Unds</h3>
+                                        <span class="inline-block bg-red-500 text-white text-[11px] font-bold px-2 py-0.5 rounded shadow-sm">Ahorra 30%</span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-xs text-gray-400 line-through mb-0.5">BS. 213.000,00</div>
+                                    <div class="font-bold text-black text-lg price-tag">BS. 88.750,00</div>
+                                </div>
+                            </div>
+                        </label>
+
+                    </div>
+
+                    <!-- Summary Box -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-2xl p-4 mb-6">
+                        <div class="flex justify-between items-center mb-2 text-gray-700">
+                            <span class="text-sm">Subtotal</span>
+                            <span class="font-semibold" id="summary-subtotal">BS. 35.500,00</span>
+                        </div>
+                        
+                        <div id="summary-discount-row" class="hidden justify-between items-center mb-2 text-red-500">
+                            <span class="text-sm font-bold flex items-center gap-1.5">
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20 6h-3V4c0-1.1-.9-2-2-2h-6c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM9 4h6v2H9V4zm11 16H4V8h16v12z"/></svg>
+                                Descuento Especial
+                            </span>
+                            <span class="font-bold">- BS. 700,00</span>
+                        </div>
+
+                        <div id="summary-prepayment-discount-row" class="hidden justify-between items-center mb-2 text-green-600">
+                            <span class="text-sm font-bold flex items-center gap-1.5">
+                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-2h2v2h-2zm0-4v-6h2v6h-2z"/></svg>
+                                Descuento Pago Anticipado (5%)
+                            </span>
+                            <span class="font-bold" id="summary-prepayment-amount">- BS. 0,00</span>
+                        </div>
+
+                        <div class="flex justify-between items-center mb-3 text-gray-700">
+                            <span class="text-sm">Envío</span>
+                            <span class="font-bold text-black">A Coordinar / Zonas habilitadas</span>
+                        </div>
+                        <hr class="border-gray-200 mb-3">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-black text-lg">Total</span>
+                            <span class="font-bold text-black text-xl" id="summary-total">BS. 35.500,00</span>
+                        </div>
+                    </div>
+
+                    <!-- Input Fields -->
+                    <div class="space-y-4 mb-6">
+                        <!-- Full Name -->
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 mb-1.5">Nombre completo<span class="text-red-500">*</span></label>
+                            <div class="flex shadow-sm rounded-xl overflow-hidden border border-gray-300 focus-within:border-black focus-within:ring-1 focus-within:ring-black transition-all bg-white">
+                                <span class="inline-flex items-center px-3.5 rounded-l-md border-r border-gray-200 bg-gray-100 text-gray-500">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                </span>
+                                <input type="text" id="nombre" name="nombre" required placeholder="Ej. Juan Perez" 
+                                    class="flex-1 block w-full px-3 py-3 text-sm outline-none bg-transparent placeholder-gray-400 text-gray-900 font-medium">
+                            </div>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 mb-1.5">Número de teléfono WhatsApp<span class="text-red-500">*</span></label>
+                            <div class="flex shadow-sm rounded-xl overflow-hidden border border-gray-300 focus-within:border-black focus-within:ring-1 focus-within:ring-black transition-all bg-white">
+                                <span class="inline-flex items-center px-3.5 rounded-l-md border-r border-gray-200 bg-gray-100 text-gray-500">
+                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.573-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.99c-.002 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 005.733 1.487h.005c6.554 0 11.89-5.335 11.893-11.893 0-3.18-1.257-6.167-3.486-8.414"/>
+                                    </svg>
+                                </span>
+                                <input type="tel" id="celular" name="celular" required placeholder="Ej. 0412 0000000" 
+                                    class="flex-1 block w-full px-3 py-3 text-sm outline-none bg-transparent placeholder-gray-400 text-gray-900 font-medium">
+                            </div>
+                        </div>
+
+                        <!-- Estado -->
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 mb-1.5">Estado<span class="text-red-500">*</span></label>
+                            <div class="relative shadow-sm rounded-xl overflow-hidden border border-gray-300 focus-within:border-black focus-within:ring-1 focus-within:ring-black transition-all bg-white">
+                                <select id="departamento" name="departamento" required class="block w-full px-4 py-3 text-sm outline-none bg-transparent text-gray-900 font-medium appearance-none cursor-pointer">
+                                    <option value="" disabled selected>Selecciona Estado</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ciudad / Municipio -->
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 mb-1.5">Ciudad / Municipio<span class="text-red-500">*</span></label>
+                            <div class="relative shadow-sm rounded-xl overflow-hidden border border-gray-300 focus-within:border-black focus-within:ring-1 focus-within:ring-black transition-all bg-white">
+                                <select id="ciudad" name="ciudad" required disabled class="block w-full px-4 py-3 text-sm outline-none bg-transparent text-gray-900 font-medium appearance-none cursor-pointer disabled:bg-gray-100 disabled:text-gray-400">
+                                    <option value="" disabled selected>Primero selecciona un estado</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Address -->
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 mb-1.5">Dirección exacta y específica<span class="text-red-500">*</span></label>
+                            <div class="flex shadow-sm rounded-xl overflow-hidden border border-gray-300 focus-within:border-black focus-within:ring-1 focus-within:ring-black transition-all bg-white">
+                                <span class="inline-flex items-center px-3.5 rounded-l-md border-r border-gray-200 bg-gray-100 text-gray-500">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                </span>
+                                <input type="text" id="direccion" name="direccion" required placeholder="Avenida, Calle, Casa/Edificio, Nro" 
+                                    class="flex-1 block w-full px-3 py-3 text-sm outline-none bg-transparent placeholder-gray-400 text-gray-900 font-medium">
+                            </div>
+                        </div>
+
+                        <!-- Reference -->
+                        <div>
+                            <label class="block text-sm font-bold text-gray-900 mb-1.5">Punto de referencia exacto<span class="text-red-500">*</span></label>
+                            <div class="flex shadow-sm rounded-xl overflow-hidden border border-gray-300 focus-within:border-black focus-within:ring-1 focus-within:ring-black transition-all bg-white">
+                                <span class="inline-flex items-center px-3.5 rounded-l-md border-r border-gray-200 bg-gray-100 text-gray-500">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                                </span>
+                                <input type="text" id="referencia" name="referencia" required placeholder="Ej. Cerca de la plaza, local color azul, etc." 
+                                    class="flex-1 block w-full px-3 py-3 text-sm outline-none bg-transparent placeholder-gray-400 text-gray-900 font-medium">
+                            </div>
+                            <p class="text-[11px] text-red-600 font-bold mt-1">⚠️ Por favor anote la dirección exacta y punto de referencia para ubicarle con precisión.</p>
+                        </div>
+                    </div>
+
+                    <!-- Commitment Checkbox -->
+                    <div class="mb-4 flex items-start gap-3">
+                        <div class="flex items-center h-5 mt-1">
+                            <input id="compromiso" name="compromiso" type="checkbox" required
+                                class="w-5 h-5 text-black bg-white border-gray-300 rounded focus:ring-black focus:ring-2 cursor-pointer accent-black">
+                        </div>
+                        <div class="text-sm">
+                            <label for="compromiso" class="font-medium text-gray-700 cursor-pointer">Me Comprometo a recibir el producto.</label>
+                        </div>
+                    </div>
+
+                    <!-- Timer Box -->
+                    <div class="bg-red-50 border border-red-100 rounded-xl p-4 text-center mb-6">
+                        <p class="text-red-500 font-bold text-base mb-1 pulse-text">Date prisa, la oferta termina en</p>
+                        <div class="text-red-600 font-black text-3xl font-mono" id="countdown">10:00</div>
+                    </div>
+
+                    <!-- Submit Buttons (Normal & Prepayment) -->
+                    <div class="space-y-3">
+                        <button type="submit" id="submitBtn" class="w-full bg-black hover:bg-gray-900 text-white rounded-2xl py-4 px-4 flex flex-col items-center justify-center transition-transform active:scale-95 shadow-xl btn-sacudon">
+                            <span class="font-black text-base sm:text-lg mb-0.5 tracking-tight uppercase" id="btn-text-price">COMPLETA TU COMPRA - BS. 35.500,00</span>
+                            <span class="text-xs font-medium text-gray-300">Paga al recibir / Contra Entrega</span>
+                        </button>
+
+                        <button type="button" id="btnPrepayment" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl py-3.5 px-4 flex flex-col items-center justify-center transition-transform active:scale-95 shadow-lg">
+                            <span class="font-black text-sm sm:text-base uppercase tracking-tight" id="btn-prepayment-text">⚡ PAGO ANTICIPADO (5% OFF) - BS. 33.725,00</span>
+                            <span class="text-[11px] font-medium text-emerald-100">Paga con Pago Móvil BNC y ahorra más</span>
+                        </button>
+                    </div>
+                    
+                    <div class="text-center mt-4 flex items-center justify-center gap-2 text-xs text-gray-500 font-medium border-t border-gray-100 pt-4">
+                        <svg class="w-4 h-4 text-green-500 fill-current" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        <span>Compra 100% Segura en Venezuela.</span>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating CTA Fixed Bar -->
+        <div class="fixed bottom-0 left-0 right-0 w-full flex justify-center p-3 bg-white/95 backdrop-blur-md shadow-[0_-4px_20px_rgba(0,0,0,0.12)] z-40">
+            <a href="#checkout-section" id="btn-open-checkout" class="w-full max-w-[480px] bg-black text-white text-center py-3.5 px-4 rounded-xl flex flex-col items-center justify-center shadow-2xl floating-cta-button">
+                <span class="font-black text-base uppercase tracking-wide flex items-center gap-2">
+                    🛒 HACER PEDIDO VENEZUELA
+                </span>
+                <span class="text-xs text-sky-400 font-bold">Envíos a tu zona - 50% DESC</span>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-gray-50 border-t border-gray-200 py-6 px-5 text-center text-xs text-gray-500 mt-6">
+            <div class="flex justify-center items-center gap-4 flex-wrap mb-3 font-semibold text-gray-700">
+                <a href="#" class="underline hover:text-black">Términos y Condiciones</a>
+                <a href="#" class="underline hover:text-black">Políticas de Privacidad</a>
+                <a href="#" class="underline hover:text-black">Soporte</a>
+            </div>
+            <div class="opacity-75">© 2026 NovaCare Lab Venezuela. Todos los derechos reservados.</div>
+        </div>
+
+    </div>
+
+    <script>
+        // Toggle Accordion Functionality
+        function toggleAccordion(btn) {
+            btn.classList.toggle('active');
+            const body = btn.nextElementSibling;
+            body.classList.toggle('open');
+        }
+
+        // CONFIGURATION VARIABLES VENEZUELA
+        const MI_NUMERO_WHATSAPP = "584169485195"; 
+        
+        // Pago Móvil Data
+        const PAGO_MOVIL_DATA = {
+            banco: "BNC (Banco Nacional de Crédito)",
+            telefono: "0416-9485195",
+            cedula: "21.271.099"
+        };
+        
+        const _p1 = "8683366249";
+        const _p2 = ":AAGOU47F";
+        const _p3 = "ObO4MT8OvOe";
+        const _p4 = "Q7-fA8IgR1C_ga1I";
+        const TELEGRAM_BOT_TOKEN = _p1 + _p2 + _p3 + _p4;
+        const TELEGRAM_CHAT_ID = "1829790745";
+
+        const GOOGLE_SHEETS_URL = "AQUI_PEGAS_TU_URL"; // Reemplaza con tu URL de Apps Script
+
+        const productos = {
+            '1_par': { name: 'Limpiador Inteligente 1 unidad', price: 35500 },
+            '2_pares': { name: 'Limpiador Inteligente 2 unidades', price: 63900 },
+            '3_pares': { name: 'Limpiador Inteligente 3 unidades', price: 88750 }
+        };
+        let currentSelectedValue = '1_par';
+
+        const form = document.getElementById('checkoutForm');
+        const deptoSelect = document.getElementById('departamento');
+        const ciudadSelect = document.getElementById('ciudad');
+        const elSubtotal = document.getElementById('summary-subtotal');
+        const elTotal = document.getElementById('summary-total');
+        const elBtnText = document.getElementById('btn-text-price');
+        const elPrepaymentBtnText = document.getElementById('btn-prepayment-text');
+        const radioButtons = document.querySelectorAll('.product-radio');
+
+        function formatPrice(price) {
+            return "BS. " + price.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        const municipiosPorEstado = {
+            "Carabobo": ["Guacara", "Naguanagua", "San Diego", "Valencia"],
+            "Distrito Capital": ["Libertador"],
+            "Lara": ["Iribarren", "Palavecino"],
+            "Miranda": ["Baruta", "Chacao", "El Hatillo"]
+        };
+
+        // Load states when DOM is ready
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!deptoSelect) return;
+            // Populate States
+            Object.keys(municipiosPorEstado).sort().forEach(estado => {
+                const option = document.createElement("option");
+                option.value = estado;
+                option.textContent = estado;
+                deptoSelect.appendChild(option);
+            });
+
+            // Event Listener for State Change
+            deptoSelect.addEventListener("change", function() {
+                ciudadSelect.innerHTML = '<option value="" disabled selected>Selecciona Ciudad / Municipio</option>';
+                ciudadSelect.disabled = false;
+                const estado = this.value;
+                if (municipiosPorEstado[estado]) {
+                    municipiosPorEstado[estado].sort().forEach(ciudad => {
+                        const option = document.createElement("option");
+                        option.value = ciudad;
+                        option.textContent = ciudad;
+                        ciudadSelect.appendChild(option);
+                    });
+                }
+            });
+        });
+
+        let descuentoAplicado = false;
+        const VALOR_DESCUENTO = 700;
+        let modalMostrado = false;
+        
+        const downsellModal = document.getElementById('downsellModal');
+        const downsellContent = document.getElementById('downsellContent');
+        const summaryDiscountRow = document.getElementById('summary-discount-row');
+        const summaryPrepaymentRow = document.getElementById('summary-prepayment-discount-row');
+        const summaryPrepaymentAmount = document.getElementById('summary-prepayment-amount');
+        const checkoutModal = document.getElementById('checkoutModal');
+
+        function abrirCheckoutModal(e) {
+            if (e) e.preventDefault();
+            if (checkoutModal) {
+                checkoutModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function cerrarCheckoutModal() {
+            if (checkoutModal) {
+                checkoutModal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Attach event listeners to open modal on CTA click
+        document.querySelectorAll('a[href="#checkout-section"]').forEach(btn => {
+            btn.addEventListener('click', abrirCheckoutModal);
+        });
+
+        // Close modal when clicking dark backdrop
+        if (checkoutModal) {
+            checkoutModal.addEventListener('click', function(e) {
+                if (e.target === checkoutModal) {
+                    cerrarCheckoutModal();
+                    mostrarDownsell();
+                }
+            });
+        }
+
+        function mostrarDownsell() {
+            if (!descuentoAplicado && !modalMostrado) {
+                downsellModal.classList.remove('hidden');
+                setTimeout(() => {
+                    downsellContent.classList.remove('scale-95');
+                    downsellContent.classList.add('scale-100');
+                }, 10);
+                modalMostrado = true;
+            }
+        }
+
+        function ocultarDownsell() {
+            downsellContent.classList.remove('scale-100');
+            downsellContent.classList.add('scale-95');
+            setTimeout(() => {
+                downsellModal.classList.add('hidden');
+            }, 300);
+        }
+
+        document.getElementById('btn-cerrar-checkout').addEventListener('click', () => {
+            cerrarCheckoutModal();
+            mostrarDownsell();
+        });
+
+        document.addEventListener('mouseleave', (e) => { 
+            if (e.clientY < 0) mostrarDownsell();
+        });
+
+        document.getElementById('btn-decline-discount').addEventListener('click', ocultarDownsell);
+        document.getElementById('btn-accept-discount').addEventListener('click', () => {
+            descuentoAplicado = true;
+            actualizarPreciosUI();
+            ocultarDownsell();
+            abrirCheckoutModal();
+            setTimeout(() => {
+                const nombreInput = document.getElementById('nombre');
+                if (nombreInput) nombreInput.focus();
+            }, 100);
+        });
+
+        function actualizarPreciosUI() {
+            const priceInfo = productos[currentSelectedValue];
+            let subtotal = priceInfo.price;
+            let total = subtotal;
+
+            elSubtotal.textContent = formatPrice(subtotal);
+
+            if (descuentoAplicado) {
+                total = subtotal - VALOR_DESCUENTO;
+                summaryDiscountRow.classList.remove('hidden');
+                summaryDiscountRow.classList.add('flex');
+            } else {
+                summaryDiscountRow.classList.add('hidden');
+                summaryDiscountRow.classList.remove('flex');
+            }
+
+            elTotal.textContent = formatPrice(total);
+            elBtnText.textContent = `COMPLETA TU COMPRA - ${formatPrice(total)}`;
+            
+            // Prepayment Total (5% discount on total)
+            let prepaymentTotal = total * 0.95;
+            let prepaymentDiscount = total * 0.05;
+            summaryPrepaymentAmount.textContent = `- ${formatPrice(prepaymentDiscount)}`;
+            summaryPrepaymentRow.classList.remove('hidden');
+            summaryPrepaymentRow.classList.add('flex');
+            elPrepaymentBtnText.textContent = `⚡ PAGO ANTICIPADO (5% OFF) - ${formatPrice(prepaymentTotal)}`;
+        }
+
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if(this.checked) {
+                    currentSelectedValue = this.value;
+                    actualizarPreciosUI();
+                }
+            });
+        });
+
+        // COUNTDOWN TIMERS
+        let timeInSeconds = 10 * 60;
+        const countdownEl = document.getElementById('countdown');
+        const mainTimerEl = document.getElementById('main-timer');
+
+        function updateCountdown() {
+            const minutes = Math.floor(timeInSeconds / 60);
+            let seconds = timeInSeconds % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            let displayMinutes = minutes < 10 ? '0' + minutes : minutes;
+            const timeString = `${displayMinutes}:${seconds}`;
+            
+            if (countdownEl) countdownEl.textContent = timeString;
+            if (mainTimerEl) mainTimerEl.textContent = timeString;
+
+            if (timeInSeconds > 0) {
+                timeInSeconds--;
+            } else {
+                if (countdownEl) countdownEl.textContent = "00:00";
+                if (mainTimerEl) mainTimerEl.textContent = "00:00";
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // PREPAYMENT BUTTON (PAGO ANTICIPADO) EVENT
+        document.getElementById('btnPrepayment').addEventListener('click', async function() {
+            const nombre = document.getElementById('nombre').value.trim();
+            const celular = document.getElementById('celular').value.trim();
+            const direccion = document.getElementById('direccion').value.trim();
+            const referencia = document.getElementById('referencia').value.trim();
+            const estado = deptoSelect.options[deptoSelect.selectedIndex]?.text || '';
+            const ciudad = ciudadSelect.options[ciudadSelect.selectedIndex]?.text || '';
+
+            if(!nombre || !celular || !direccion || !referencia || !estado || !ciudad) {
+                alert("Por favor completa todos los campos del formulario (Nombre, Teléfono, Estado, Ciudad, Dirección y Referencia) antes de proceder con el Pago Anticipado.");
+                return;
+            }
+
+            const productoSeleccionado = productos[currentSelectedValue];
+            let precioFinalCalculado = productoSeleccionado.price;
+            if (descuentoAplicado) precioFinalCalculado -= VALOR_DESCUENTO;
+            let prepaymentTotal = precioFinalCalculado * 0.95;
+            const precioTotalTexto = formatPrice(prepaymentTotal);
+
+            // Send to Google Sheets and Telegram as Prepayment order
+            const fechaActual = new Date();
+            const orderData = {
+                fecha: fechaActual.toLocaleDateString() + ' ' + fechaActual.toLocaleTimeString(),
+                nombre: nombre,
+                celular: celular,
+                direccion: direccion,
+                referencia: referencia,
+                ciudad: ciudad,
+                estado: estado,
+                producto: productoSeleccionado.name,
+                descuento: descuentoAplicado ? "Sí (-BS. 700)" : "No",
+                pagoAnticipado: "Sí (5% OFF)",
+                precioTotal: precioTotalTexto
+            };
+
+            // Telegram notification
+            let mensajeTelegram = `🚨 <b>¡NUEVO PAGO ANTICIPADO VENEZUELA!</b> 🚨\n\n`;
+            mensajeTelegram += `📦 <b>Producto:</b> ${productoSeleccionado.name}\n`;
+            mensajeTelegram += `💳 <b>Modalidad:</b> Pago Anticipado (5% Descuento)\n`;
+            mensajeTelegram += `💰 <b>Total a Pagar:</b> ${precioTotalTexto}\n\n`;
+            mensajeTelegram += `👤 <b>DATOS DEL CLIENTE:</b>\n`;
+            mensajeTelegram += `• <b>Nombre:</b> ${nombre}\n`;
+            mensajeTelegram += `• <b>Celular:</b> ${celular}\n`;
+            mensajeTelegram += `• <b>Dirección:</b> ${direccion}\n`;
+            mensajeTelegram += `• <b>Ref:</b> ${referencia}\n`;
+            mensajeTelegram += `• <b>Ciudad:</b> ${ciudad}\n`;
+            mensajeTelegram += `• <b>Estado:</b> ${estado}\n\n`;
+
+            if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: mensajeTelegram, parse_mode: 'HTML' }),
+                    keepalive: true
+                }).catch(err => console.log(err));
+            }
+
+            if (GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL !== "AQUI_PEGAS_TU_URL") {
+                fetch(GOOGLE_SHEETS_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(orderData),
+                    keepalive: true
+                }).catch(err => console.log(err));
+            }
+
+            // WhatsApp Persuasive Message with Payment Mobile Info
+            let mensajeWhatsApp = `Hola! 👋 Quiero realizar mi *PAGO ANTICIPADO (5% OFF)* para mi pedido del Limpiador Inteligente.\n\n`;
+            mensajeWhatsApp += `📦 *Producto:* ${productoSeleccionado.name}\n`;
+            mensajeWhatsApp += `💰 *Total con Descuento (5%):* ${precioTotalTexto}\n\n`;
+            mensajeWhatsApp += `👤 *Mis Datos:*\n`;
+            mensajeWhatsApp += `*Nombre:* ${nombre}\n`;
+            mensajeWhatsApp += `*Teléfono:* ${celular}\n`;
+            mensajeWhatsApp += `*Estado:* ${estado}\n`;
+            mensajeWhatsApp += `*Ciudad:* ${ciudad}\n`;
+            mensajeWhatsApp += `*Dirección:* ${direccion}\n`;
+            mensajeWhatsApp += `*Punto de referencia:* ${referencia}\n\n`;
+            mensajeWhatsApp += `💳 *Datos de Pago Móvil para transferir:*\n`;
+            mensajeWhatsApp += `• *Banco:* ${PAGO_MOVIL_DATA.banco}\n`;
+            mensajeWhatsApp += `• *Teléfono:* ${PAGO_MOVIL_DATA.telefono}\n`;
+            mensajeWhatsApp += `• *Cédula:* ${PAGO_MOVIL_DATA.cedula}\n\n`;
+            mensajeWhatsApp += `Adjunto capture de mi pago móvil realizado. ✅`;
+
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${MI_NUMERO_WHATSAPP}&text=${encodeURIComponent(mensajeWhatsApp)}`;
+            window.location.href = whatsappUrl;
+        });
+
+        // FORM SUBMISSION & INTEGRATION (Contra Entrega)
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault(); 
+
+            const nombre = document.getElementById('nombre').value.trim();
+            const celular = document.getElementById('celular').value.trim();
+            const direccion = document.getElementById('direccion').value.trim();
+            const referencia = document.getElementById('referencia').value.trim();
+            const estado = deptoSelect.options[deptoSelect.selectedIndex]?.text || '';
+            const ciudad = ciudadSelect.options[ciudadSelect.selectedIndex]?.text || '';
+
+            const productoSeleccionado = productos[currentSelectedValue];
+            
+            let precioFinalCalculado = productoSeleccionado.price;
+            if (descuentoAplicado) precioFinalCalculado -= VALOR_DESCUENTO;
+            const precioTotalTexto = formatPrice(precioFinalCalculado);
+
+            // META PIXEL PURCHASE TRACKING
+            if (typeof fbq === 'function') {
+                const cleanPhone = celular.replace(/\D/g, '');
+                
+                fbq('init', '1196814618515553', {
+                    ph: cleanPhone,
+                    fn: nombre.toLowerCase()
+                });
+
+                let valorParaMeta = parseFloat(precioFinalCalculado);
+                if (isNaN(valorParaMeta) || valorParaMeta <= 0) {
+                    valorParaMeta = 35500; 
+                }
+
+                fbq('track', 'Purchase', {
+                    value: valorParaMeta,
+                    currency: 'VES',
+                    content_name: productoSeleccionado.name,
+                    content_ids: [currentSelectedValue],
+                    content_type: 'product'
+                });
+            }
+
+            // Order Data Object for Google Sheets
+            const fechaActual = new Date();
+            const orderData = {
+                fecha: fechaActual.toLocaleDateString() + ' ' + fechaActual.toLocaleTimeString(),
+                nombre: nombre,
+                celular: celular,
+                direccion: direccion,
+                referencia: referencia,
+                ciudad: ciudad,
+                estado: estado,
+                producto: productoSeleccionado.name,
+                descuento: descuentoAplicado ? "Sí (-BS. 700)" : "No",
+                pagoAnticipado: "No (Contra Entrega)",
+                precioTotal: precioTotalTexto
+            };
+
+            const btnOriginalText = elBtnText.textContent;
+            elBtnText.textContent = "PROCESANDO PEDIDO...";
+
+            const envios = [];
+
+            // 1. Google Sheets API
+            if (GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL !== "AQUI_PEGAS_TU_URL") {
+                envios.push(
+                    fetch(GOOGLE_SHEETS_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(orderData),
+                        keepalive: true
+                    }).catch(err => console.log("Error de conexión a Sheet", err))
+                );
+            }
+
+            // 2. Telegram Bot Integration
+            let mensajeTelegram = `🚨 <b>¡NUEVO PEDIDO VENEZUELA!</b> 🚨\n\n`;
+            mensajeTelegram += `📦 <b>Producto:</b> ${productoSeleccionado.name}\n`;
+            mensajeTelegram += `🎁 <b>Descuento:</b> ${descuentoAplicado ? 'Sí (-BS. 700)' : 'No'}\n`;
+            mensajeTelegram += `💰 <b>Total a Cobrar:</b> ${precioTotalTexto}\n\n`;
+            mensajeTelegram += `👤 <b>DATOS DEL CLIENTE:</b>\n`;
+            mensajeTelegram += `• <b>Nombre:</b> ${nombre}\n`;
+            mensajeTelegram += `• <b>Celular:</b> ${celular}\n`;
+            mensajeTelegram += `• <b>Dirección exacta:</b> ${direccion}\n`;
+            mensajeTelegram += `• <b>Punto de referencia:</b> ${referencia}\n`;
+            mensajeTelegram += `• <b>Ciudad/Municipio:</b> ${ciudad}\n`;
+            mensajeTelegram += `• <b>Estado:</b> ${estado}\n`;
+            mensajeTelegram += `• <b>Fecha:</b> ${orderData.fecha}\n\n`;
+            mensajeTelegram += `⚡ <i>Pago Contra Entrega - Cliente Comprometido</i>`;
+
+            if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+                envios.push(
+                    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: mensajeTelegram,
+                            parse_mode: 'HTML'
+                        }),
+                        keepalive: true
+                    }).catch(err => console.error("Error en Telegram:", err))
+                );
+            }
+
+            // Wait for network requests
+            await Promise.allSettled(envios);
+            await new Promise(resolve => setTimeout(resolve, 800));
+
+            // 3. WhatsApp Redirect
+            let mensaje = `🚨 *NUEVO PEDIDO VENEZUELA (CONTRA ENTREGA)* 🚨\n\n`;
+            mensaje += `📦 *Producto:* ${productoSeleccionado.name}\n`;
+            if (descuentoAplicado) mensaje += `🎁 *DESCUENTO APLICADO:* -BS. 700\n`;
+            mensaje += `💰 *Total a cobrar:* ${precioTotalTexto}\n\n`;
+            mensaje += `👤 *Datos del Cliente:*\n`;
+            mensaje += `*Nombre:* ${nombre}\n`;
+            mensaje += `*Celular:* ${celular}\n`;
+            mensaje += `*Estado:* ${estado}\n`;
+            mensaje += `*Ciudad/Municipio:* ${ciudad}\n`;
+            mensaje += `*Dirección exacta:* ${direccion}\n`;
+            mensaje += `*Punto de referencia:* ${referencia}\n\n`;
+            mensaje += `✅ _Cliente comprometido a recibir._`;
+
+            const textEncoded = encodeURIComponent(mensaje);
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${MI_NUMERO_WHATSAPP}&text=${textEncoded}`;
+
+            window.location.href = whatsappUrl;
+            elBtnText.textContent = btnOriginalText;
+        });
+    </script>
+</body>
+</html>
