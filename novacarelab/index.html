@@ -1164,7 +1164,7 @@
                 }).catch(err => console.log(err));
             }
 
-            if (GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL !== "AQUI_PEGAS_TU_URL") {
+            if (GOOGLE_SHEETS_URL) {
                 fetch(GOOGLE_SHEETS_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -1257,7 +1257,7 @@
             const envios = [];
 
             // 1. Google Sheets API (Usando text/plain para omitir restricciones CORS de Google)
-            if (GOOGLE_SHEETS_URL && GOOGLE_SHEETS_URL !== "AQUI_PEGAS_TU_URL") {
+            if (GOOGLE_SHEETS_URL) {
                 envios.push(
                     fetch(GOOGLE_SHEETS_URL, {
                         method: 'POST',
@@ -1311,7 +1311,7 @@
             mensaje += `👤 *Datos del Cliente:*\n`;
             mensaje += `*Nombre:* ${nombre}\n`;
             mensaje += `*Celular:* ${celular}\n`;
-            mensaje premature += `*Estado:* ${estado}\n`;
+            mensaje += `*Estado:* ${estado}\n`;
             mensaje += `*Ciudad/Municipio:* ${ciudad}\n`;
             mensaje += `*Dirección exacta:* ${direccion}\n`;
             mensaje += `*Punto de referencia:* ${referencia}\n\n`;
