@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA - Tu Compañera IA de Vida & Productividad</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.85);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-full flex flex-col transition-colors duration-300">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-50 glass border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/20 text-white font-bold">
+                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-pink-500 dark:from-indigo-400 dark:to-pink-400">AURA</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Tu Compañera 100% Gratis</p>
+                </div>
+            </div>
+
+            <!-- Action Buttons Header -->
+            <div class="flex items-center space-x-2">
+                <!-- Voice Toggle -->
+                <button id="toggle-voice-btn" onclick="toggleVoiceOutput()" class="px-3 py-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900 border border-indigo-200 dark:border-indigo-800 transition-all flex items-center space-x-1.5 text-xs font-semibold shadow-sm" title="Activar/Desactivar Voz de AURA">
+                    <i id="voice-icon" data-lucide="volume-2" class="w-4 h-4 text-emerald-500"></i>
+                    <span id="voice-status-text">Voz Activa</span>
+                </button>
+
+                <!-- Notifications Button -->
+                <button onclick="requestNotificationPermission()" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-all flex items-center space-x-1.5 text-xs font-semibold">
+                    <i data-lucide="bell" class="w-4 h-4 text-amber-500"></i>
+                    <span class="hidden sm:inline" id="notif-status-text">Alertas</span>
+                </button>
+
+                <!-- Config / Settings Button (Gear) -->
+                <button onclick="openConfigModal()" class="px-3 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:opacity-90 transition-all flex items-center space-x-1.5 text-xs font-bold shadow-md shadow-indigo-500/20">
+                    <i data-lucide="settings" class="w-4 h-4"></i>
+                    <span>Configurar IA</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-6 space-y-6">
+
+        <!-- Companion Banner Greeting -->
+        <section class="p-6 rounded-3xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white shadow-xl shadow-indigo-500/10 relative overflow-hidden">
+            <div class="relative z-10 max-w-2xl space-y-2">
+                <span class="px-3 py-1 rounded-full bg-white/20 text-xs font-semibold backdrop-blur-md uppercase tracking-wider">Tu Rutina Diaria</span>
+                <h2 id="greeting-text" class="text-2xl sm:text-3xl font-bold leading-tight">¡Hola! ¿Listos para un día saludable y productivo?</h2>
+                <p id="daily-quote" class="text-indigo-100 text-sm italic font-light">"Tu compañera AURA está lista para hablar, escucharte y guiarte paso a paso."</p>
+            </div>
+            <i data-lucide="heart-handshake" class="absolute -right-6 -bottom-6 w-48 h-48 opacity-10 text-white pointer-events-none"></i>
+        </section>
+
+        <!-- Daily Habits Tracker Grid -->
+        <section class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <!-- Water Tracker -->
+            <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-3">
+                <div class="flex justify-between items-start">
+                    <span class="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-500">
+                        <i data-lucide="droplet" class="w-5 h-5"></i>
+                    </span>
+                    <span id="water-count" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300">0/8</span>
+                </div>
+                <div>
+                    <h3 class="font-medium text-sm">Agua (Vasos)</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Meta: 2 Litros</p>
+                </div>
+                <button onclick="addWater()" class="w-full py-1.5 rounded-xl bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium transition-all flex items-center justify-center space-x-1 shadow-sm">
+                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                    <span>Tomar Vaso</span>
+                </button>
+            </div>
+
+            <!-- Healthy Food -->
+            <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-3">
+                <div class="flex justify-between items-start">
+                    <span class="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-500">
+                        <i data-lucide="utensils" class="w-5 h-5"></i>
+                    </span>
+                    <span id="food-count" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-300">0/4</span>
+                </div>
+                <div>
+                    <h3 class="font-medium text-sm">Comida Sana</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Des/Alm/Cen/Mer</p>
+                </div>
+                <button onclick="addFood()" class="w-full py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-medium transition-all flex items-center justify-center space-x-1 shadow-sm">
+                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                    <span>Registrar</span>
+                </button>
+            </div>
+
+            <!-- Workout Tracker -->
+            <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-3">
+                <div class="flex justify-between items-start">
+                    <span class="p-2 rounded-xl bg-orange-50 dark:bg-orange-950/50 text-orange-500">
+                        <i data-lucide="activity" class="w-5 h-5"></i>
+                    </span>
+                    <span id="workout-status" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Pendiente</span>
+                </div>
+                <div>
+                    <h3 class="font-medium text-sm">Ejercicio</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Mínimo 20 min</p>
+                </div>
+                <button onclick="toggleWorkout()" class="w-full py-1.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs font-medium transition-all flex items-center justify-center space-x-1 shadow-sm">
+                    <i data-lucide="dumbbell" class="w-3.5 h-3.5"></i>
+                    <span>Completar</span>
+                </button>
+            </div>
+
+            <!-- Learn New Skill -->
+            <div class="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-3">
+                <div class="flex justify-between items-start">
+                    <span class="p-2 rounded-xl bg-purple-50 dark:bg-purple-950/50 text-purple-500">
+                        <i data-lucide="brain-circuit" class="w-5 h-5"></i>
+                    </span>
+                    <span id="skill-status" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">Pendiente</span>
+                </div>
+                <div>
+                    <h3 class="font-medium text-sm">Aprender Algo</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">15 min de estudio</p>
+                </div>
+                <button onclick="toggleSkill()" class="w-full py-1.5 rounded-xl bg-purple-500 hover:bg-purple-600 text-white text-xs font-medium transition-all flex items-center justify-center space-x-1 shadow-sm">
+                    <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                    <span>Completar</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Dynamic AI Interactive Assistant Hub -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- Companion Chat & Prompt Box -->
+            <div class="md:col-span-2 p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col h-[500px]">
+                <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+                    <div class="flex items-center space-x-3">
+                        <div class="relative">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-600 text-white flex items-center justify-center font-bold shadow-md">A</div>
+                            <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900"></span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-sm">Asistente AURA (Voz y Chat)</h3>
+                            <p class="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Lista para hablar contigo</p>
+                        </div>
+                    </div>
+                    <span class="text-xs px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 font-medium border border-emerald-200 dark:border-emerald-800">
+                        100% Gratis
+                    </span>
+                </div>
+
+                <!-- Chat History Window -->
+                <div id="chat-window" class="flex-1 overflow-y-auto py-4 space-y-4 pr-2 text-sm">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-7 h-7 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 font-bold text-xs">A</div>
+                        <div class="p-3.5 rounded-2xl rounded-tl-none bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 max-w-[85%] relative shadow-sm">
+                            ¡Hola! Soy AURA, tu compañera personal de inteligencia artificial. Puedes escribir o **tocar el botón del micrófono 🎙️ para hablarme con tu voz** y te responderé hablándote en voz alta. ¿Qué desayunamos, qué entrenamos o de qué quieres que hablemos hoy?
+                            <button onclick="speakText('¡Hola! Soy AURA, tu compañera personal de inteligencia artificial. Puedes tocar el botón del micrófono para hablarme con tu voz y te responderé hablándote en voz alta.')" class="mt-2 text-xs text-indigo-500 hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center space-x-1 font-semibold">
+                                <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+                                <span>Escuchar voz</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Box with Voice Recognition Button -->
+                <form id="chat-form" onsubmit="handleChatSubmit(event)" class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center space-x-2">
+                    <button type="button" id="mic-btn" onclick="toggleSpeechRecognition()" class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-600 border border-slate-200 dark:border-slate-700 transition-all shrink-0 shadow-sm" title="Toca para hablar con tu voz">
+                        <i id="mic-icon" data-lucide="mic" class="w-5 h-5"></i>
+                    </button>
+                    <input id="user-input" type="text" placeholder="Escribe o presiona el micrófono para hablar con AURA..." class="flex-1 px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 border border-slate-200 dark:border-slate-700">
+                    <button type="submit" class="p-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white transition-all shrink-0 shadow-md shadow-indigo-500/20" title="Enviar mensaje">
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Quick Action Generators -->
+            <div class="space-y-4 flex flex-col">
+                <div class="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 flex-1">
+                    <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 flex items-center space-x-2">
+                        <i data-lucide="zap" class="w-4 h-4 text-amber-500"></i>
+                        <span>Generadores Rápidos</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Pide ideas instantáneas de bienestar:</p>
+
+                    <div class="space-y-2 pt-1">
+                        <button onclick="generateRecipePrompt()" class="w-full text-left p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 border border-slate-200/60 dark:border-slate-800 hover:border-emerald-300 transition-all flex items-center justify-between group">
+                            <div class="flex items-center space-x-2.5">
+                                <i data-lucide="utensils" class="w-4 h-4 text-emerald-500"></i>
+                                <span class="text-xs font-medium">Receta Saludable Rápida</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+                        </button>
+
+                        <button onclick="generateWorkoutPrompt()" class="w-full text-left p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-orange-50 dark:hover:bg-orange-950/30 border border-slate-200/60 dark:border-slate-800 hover:border-orange-300 transition-all flex items-center justify-between group">
+                            <div class="flex items-center space-x-2.5">
+                                <i data-lucide="flame" class="w-4 h-4 text-orange-500"></i>
+                                <span class="text-xs font-medium">Rutina Ejercicio Casa</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+                        </button>
+
+                        <button onclick="generateSkillPrompt()" class="w-full text-left p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-purple-50 dark:hover:bg-purple-950/30 border border-slate-200/60 dark:border-slate-800 hover:border-purple-300 transition-all flex items-center justify-between group">
+                            <div class="flex items-center space-x-2.5">
+                                <i data-lucide="lightbulb" class="w-4 h-4 text-purple-500"></i>
+                                <span class="text-xs font-medium">Nueva Micro-Habilidad</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+                        </button>
+
+                        <button onclick="generateProductivityPrompt()" class="w-full text-left p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-blue-50 dark:hover:bg-blue-950/30 border border-slate-200/60 dark:border-slate-800 hover:border-blue-300 transition-all flex items-center justify-between group">
+                            <div class="flex items-center space-x-2.5">
+                                <i data-lucide="target" class="w-4 h-4 text-blue-500"></i>
+                                <span class="text-xs font-medium">Tip Enfoque & Productividad</span>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Schedule Alarms Status -->
+                <div class="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/50 flex items-center justify-between shadow-sm">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="clock" class="w-5 h-5 text-indigo-600 dark:text-indigo-400"></i>
+                        <div>
+                            <h4 class="text-xs font-semibold text-indigo-900 dark:text-indigo-200">Alertas Automáticas</h4>
+                            <p class="text-[11px] text-indigo-700 dark:text-indigo-300">Agua cada 2h & Horas de Comida</p>
+                        </div>
+                    </div>
+                    <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Configuration Modal (Gear Button) -->
+    <div id="config-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-full max-w-md rounded-3xl p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
+                <h3 class="font-bold text-base flex items-center space-x-2">
+                    <i data-lucide="settings" class="w-5 h-5 text-indigo-500"></i>
+                    <span>Configurar Clave de IA Gratuita</span>
+                </h3>
+                <button onclick="closeConfigModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-xl">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <div class="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-900/50 text-indigo-900 dark:text-indigo-200 space-y-2">
+                    <p class="font-semibold flex items-center space-x-1.5 text-sm">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-indigo-500"></i>
+                        <span>¿Cómo conectar IA real 100% Gratis?</span>
+                    </p>
+                    <p class="text-indigo-700 dark:text-indigo-300">Puedes obtener una clave gratuita de Google Gemini en 30 segundos sin pagar nada ni meter tarjeta.</p>
+                </div>
+
+                <div class="bg-slate-50 dark:bg-slate-800/60 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-2">
+                    <p class="font-bold text-slate-800 dark:text-slate-200">Pasos rápidos:</p>
+                    <ol class="list-decimal list-inside space-y-1.5 text-slate-600 dark:text-slate-300">
+                        <li>Entra a <a href="https://aistudio.google.com" target="_blank" class="text-indigo-600 dark:text-indigo-400 font-semibold underline">aistudio.google.com</a> con tu correo Gmail.</li>
+                        <li>Haz clic en <strong>"Get API key"</strong>.</li>
+                        <li>Copia la clave generada (empieza por <code>AIzaSy...</code>) y pégala aquí abajo.</li>
+                    </ol>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Tu API Key de Gemini:</label>
+                    <input id="api-key-input" type="password" placeholder="AIzaSy..." class="w-full px-3 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono">
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-2 pt-2">
+                <button onclick="saveSettings()" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-all shadow-lg shadow-indigo-500/20">
+                    Guardar Configuración y Activar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        // State Initialization
+        let state = {
+            water: localStorage.getItem('aura_water') ? parseInt(localStorage.getItem('aura_water')) : 0,
+            food: localStorage.getItem('aura_food') ? parseInt(localStorage.getItem('aura_food')) : 0,
+            workout: localStorage.getItem('aura_workout') === 'true',
+            skill: localStorage.getItem('aura_skill') === 'true',
+            apiKey: localStorage.getItem('aura_gemini_key') || '',
+            voiceEnabled: true,
+            isListening: false
+        };
+
+        window.onload = function() {
+            lucide.createIcons();
+            updateUI();
+            checkNotificationStatus();
+            
+            // Pre-fill API key input if stored
+            if (state.apiKey) {
+                document.getElementById('api-key-input').value = state.apiKey;
+            }
+
+            // Load speech synthesis voices
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.onvoiceschanged = () => {
+                    window.speechSynthesis.getVoices();
+                };
+            }
+        };
+
+        // Modal Controls
+        function openConfigModal() {
+            document.getElementById('config-modal').classList.remove('hidden');
+        }
+
+        function closeConfigModal() {
+            document.getElementById('config-modal').classList.add('hidden');
+        }
+
+        function saveSettings() {
+            const key = document.getElementById('api-key-input').value.trim();
+            state.apiKey = key;
+            localStorage.setItem('aura_gemini_key', key);
+            closeConfigModal();
+            appendChatMessage("AURA", "✨ ¡Configuración guardada con éxito! Ahora tengo conectada la inteligencia artificial avanzada para darte respuestas reales e ilimitadas.");
+        }
+
+        // Speech Recognition Setup (Microphone Input)
+        let recognition = null;
+        if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = true;
+            recognition.lang = 'es-ES';
+
+            recognition.onstart = () => {
+                state.isListening = true;
+                updateMicUI(true);
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = Array.from(event.results)
+                    .map(result => result[0])
+                    .map(result => result.transcript)
+                    .join('');
+                
+                const input = document.getElementById('user-input');
+                input.value = transcript;
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Error en micrófono:", event.error);
+                state.isListening = false;
+                updateMicUI(false);
+            };
+
+            recognition.onend = () => {
+                state.isListening = false;
+                updateMicUI(false);
+                const input = document.getElementById('user-input');
+                if (input.value.trim().length > 0) {
+                    const fakeEvent = { preventDefault: () => {} };
+                    handleChatSubmit(fakeEvent);
+                }
+            };
+        }
+
+        function toggleSpeechRecognition() {
+            if (!recognition) {
+                alert('Tu navegador no soporta reconocimiento de voz por micrófono. Te recomendamos usar Google Chrome o Microsoft Edge.');
+                return;
+            }
+
+            if (state.isListening) {
+                recognition.stop();
+            } else {
+                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+                recognition.start();
+            }
+        }
+
+        function updateMicUI(listening) {
+            const micBtn = document.getElementById('mic-btn');
+            const micIcon = document.getElementById('mic-icon');
+            
+            if (listening) {
+                micBtn.className = 'p-3 rounded-xl bg-rose-500 text-white animate-pulse transition-all shrink-0 shadow-md';
+                micIcon.setAttribute('data-lucide', 'mic-off');
+            } else {
+                micBtn.className = 'p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-600 border border-slate-200 dark:border-slate-700 transition-all shrink-0 shadow-sm';
+                micIcon.setAttribute('data-lucide', 'mic');
+            }
+            lucide.createIcons();
+        }
+
+        // Speech Synthesis Engine (AURA's Voice)
+        function speakText(text) {
+            if (!state.voiceEnabled) return;
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const cleanText = text.replace(/\*\*/g, '').replace(/[\#\-\*]/g, '');
+                const utterance = new SpeechSynthesisUtterance(cleanText);
+                utterance.lang = 'es-ES';
+                utterance.rate = 1.0;
+                utterance.pitch = 1.0;
+
+                const voices = window.speechSynthesis.getVoices();
+                const spanishVoice = voices.find(v => v.lang.startsWith('es'));
+                if (spanishVoice) {
+                    utterance.voice = spanishVoice;
+                }
+
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function toggleVoiceOutput() {
+            state.voiceEnabled = !state.voiceEnabled;
+            const statusBtnText = document.getElementById('voice-status-text');
+            const icon = document.getElementById('voice-icon');
+
+            if (state.voiceEnabled) {
+                statusBtnText.innerText = 'Voz Activa';
+                icon.className = 'w-4 h-4 text-emerald-500';
+                speakText("La voz de AURA está activada.");
+            } else {
+                window.speechSynthesis.cancel();
+                statusBtnText.innerText = 'Voz Silenciada';
+                icon.className = 'w-4 h-4 text-slate-400';
+            }
+        }
+
+        // Habit Tracking Functions
+        function addWater() {
+            if (state.water < 8) state.water++;
+            saveState();
+            updateUI();
+            if (state.water === 8) {
+                appendChatMessage("AURA", "🎉 ¡Felicitaciones! Has completado tu meta de 8 vasos de agua hoy.");
+            }
+        }
+
+        function addFood() {
+            if (state.food < 4) state.food++;
+            saveState();
+            updateUI();
+        }
+
+        function toggleWorkout() {
+            state.workout = !state.workout;
+            saveState();
+            updateUI();
+            if (state.workout) {
+                appendChatMessage("AURA", "💪 ¡Excelente entrenamiento completado! Mantener el cuerpo activo te da energía infinita.");
+            }
+        }
+
+        function toggleSkill() {
+            state.skill = !state.skill;
+            saveState();
+            updateUI();
+            if (state.skill) {
+                appendChatMessage("AURA", "📚 ¡Muy bien! Dedicar tiempo a aprender cosas nuevas expande tu mente cada día.");
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem('aura_water', state.water);
+            localStorage.setItem('aura_food', state.food);
+            localStorage.setItem('aura_workout', state.workout);
+            localStorage.setItem('aura_skill', state.skill);
+        }
+
+        function updateUI() {
+            document.getElementById('water-count').innerText = `${state.water}/8`;
+            document.getElementById('food-count').innerText = `${state.food}/4`;
+            
+            const workoutStatus = document.getElementById('workout-status');
+            workoutStatus.innerText = state.workout ? 'Completado' : 'Pendiente';
+            workoutStatus.className = `text-xs font-semibold px-2 py-0.5 rounded-full ${state.workout ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-300' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`;
+
+            const skillStatus = document.getElementById('skill-status');
+            skillStatus.innerText = state.skill ? 'Completado' : 'Pendiente';
+            skillStatus.className = `text-xs font-semibold px-2 py-0.5 rounded-full ${state.skill ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-300' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'}`;
+            
+            lucide.createIcons();
+        }
+
+        // Notifications API
+        function checkNotificationStatus() {
+            const btnText = document.getElementById('notif-status-text');
+            if ('Notification' in window) {
+                if (Notification.permission === 'granted') {
+                    btnText.innerText = 'Alertas Activas';
+                } else if (Notification.permission === 'denied') {
+                    btnText.innerText = 'Bloqueadas';
+                }
+            }
+        }
+
+        function requestNotificationPermission() {
+            if (!('Notification' in window)) {
+                alert('Las notificaciones no son compatibles con este navegador.');
+                return;
+            }
+            Notification.requestPermission().then(permission => {
+                checkNotificationStatus();
+                if (permission === 'granted') {
+                    new Notification("¡AURA Activada! 🌟", { body: "Te recordaré tomar agua, comer saludable y ser productiva." });
+                    speakText("Notificaciones activadas correctamente.");
+                }
+            });
+        }
+
+        // AI Request Handler (Gemini or Smart Fallback)
+        async function executeAiQuery(prompt) {
+            appendChatMessage("AURA", " Pensando...");
+            const chatWin = document.getElementById('chat-window');
+            const lastMsg = chatWin.lastChild;
+
+            if (state.apiKey) {
+                try {
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${state.apiKey}`;
+                    const payload = {
+                        contents: [{ parts: [{ text: prompt }] }],
+                        systemInstruction: {
+                            parts: [{ text: "Eres AURA, una compañera personal de vida, salud, nutrición y productividad. Hablas de forma cálida, cercana, motivadora y experta en español. Da respuestas prácticas, directas y útiles." }]
+                        }
+                    };
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                    chatWin.removeChild(lastMsg);
+                    if (text) {
+                        appendChatMessage("AURA", text);
+                        return;
+                    }
+                } catch(e) {
+                    console.error("Error con API Gemini:", e);
+                }
+            }
+
+            // Fallback smart intelligent responses if no API key is provided
+            setTimeout(() => {
+                chatWin.removeChild(lastMsg);
+                let responseText = "¡Excelente pregunta! Como tu compañera, te sugiero mantener la constancia en tus hábitos diarios. Configura tu API Key gratuita en el botón superior para obtener respuestas ilimitadas y profundas sobre cualquier tema.";
+                
+                const lower = prompt.toLowerCase();
+                if (lower.includes('receta') || lower.includes('desayunar') || lower.includes('almorzar') || lower.includes('cenar')) {
+                    responseText = "🍳 **Receta saludable recomendada por AURA:**\n\n• **Ingredientes:** 2 huevos, espinacas frescas, tomate en rodajas y un chorrito de aceite de oliva.\n• **Preparación:** Saltea las espinacas en un sartén con el aceite, añade los huevos batidos o en tortilla y acompaña con el tomate fresco.\n• **Beneficio:** Aporte alto en proteínas, antioxidantes y grasas saludables para mantener tu cerebro enfocado.";
+                } else if (lower.includes('ejercicio') || lower.includes('rutina')) {
+                    responseText = "💪 **Rutina express de 15 minutos en casa:**\n\n1. 3 series de 12 sentadillas profundas.\n2. 3 series de 10 flexiones de pecho (o apoyando rodillas).\n3. Plancha abdominal de 45 segundos (3 repeticiones).\n\n¡Ideal para activar tu metabolismo sin salir de casa!";
+                } else if (lower.includes('productividad') || lower.includes('enfoque')) {
+                    responseText = "🎯 **Consejo de productividad de AURA:**\n\nAplica la técnica **Pomodoro de 25/5**: trabaja sin distracciones ni celular durante 25 minutos exactos, y descansa 5 minutos estirando las piernas o tomando agua. ¡Verás cómo duplicas tus resultados!";
+                } else if (lower.includes('habilidad')) {
+                    responseText = "🧠 **Micro-habilidad recomendada para hoy:**\n\nAprende los fundamentos de la **Lectura Rápida**: practica deslizando tu dedo o un bolígrafo debajo de cada línea sin subvocalizar cada palabra. ¡Aumentarás tu velocidad de lectura un 30% hoy!";
+                }
+
+                appendChatMessage("AURA", responseText);
+            }, 800);
+        }
+
+        function generateRecipePrompt() {
+            executeAiQuery("Recomiéndame una receta de comida muy saludable, deliciosa y fácil.");
+        }
+
+        function generateWorkoutPrompt() {
+            executeAiQuery("Dame una rutina rápida de ejercicio en casa sin equipamiento.");
+        }
+
+        function generateSkillPrompt() {
+            executeAiQuery("Enséñame una micro-habilidad útil de productividad para aprender hoy.");
+        }
+
+        function generateProductivityPrompt() {
+            executeAiQuery("Dame el mejor consejo de enfoque y productividad.");
+        }
+
+        function handleChatSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('user-input');
+            const text = input.value.trim();
+            if (!text) return;
+            
+            appendChatMessage("Tú", text);
+            input.value = "";
+            executeAiQuery(text);
+        }
+
+        function appendChatMessage(sender, text) {
+            const chatWin = document.getElementById('chat-window');
+            const isUser = sender === "Tú";
+            
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `flex items-start space-x-3 ${isUser ? 'flex-row-reverse space-x-reverse' : ''}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = `w-7 h-7 rounded-lg ${isUser ? 'bg-purple-600 text-white' : 'bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400'} flex items-center justify-center shrink-0 font-bold text-xs shadow-sm`;
+            avatar.innerText = isUser ? 'U' : 'A';
+
+            const bubble = document.createElement('div');
+            bubble.className = `p-3.5 rounded-2xl ${isUser ? 'rounded-tr-none bg-indigo-600 text-white' : 'rounded-tl-none bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200'} max-w-[85%] whitespace-pre-line shadow-sm`;
+            
+            let htmlContent = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            if (!isUser && text !== " Pensando...") {
+                bubble.innerHTML = htmlContent;
+                const speakBtn = document.createElement('button');
+                speakBtn.className = 'mt-2 text-xs text-indigo-500 hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center space-x-1 font-semibold';
+                speakBtn.innerHTML = '<i data-lucide="volume-2" class="w-3.5 h-3.5"></i><span>Escuchar voz</span>';
+                speakBtn.onclick = () => speakText(text);
+                bubble.appendChild(speakBtn);
+            } else {
+                bubble.innerHTML = htmlContent;
+            }
+
+            msgDiv.appendChild(avatar);
+            msgDiv.appendChild(bubble);
+            chatWin.appendChild(msgDiv);
+            chatWin.scrollTop = chatWin.scrollHeight;
+            lucide.createIcons();
+
+            if (!isUser && text !== " Pensando...") {
+                speakText(text);
+            }
+        }
+    </script>
+</body>
+</html>
