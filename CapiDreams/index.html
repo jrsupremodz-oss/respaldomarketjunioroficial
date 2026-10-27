@@ -731,65 +731,6 @@
                             </span>
                             <span class="font-bold">- BS. 700,00</span>
                         </div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="font-bold text-black text-lg price-tag">BS. 39.000,00</div>
-                                </div>
-                            </div>
-                        </label>
-
-                        <!-- Option 2: 2 units -->
-                        <label class="block cursor-pointer relative">
-                            <input type="radio" name="producto" value="2_pares" class="product-radio peer sr-only">
-                            <div class="border-2 border-gray-200 rounded-2xl p-3 flex items-center justify-between transition-all duration-200 hover:border-red-300">
-                                <div class="flex items-center gap-3">
-                                    <img src="https://i.imgur.com/XEE0QYF.jpeg" alt="CapiDream 2 Unidades" class="w-14 h-14 rounded-lg object-cover shadow-sm bg-gray-50">
-                                    <div>
-                                        <h3 class="font-bold text-black text-base leading-none mb-1">CapiDream 2 Unidades</h3>
-                                        <span class="inline-block bg-red-500 text-white text-[11px] font-bold px-2 py-0.5 rounded shadow-sm">Ahorra 11%</span>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="text-xs text-gray-400 line-through mb-0.5">BS. 156.000,00</div>
-                                    <div class="font-bold text-black text-lg price-tag">BS. 69.000,00</div>
-                                </div>
-                            </div>
-                        </label>
-
-                        <!-- Option 3: 3 units -->
-                        <label class="block cursor-pointer relative">
-                            <input type="radio" name="producto" value="3_pares" class="product-radio peer sr-only">
-                            <div class="border-2 border-gray-200 rounded-2xl p-3 flex items-center justify-between transition-all duration-200 hover:border-red-300">
-                                <div class="flex items-center gap-3">
-                                    <img src="https://i.imgur.com/XEE0QYF.jpeg" alt="CapiDream 3 Unidades" class="w-14 h-14 rounded-lg object-cover shadow-sm bg-gray-50">
-                                    <div>
-                                        <h3 class="font-bold text-black text-base leading-none mb-1">CapiDream 3 Unidades</h3>
-                                        <span class="inline-block bg-red-500 text-white text-[11px] font-bold px-2 py-0.5 rounded shadow-sm">Ahorra 17%</span>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="text-xs text-gray-400 line-through mb-0.5">BS. 234.000,00</div>
-                                    <div class="font-bold text-black text-lg price-tag">BS. 97.500,00</div>
-                                </div>
-                            </div>
-                        </label>
-
-                    </div>
-
-                    <!-- Summary Box -->
-                    <div class="bg-gray-50 border border-gray-200 rounded-2xl p-4 mb-6">
-                        <div class="flex justify-between items-center mb-2 text-gray-700">
-                            <span class="text-sm">Subtotal</span>
-                            <span class="font-semibold" id="summary-subtotal">BS. 39.000,00</span>
-                        </div>
-                        
-                        <div id="summary-discount-row" class="hidden justify-between items-center mb-2 text-red-500">
-                            <span class="text-sm font-bold flex items-center gap-1.5">
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20 6h-3V4c0-1.1-.9-2-2-2h-6c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM9 4h6v2H9V4zm11 16H4V8h16v12z"/></svg>
-                                Descuento Especial
-                            </span>
-                            <span class="font-bold">- BS. 7.000,00</span>
-                        </div>
 
                         <div id="summary-prepayment-discount-row" class="hidden justify-between items-center mb-2 text-green-600">
                             <span class="text-sm font-bold flex items-center gap-1.5">
@@ -1421,7 +1362,8 @@
             mensaje += `*Celular:* ${celular}\n`;
             mensaje += `*Estado:* ${estado}\n`;
             mensaje += `*Ciudad/Municipio:* ${ciudad}\n`;
-            mensaje************
+            mensaje += `*Dirección:* ${direccion}\n`;
+            mensaje += `*Punto de referencia:* ${referencia}\n`;
 
             const textEncoded = encodeURIComponent(mensaje);
             const whatsappUrl = `https://api.whatsapp.com/send?phone=${MI_NUMERO_WHATSAPP}&text=${textEncoded}`;
