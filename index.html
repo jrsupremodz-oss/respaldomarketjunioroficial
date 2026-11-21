@@ -82,9 +82,10 @@
         }
     </script>
     <style>
+        html { scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #0a0a0a; }
         .glass-nav { backdrop-filter: blur(12px); background-color: rgba(255, 255, 255, 0.92); }
-        .product-card { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+        .product-card { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); scroll-margin-top: 100px; }
         .product-card:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
@@ -93,6 +94,29 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
+        /* Efecto de resaltado breve al navegar mediante enlace directo #id */
+        @keyframes highlightTargetPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.85), 0 12px 28px rgba(16, 185, 129, 0.25);
+                border-color: #10b981;
+                transform: translateY(-4px) scale(1.015);
+            }
+            35% {
+                box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.35), 0 12px 28px rgba(16, 185, 129, 0.2);
+                border-color: #10b981;
+                transform: translateY(-4px) scale(1.015);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+                border-color: #e5e5e5;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .product-highlight {
+            animation: highlightTargetPulse 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            z-index: 20;
+        }
+
         .btn-meli {
             background: linear-gradient(135deg, #FFE600 0%, #FFD000 100%);
             color: #2D3277;
@@ -604,10 +628,68 @@
 
 ];
 
+        // Generar slugs únicos y limpios (minúsculas y guiones) para enlaces directos #id
+        function slugifyProductName(text) {
+            return text
+                .toString()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
+                .trim()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+
+        const usedSlugs = new Set();
+        products.forEach((product) => {
+            let baseSlug = slugifyProductName(product.name) || product.id;
+            let uniqueSlug = baseSlug;
+            let counter = 2;
+            while (usedSlugs.has(uniqueSlug)) {
+                uniqueSlug = `${baseSlug}-${counter}`;
+                counter++;
+            }
+            usedSlugs.add(uniqueSlug);
+            product.slug = uniqueSlug;
+        });
+
+        // Compartir enlace directo de un producto por WhatsApp
+        function shareProductOnWhatsapp(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const directUrl = `https://marketjunior.com/#${product.slug}`;
+            const message = `Mira este producto que vi en Market Junior: ${product.name} - ${directUrl}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // Navegación suave y resaltado breve si la URL contiene un #id
+        function scrollToAndHighlightHash() {
+            const rawHash = window.location.hash;
+            if (!rawHash || rawHash.length <= 1) return;
+
+            const targetId = decodeURIComponent(rawHash.substring(1));
+            const targetEl = document.getElementById(targetId);
+            if (!targetEl) return;
+
+            setTimeout(() => {
+                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                targetEl.classList.remove('product-highlight');
+                void targetEl.offsetWidth; // Reiniciar animación si ya existía
+                targetEl.classList.add('product-highlight');
+                setTimeout(() => {
+                    targetEl.classList.remove('product-highlight');
+                }, 2500);
+            }, 120);
+        }
+
+        window.addEventListener('hashchange', scrollToAndHighlightHash);
+
         window.addEventListener('DOMContentLoaded', async () => {
             try {
                 loadCart();
                 renderProducts();
+                scrollToAndHighlightHash();
                 await fetchBcvRate();
             } catch (err) {
                 console.error("Error al iniciar la aplicación:", err);
@@ -818,12 +900,17 @@
                 const hasStock = isProductAvailable(product);
 
                 return `
-                    <div class="product-card bg-white rounded-2xl border border-neutral-200 overflow-hidden flex flex-col justify-between p-2.5 relative group">
+                    <div id="${product.slug}" class="product-card bg-white rounded-2xl border border-neutral-200 overflow-hidden flex flex-col justify-between p-2.5 relative group">
                         ${discount > 0 ? `
                             <span class="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-md z-10 shadow-sm">
                                 -${discount}% OFF
                             </span>
                         ` : ''}
+
+                        <!-- Botón discreto de Compartir por WhatsApp -->
+                        <button type="button" onclick="event.stopPropagation(); shareProductOnWhatsapp('${product.id}')" title="Compartir producto por WhatsApp" aria-label="Compartir ${product.name} por WhatsApp" class="absolute top-3.5 right-3.5 z-10 w-7 h-7 rounded-full bg-white/90 hover:bg-emerald-500 text-neutral-600 hover:text-white border border-neutral-200/80 shadow-xs flex items-center justify-center transition-all">
+                            <i class="fa-brands fa-whatsapp text-xs"></i>
+                        </button>
 
                         <div class="cursor-pointer" onclick="openProductDetailModal('${product.id}')">
                             <div class="overflow-hidden rounded-xl bg-neutral-50 mb-2.5 aspect-square relative border border-neutral-100 flex items-center justify-center p-2">
@@ -890,8 +977,8 @@
                                         ${hasStock ? `Disponible (${product.stock} en stock)` : 'Agotado'}
                                     </span>
                                 </div>
-                                <button onclick="shareProduct('${product.id}')" class="text-xs font-bold px-2.5 py-1.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 rounded-xl transition flex items-center gap-1.5">
-                                    <i class="fa-solid fa-share-nodes"></i> Compartir
+                                <button onclick="shareProductOnWhatsapp('${product.id}')" class="text-xs font-bold px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl transition flex items-center gap-1.5">
+                                    <i class="fa-brands fa-whatsapp"></i> Compartir
                                 </button>
                             </div>
                             <h2 class="text-base sm:text-lg font-black text-neutral-900 leading-snug mb-2">${product.name}</h2>
@@ -949,17 +1036,18 @@
             const product = products.find(p => p.id === productId);
             if (!product) return;
 
+            const directUrl = `https://marketjunior.com/#${product.slug}`;
             const priceBs = formatBolivars(product.price);
             const shareData = {
                 title: product.name,
-                text: `¡MIRA ESTE PRODUCTO EN MARKET JUNIOR!\n📦 ${product.name}\n💰 $${product.price.toFixed(2)} (Bs. ${priceBs})\n`,
-                url: window.location.href
+                text: `Mira este producto que vi en Market Junior: ${product.name} - ${directUrl}\n💰 $${product.price.toFixed(2)} (Bs. ${priceBs})`,
+                url: directUrl
             };
 
             if (navigator.share) {
                 navigator.share(shareData).catch(() => {});
             } else {
-                copyToClipboard(`${shareData.text} Ver aquí: ${window.location.href}`);
+                copyToClipboard(shareData.text);
                 showToast("¡Información del producto copiada!");
             }
         }
@@ -1004,7 +1092,7 @@
                 }, 2000);
             }).catch(err => {
                 console.error("Error al copiar: ", err);
-                alert("No se pudo copiar automáticamente.");
+                showToast("No se pudo copiar automáticamente.");
             });
         }
     </script>
