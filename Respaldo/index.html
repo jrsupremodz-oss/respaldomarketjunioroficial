@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Junior | Tienda Online Venezuela</title>
+    
+    <!-- PWA & Mobile Web App Meta -->
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Market Junior">
+    
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/jpeg" href="https://i.imgur.com/HNuWYPn.jpeg">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/HNuWYPn.jpeg">
+
+    <!-- Web App Manifest Dynamic Data URI -->
+    <script>
+        const manifestData = {
+            "id": "./",
+            "name": "Market Junior Venezuela",
+            "short_name": "Market Junior",
+            "start_url": "./",
+            "display": "standalone",
+            "background_color": "#0a0a0a",
+            "theme_color": "#0a0a0a",
+            "description": "Tu tienda online de confianza en Venezuela con Tasa BCV Oficial.",
+            "icons": [
+                {
+                    "src": "https://i.imgur.com/HNuWYPn.jpeg",
+                    "sizes": "192x192",
+                    "type": "image/jpeg",
+                    "purpose": "any maskable"
+                },
+                {
+                    "src": "https://i.imgur.com/HNuWYPn.jpeg",
+                    "sizes": "512x512",
+                    "type": "image/jpeg",
+                    "purpose": "any maskable"
+                }
+            ]
+        };
+        const manifestBlob = new Blob([JSON.stringify(manifestData)], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(manifestBlob);
+        const manifestLink = document.createElement('link');
+        manifestLink.rel = 'manifest';
+        manifestLink.href = manifestURL;
+        document.head.appendChild(manifestLink);
+    </script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mj: {
+                            black: '#0a0a0a',
+                            dark: '#171717',
+                            gray: '#737373',
+                            light: '#f5f5f5',
+                            border: '#e5e5e5'
+                        },
+                        meli: {
+                            yellow: '#FFE600',
+                            blue: '#2D3277',
+                            hover: '#e6cf00'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #0a0a0a; }
+        .glass-nav { backdrop-filter: blur(12px); background-color: rgba(255, 255, 255, 0.92); }
+        .product-card { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+        .product-card:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #d1d1d1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9e9e9e; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .btn-meli {
+            background: linear-gradient(135deg, #FFE600 0%, #FFD000 100%);
+            color: #2D3277;
+            box-shadow: 0 2px 8px rgba(255, 230, 0, 0.35);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-meli:hover {
+            background: linear-gradient(135deg, #FFD000 0%, #F5C400 100%);
+            box-shadow: 0 4px 14px rgba(255, 230, 0, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .subtle-floating-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            background: rgba(255, 255, 255, 0.85);
+            color: #1a1a1a;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            padding: 10px 18px;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .subtle-floating-btn:hover {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .subtle-floating-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-black selection:text-white">
+
+    <!-- Header / Navbar Principal -->
+    <header class="sticky top-0 z-40 border-b border-neutral-200 glass-nav transition-all">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20 gap-2">
+                
+                <!-- Brand Logo & Tasa BCV Indicator -->
+                <div class="flex items-center gap-2.5 cursor-pointer group select-none" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                    <img src="https://i.imgur.com/HNuWYPn.jpeg" alt="Market Junior Logo" class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl object-cover shadow-md group-hover:scale-105 transition-transform border border-neutral-200">
+                    <div>
+                        <span class="text-base sm:text-xl font-black tracking-tight text-neutral-900 block leading-none">MARKET JUNIOR</span>
+                        <div class="flex items-center gap-1.5 mt-0.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span id="bcvStatusLabel" class="text-[10px] sm:text-[11px] tracking-wider text-neutral-500 uppercase font-bold">Tasa BCV: Cargando...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desktop Search Bar -->
+                <div class="hidden md:flex flex-1 max-w-md mx-6">
+                    <div class="relative w-full">
+                        <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Buscar entre más de 100 productos..." class="w-full pl-10 pr-4 py-2.5 bg-neutral-100 border border-transparent rounded-xl text-xs font-medium focus:outline-none focus:bg-white focus:border-black transition-all">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-neutral-400 text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- Header Action Buttons -->
+                <div class="flex items-center gap-1.5 sm:gap-2">
+                    <button onclick="shareStore()" class="flex items-center gap-1.5 text-xs font-bold px-2.5 py-2 sm:px-4 sm:py-2.5 rounded-xl border border-neutral-300 bg-white hover:bg-black hover:text-white transition-all shadow-sm" title="Compartir tienda">
+                        <i class="fa-solid fa-share-nodes text-xs"></i>
+                        <span class="hidden sm:inline text-[11px] sm:text-xs">Compartir</span>
+                    </button>
+
+                    <button onclick="openPaymentInfoModal()" class="flex items-center gap-1.5 text-xs font-bold px-2.5 py-2 sm:px-4 sm:py-2.5 rounded-xl border border-neutral-300 bg-white hover:bg-black hover:text-white transition-all shadow-sm">
+                        <i class="fa-solid fa-wallet text-xs"></i>
+                        <span class="hidden sm:inline text-[11px] sm:text-xs">Pagos Bs / $</span>
+                    </button>
+
+                    <!-- Cart Trigger Button -->
+                    <button onclick="toggleCartDrawer()" class="relative flex items-center gap-2 text-xs font-bold px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl bg-black text-white hover:bg-neutral-800 transition-all shadow-md">
+                        <i class="fa-solid fa-cart-shopping text-sm"></i>
+                        <span class="hidden sm:inline">Carrito</span>
+                        <span id="cartBadge" class="bg-emerald-500 text-white text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Search Bar -->
+            <div class="pb-3 md:hidden">
+                <div class="relative w-full">
+                    <input type="text" id="searchInputMobile" oninput="syncMobileSearch()" placeholder="Buscar en el catálogo..." class="w-full pl-9 pr-4 py-2 bg-neutral-100 border border-transparent rounded-xl text-xs font-medium focus:outline-none focus:bg-white focus:border-black">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-neutral-400 text-xs"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner Promocional -->
+    <section class="bg-black text-white py-8 sm:py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="max-w-xl text-center md:text-left">
+                <div class="inline-flex items-center gap-2 bg-neutral-900 border border-neutral-800 text-neutral-300 text-[10px] font-bold uppercase px-3 py-1 rounded-full mb-3 tracking-wider">
+                    <span>🇻🇪 Tasa Oficial BCV Actualizada • Venezuela</span>
+                </div>
+                <h1 class="text-2xl sm:text-4xl font-black tracking-tight leading-tight">
+                    Los Mejores Productos Virales y en Tendencia
+                </h1>
+                <p class="mt-2 text-neutral-400 text-xs sm:text-sm leading-relaxed">
+                    Explora nuestros productos con conversión en tiempo real a Bolívares. Realiza tu compra por WhatsApp o disfruta de envíos nacionales por Mercado Libre.
+                </p>
+                <div class="mt-4 flex flex-wrap gap-2 justify-center md:justify-start">
+                    <a href="https://wa.me/584243800296?text=¡Hola%20Market%20Junior!%20Quisiera%20consultar%20sobre%20el%20catálogo%20actual." target="_blank" class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl transition flex items-center gap-2 shadow-md text-xs">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Atencion WhatsApp
+                    </a>
+                    <button onclick="shareStore()" class="px-4 py-2.5 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-white font-bold rounded-xl transition flex items-center gap-2 text-xs">
+                        <i class="fa-solid fa-share-nodes text-xs"></i> Compartir Catálogo
+                    </button>
+                    <button onclick="openPaymentInfoModal()" class="px-4 py-2.5 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-white font-bold rounded-xl transition text-xs">
+                        Datos Pago Móvil
+                    </button>
+                </div>
+            </div>
+            
+            <div class="flex gap-3 w-full md:w-auto justify-center">
+                <div class="bg-neutral-900/90 border border-neutral-800 p-4 rounded-2xl text-center min-w-[130px]">
+                    <i class="fa-solid fa-arrows-rotate text-emerald-400 text-base mb-1"></i>
+                    <h3 id="heroRateDisplay" class="font-bold text-xs text-white">BCV: --</h3>
+                    <p class="text-[10px] text-neutral-400">Tasa automática</p>
+                </div>
+                <div class="bg-neutral-900/90 border border-neutral-800 p-4 rounded-2xl text-center min-w-[130px]">
+                    <i class="fa-solid fa-tags text-amber-400 text-base mb-1"></i>
+                    <h3 class="font-bold text-xs text-white">+100 Productos</h3>
+                    <p class="text-[10px] text-neutral-400">Ofertas activas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seccion Principal del Catálogo -->
+    <main class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+        <div class="flex items-center justify-between pb-4 mb-4 border-b border-neutral-200">
+            <span class="text-xs font-bold text-neutral-500">
+                Catálogo de Productos
+            </span>
+            <div class="flex items-center gap-3 text-xs font-bold text-neutral-500">
+                <span class="bg-neutral-200/60 px-3 py-1.5 rounded-xl text-black">
+                    Mostrando <strong id="productCount" class="font-black text-black">0</strong> productos
+                </span>
+            </div>
+        </div>
+
+        <!-- Grid de Tarjetas de Productos -->
+        <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2.5 sm:gap-4">
+            <!-- Renderizado dinámico vía JavaScript -->
+        </div>
+
+        <!-- Estado Vacio de Búsqueda -->
+        <div id="emptyState" class="hidden text-center py-16">
+            <div class="w-12 h-12 bg-neutral-100 rounded-2xl flex items-center justify-center mx-auto mb-3 text-neutral-400 text-xl">
+                <i class="fa-solid fa-box-open"></i>
+            </div>
+            <h3 class="text-sm font-bold text-neutral-800">No se encontraron productos</h3>
+            <p class="text-xs text-neutral-500 mt-1">Prueba realizando otra búsqueda.</p>
+        </div>
+    </main>
+
+    <!-- MODAL DETALLE DE PRODUCTO EXPANDIDO -->
+    <div id="productDetailModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto transition-all">
+        <div class="bg-white w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden relative border border-neutral-200 my-auto">
+            <button onclick="closeProductDetailModal()" class="absolute top-3 right-3 z-20 w-8 h-8 sm:w-9 sm:h-9 bg-neutral-900/80 hover:bg-black text-white rounded-full flex items-center justify-center transition shadow-md">
+                <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+            <div id="detailModalContent" class="p-4 sm:p-6">
+                <!-- Contenido Dinámico -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DATOS DE PAGO MÓVIL Y BANCOS -->
+    <div id="paymentInfoModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto transition-all">
+        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden relative border border-neutral-200 my-auto p-5 sm:p-6">
+            <button onclick="closePaymentInfoModal()" class="absolute top-3 right-3 z-20 w-8 h-8 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 rounded-full flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-sm"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+                <div>
+                    <h3 class="font-black text-base text-neutral-900">Métodos de Pago</h3>
+                    <p class="text-xs text-neutral-500">Aceptamos Bolívares Tasa BCV y Dólares</p>
+                </div>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <!-- Pago Móvil BNC -->
+                <div class="bg-neutral-50 border border-neutral-200 p-3.5 rounded-2xl space-y-2">
+                    <div class="flex justify-between items-center font-bold text-neutral-900 border-b border-neutral-200 pb-1.5 mb-1.5">
+                        <span class="text-emerald-600 font-black"><i class="fa-solid fa-mobile-screen"></i> Pago Móvil</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] bg-neutral-200 px-2 py-0.5 rounded-md">Bs. Tasa BCV</span>
+                            <button onclick="copiarTodoPagoMovil(this)" class="text-[11px] bg-emerald-600 hover:bg-emerald-700 text-white px-2 py-1 rounded-md transition-colors font-semibold flex items-center gap-1">
+                                📋 Copiar Todo
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center text-neutral-600">
+                        <span>Cedula:</span> 
+                        <strong id="pago-cedula" class="text-neutral-900">21271099</strong>
+                    </div>
+
+                    <div class="flex justify-between items-center text-neutral-600">
+                        <span>Banco:</span> 
+                        <strong id="pago-banco" class="text-neutral-900">BNC (0191)</strong>
+                    </div>
+
+                    <div class="flex justify-between items-center text-neutral-600">
+                        <span>Teléfono:</span> 
+                        <strong id="pago-telefono" class="text-neutral-900 font-mono">04169485195</strong>
+                    </div>
+                </div>
+
+                <!-- Divisas -->
+                <div class="bg-neutral-50 border border-neutral-200 p-3.5 rounded-2xl space-y-1">
+                    <div class="font-bold text-neutral-900 border-b border-neutral-200 pb-1.5 mb-1.5 flex justify-between">
+                        <span class="text-amber-600 font-black"><i class="fa-solid fa-dollar-sign"></i> Divisas y Efectivo</span>
+                        <span class="text-[10px] bg-neutral-200 px-2 py-0.5 rounded-md">$ USD</span>
+                    </div>
+                    <p class="text-[11px] text-neutral-600 leading-snug">Efectivo para entregas personales o acuerdos directos. Consulta disponibilidad al confirmar tu orden vía WhatsApp.</p>
+                </div>
+            </div>
+
+            <button onclick="closePaymentInfoModal()" class="w-full mt-5 py-3 bg-black text-white font-bold rounded-xl text-xs hover:bg-neutral-800 transition">
+                Entendido
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL INTEGRADO DE POLÍTICAS DE PRIVACIDAD Y TÉRMINOS -->
+    <div id="policyModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto transition-all">
+        <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden relative border border-neutral-200 my-auto flex flex-col max-h-[85vh]">
+            <div class="p-4 sm:p-5 border-b border-neutral-200 flex items-center justify-between bg-neutral-50">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-solid fa-shield-halved text-emerald-600 text-lg"></i>
+                    <h3 class="font-black text-base text-neutral-900">Políticas de Privacidad y Términos de Servicio</h3>
+                </div>
+                <button onclick="closePolicyModal()" class="w-8 h-8 bg-neutral-200 hover:bg-neutral-300 text-neutral-700 rounded-full flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+            
+            <div class="p-5 sm:p-6 overflow-y-auto space-y-5 text-xs text-neutral-700 leading-relaxed">
+                <div>
+                    <h4 class="font-black text-sm text-neutral-900 mb-2">1. POLÍTICA DE PRIVACIDAD</h4>
+                    <p class="mb-2">En <strong>Market Junior Venezuela</strong> nos tomamos muy en serio la seguridad y privacidad de nuestros clientes. No requerimos registro previo ni contraseñas para interactuar con la tienda.</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li><strong>Procesamiento de Pedidos:</strong> Al armar tu carrito y pulsar "Enviar Pedido por WhatsApp", la aplicación genera una plantilla de texto formateada con tus artículos y montos calculados en $ USD y Bolívares (Tasa BCV). Esta información se transmite exclusivamente a nuestra línea oficial de atención.</li>
+                        <li><strong>Almacenamiento Local (LocalStorage):</strong> Tu navegador guarda temporalmente los productos seleccionados en el carrito para evitar que se pierdan al recargar la página.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-black text-sm text-neutral-900 mb-2">2. TÉRMINOS Y CONDICIONES DE USO</h4>
+                    <ul class="list-disc pl-5 space-y-1.5">
+                        <li><strong>Precios y Tasa BCV:</strong> Los precios de los productos están fijados en Dólares ($) y se convierten de forma automática a Bolívares (Bs.) según la tasa oficial del Banco Central de Venezuela (BCV) del día.</li>
+                        <li><strong>Disponibilidad e Inventario:</strong> Agregar productos al carrito no garantiza la reserva exclusiva del stock hasta tanto la orden sea recibida y confirmada por nuestro equipo por WhatsApp.</li>
+                        <li><strong>Envíos y Entregas:</strong> Las compras gestionadas vía Mercado Libre se ajustan a las políticas de envío y garantías de dicha plataforma. Las entregas personales o locales se coordinan directamente vía WhatsApp.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-neutral-200 bg-neutral-50 text-right">
+                <button onclick="closePolicyModal()" class="px-5 py-2.5 bg-black text-white font-bold rounded-xl text-xs hover:bg-neutral-800 transition">
+                    Entendido y Acepto
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DRAWER LATERAL CARRITO DE COMPRAS -->
+    <div id="cartDrawer" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden transition-opacity">
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-6">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between overflow-hidden">
+                <div class="p-4 sm:p-5 bg-black text-white flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-cart-shopping text-emerald-400 text-base"></i>
+                        <h2 class="text-base font-black tracking-tight">Tu Carrito de Compras</h2>
+                    </div>
+                    <button onclick="toggleCartDrawer()" class="w-8 h-8 rounded-full bg-neutral-800 text-neutral-300 hover:text-white flex items-center justify-center transition">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <div id="cartItemsContainer" class="p-4 flex-1 overflow-y-auto space-y-3 divide-y divide-neutral-100">
+                    <!-- Productos del carrito dinámicos -->
+                </div>
+
+                <div class="p-4 sm:p-5 bg-neutral-50 border-t border-neutral-200 space-y-3">
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between items-center text-xs text-neutral-500 font-semibold">
+                            <span>Subtotal en Dólares:</span>
+                            <span id="cartSubtotalUsd" class="font-black text-black">$0.00</span>
+                        </div>
+                        <div class="flex justify-between items-end text-sm font-extrabold text-neutral-900 border-t border-neutral-200 pt-2 gap-2">
+                            <span class="text-xs sm:text-sm">Total Estimado (BCV):</span>
+                            <div class="text-right min-w-0 flex-1 overflow-hidden">
+                                <span id="cartTotalBs" class="block text-emerald-600 font-black text-sm sm:text-base truncate">Bs. 0,00</span>
+                                <span id="cartTotalUsd" class="block text-[11px] text-neutral-400 font-bold truncate">$0.00 USD</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a id="cartWhatsappBtn" href="#" target="_blank" onclick="sendCartToWhatsapp(event)" class="w-full py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-black rounded-xl transition flex items-center justify-center gap-2 shadow-lg text-xs uppercase tracking-wider">
+                        <i class="fa-brands fa-whatsapp text-base"></i> Enviar Pedido por WhatsApp
+                    </a>
+                    
+                    <button onclick="clearCart()" class="w-full text-[11px] text-neutral-400 hover:text-red-600 font-bold text-center transition py-1">
+                        Vaciar Carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICACIONES -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-black text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-neutral-800">
+            <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
+            <span id="toastMessage" class="text-xs font-bold">Mensaje de notificación</span>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-black text-white border-t border-neutral-800 py-8 px-4 sm:px-6 lg:px-8 mt-12">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+            <div class="flex items-center gap-3">
+                <img src="https://i.imgur.com/HNuWYPn.jpeg" class="w-8 h-8 rounded-lg border border-neutral-700">
+                <div>
+                    <span class="font-black text-sm block leading-none">MARKET JUNIOR</span>
+                    <span class="text-[10px] text-neutral-400">Tienda Online Oficial en Venezuela</span>
+                </div>
+            </div>
+            
+            <p class="text-[11px] text-neutral-500">
+                Tasa referencial: <strong id="footerBcvDisplay" class="text-neutral-300">Cargando...</strong> • Todos los derechos reservados.
+            </p>
+
+            <div class="flex items-center gap-4 text-xs font-bold">
+                <button onclick="openPolicyModal()" class="text-neutral-400 hover:text-white transition">Políticas y Términos</button>
+                <a href="https://wa.me/584243800296" target="_blank" class="text-emerald-400 hover:text-emerald-300">WhatsApp</a>
+                <a href="https://www.mercadolibre.com.ve/pagina/market_junior#from=share_eshop" target="_blank" class="text-amber-400 hover:text-amber-300">Mercado Libre</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LÓGICA JAVASCRIPT INTEGRADA -->
+    <script>
+        const WHATSAPP_NUMBER = "584243800296";
+        let currentBcvRate = 36.50;
+        let cart = [];
+        let searchQuery = "";
+        let hasOpenedCartFirstTime = false;
+
+        /*
+          NOTA DE USO:
+          - Cada producto tiene un ID UNICO (prod_1, prod_2, prod_3... prod_21).
+          - Para activar o desactivar la disponibilidad de un producto manualmente,
+            simplemente cambia: 
+              inStock: true  (Disponible)
+              inStock: false (Agotado / Desactivado)
+        */
+    const products = [
+    { id: "prod_1", name: "Pinceles Liner Para Manicure Arte Ultradelgado 5 Piezas", price: 7.99, originalPrice: 0, stock: 6, inStock: true, image: "https://i.imgur.com/JferB8c.png", description: "Eleva tus habilidades de manicure con los Pinceles Liner para Arte Ultradelgado. Este conjunto de 5 pinceles está diseñado para proporcionar la precisión necesaria en detalles finos y elaboraciones intricadas, permitiendo que tu creatividad fluya ...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-813269324-pinceles-liner-para-manicure-arte-ultradelgado-5-piezas_JM" },
+    { id: "prod_2", name: "Peluche De Jesús Que Respira, Música, Y Luz", price: 45.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/d7Q8WEa.png", description: "Experimenta la magia de un peluche que cobra vida con el Peluche de Jesús que respira. Con un diseño encantador, este peluche de 30 cm combina calidez y ternura, convirtiéndose en el compañero ideal para niños y adultos que buscan un toque especia...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-874302818-peluche-de-jess-que-respira-msica-y-luz_JM" },
+    { id: "prod_3", name: "Espejos Punto Ciego 360 Grados Retrovisor Ojo De Pez 2 Pcs", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/Om7BjRR.png", description: "Potencia tu seguridad al conducir con los espejos punto ciego 360 grados. Este set incluye dos espejos de retrovisor tipo ojo de pez, diseñados para proporcionarte una visión amplia y sin obstáculos en cada cambio de carril. La marca Nueva garanti...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1015300394-espejos-punto-ciego-360-grados-retrovisor-ojo-de-pez-2-pcs_JM" },
+    { id: "prod_4", name: "Reloj De Pared Adhesivo 40 X 40cm Analógico", price: 8.99, originalPrice: 0, stock: 4, inStock: true, image: "https://i.imgur.com/UkHoZAF.jpeg", description: "Transforma tu espacio con el Reloj de Pared Adhesivo Analógico de 40 x 40 cm. Este elegante reloj, de diseño clásico, se adapta perfectamente a cualquier ambiente, ya sea en tu hogar, oficina o sala de estar. Su diámetro de 40 cm lo convierte en u...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-813270250-reloj-de-pared-adhesivo-40-x-40cm-analgico_JM" },
+    { id: "prod_5", name: "Bolígrafo De Broma Choque Eléctrico Lapicero Juguete", price: 9.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/tWTNeYM.jpeg", description: "La diversión y la risa llegan con este bolígrafo de broma que provoca un ligero choque eléctrico. Diseñado específicamente para los más jóvenes, este juguete es perfecto para hacer chascos a amigos y familiares. Con un mecanismo ingenioso, garanti...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-777159703-bolgrafo-de-broma-choque-elctrico-lapicero-juguete_JM" },
+    { id: "prod_6", name: "Pasamontañas Balaclava Para Motorizado Ajustable Elástica", price: 6.99, originalPrice: 0, stock: 4, inStock: true, image: "https://i.imgur.com/BtX5ZSD.png", description: "La balaclava ajustable elástica de la marca Nueva es la elección perfecta para quienes disfrutan de actividades al aire libre y motociclismo. Diseñada para ofrecer comodidad y funcionalidad, este pasamontañas se adapta a diferentes formas de rostr...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-997163444-pasamontaas-balaclava-para-motorizado-ajustable-elstica_JM" },
+    { id: "prod_7", name: "Funda Protectora Para Moto Forro Impermeable Contra El Sol Gris", price: 8.99, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/xn6kHQs.jpeg", description: "La funda protectora Coprimoto Classic está pensada para resguardar tu moto o cuatriciclo frente a las condiciones del día a día, como el sol, la humedad y el polvo. Fabricada en polietileno y con protección UV, ayuda a conservar el exterior del ve...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1020880180-funda-protectora-para-moto-forro-impermeable-contra-el-sol-gris_JM" },
+    { id: "prod_8", name: "Máscara Antifaz Con Auriculares Inalámbricos Bluetooth", price: 14.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/Mr7RsDU.png", description: "Descubre la experiencia única de relajación y desconexión con la Máscara Antifaz con Auriculares inalámbricos Bluetooth. Diseñada para quienes buscan un momento de paz, esta máscara combina la comodidad de un antifaz suave con la tecnología de aud...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-774992303-mscara-antifaz-con-auriculares-inalambricos-bluetooth_JM" },
+    { id: "prod_9", name: "Banda Elástica Con Auriculares Bluetooth Descanso Y Deportes", price: 15.99, originalPrice: 0, stock: 3, inStock: true, image: "https://i.imgur.com/dKOkIJb.png", description: "Experimenta la libertad de movimiento con la banda elástica con auriculares Bluetooth, diseñada para aquellos que buscan comodidad y un sonido excepcional durante sus actividades. Ideal para el descanso y el deporte, esta banda se adapta perfectam...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-876770988-banda-elstica-con-auriculares-bluetooth-descanso-y-deportes_JM" },
+    { id: "prod_10", name: "Juguete Antiestres 4 Teclas Botonera Iluminación Led Llavero", price: 8.99, originalPrice: 0, stock: 4, inStock: true, image: "https://i.imgur.com/OPw4BBj.jpeg", description: "El juguete antiestrés de 4 teclas con iluminación led y formato llavero está pensado para acompañar el día a día de niños y niñas de 8 a 13 años. Su diseño compacto permite llevarlo en mochilas, bolsos o junto a las llaves, ofreciendo una forma se...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1019851294-juguete-antiestres-4-teclas-botonera-iluminacin-led-llavero_JM" },
+    { id: "prod_11", name: "Collar Elegante Para Dama Estilo Gargantilla Cuadrado", price: 6.99, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/6S5n7Nd.png", description: "Collar elegante para dama estilo gargantilla cuadrado.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-768108285-collar-elegante-para-dama-estilo-gargantilla-cuadrado_JM" },
+    { id: "prod_12", name: "Medidor De Presión De Aire Cauchos Calibrador 150 Psi Manual", price: 10.99, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/2n0nPbH.png", description: "Medidor de presión de aire para cauchos calibrador 150 psi manual.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1013430858-medidor-de-presin-de-aire-cauchos-calibrador-150-psi-manual_JM" },
+    { id: "prod_13", name: "Cuchillo De Juguete Viral Retractil Broma Juego", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/tktcXrb.png", description: "Cuchillo de juguete viral retractil broma juego.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1013818160-cuchillo-de-juguete-viral-retractil-broma-juego-_JM" },
+    { id: "prod_14", name: "Juego De 7 Piezas Palillos Dental Reutilizables Acero Inoxid", price: 8.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/Vo5Thtw.png", description: "Juego de 7 piezas palillos dental reutilizables acero inoxidable.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1020038266-juego-de-7-piezas-palillos-dental-reutilizables-acero-inoxid_JM" },
+    { id: "prod_15", name: "Chicle Goma De Broma Jueguete Descarga Eléctrica Corriente", price: 10.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/Uoh34vZ.png", description: "Chicle goma de broma jueguete descarga eléctrica corriente.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-778121251-chicle-goma-de-broma-jueguete-descarga-electrica-corriente-_JM" },
+    { id: "prod_16", name: "Escaner Automotriz V519 Herramienta De Diagnóstico De Fallas", price: 45.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/TCf89fY.png", description: "Escaner automotriz V519 herramienta de diagnóstico de fallas.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1009964170-escaner-automotriz-v519-herramienta-de-diagnstico-de-fallas_JM" },
+    { id: "prod_17", name: "Pinceles Liner Para Manicure Arte Ultradelgado Kit 5 Piezas", price: 7.99, originalPrice: 0, stock: 5, inStock: true, image: "https://i.imgur.com/ruCmXGb.png", description: "Pinceles liner para manicure arte ultradelgado kit 5 piezas.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1027611384-pinceles-liner-para-manicure-arte-ultradelgado-kit-5-piezas_JM" },
+    { id: "prod_18", name: "Lámpara Plana Led Antipolvo 60w Luz Blanca 120 Cm X 6 Cm", price: 11.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/M2eDYn9.png", description: "Lámpara plana led antipolvo 60w luz blanca 120 cm x 6 cm.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-774927431-lmpara-plana-led-antipolvo-60w-luz-blanca-120-cm-x-6-cm_JM" },
+    { id: "prod_19", name: "Reloj Vintage Clásico Cuadrado Acero Inoxidable Unisex", price: 9.99, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/VQmiD2f.png", description: "Reloj vintage clásico cuadrado acero inoxidable unisex.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-776201547-reloj-vintage-cl-sico-cuadrado-acero-inoxidable-unisex_JM" },
+    { id: "prod_20", name: "Kit Limpiador De Oidos 6 Piezas Portátil Llavero Inoxidable", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/yjGHDih.png", description: "Kit limpiador de oidos 6 piezas portátil llavero inoxidable.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-813615064-kit-limpiador-de-oidos-6-piezas-porttil-llavero-inoxidable_JM" },
+    { id: "prod_21", name: "Corrector De Postura Ajustable Lumbar M", price: 14.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/90Uq5DH.png", description: "Corrector de postura ajustable lumbar M.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-969662446-corrector-de-postura-ajustable-lumbar-m_JM" },
+    { id: "prod_22", name: "Limpiador De Oidos Kit 6 Piezas Manual Llavero Inoxidable", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/X3AiVKA.png", description: "Limpiador de oidos kit 6 piezas manual llavero inoxidable.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-999018234-limpiador-de-oidos-kit-6-piezas-manual-llavero-inoxidable_JM" },
+    { id: "prod_23", name: "Mini Encendedor Eléctrico Tipo C Se Conecta Se Sopla", price: 6.59, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/aWRtcsr.png", description: "Mini encendedor eléctrico tipo C se conecta se sopla.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1013892550-mini-encendedor-elctrico-tipo-c-se-conecta-se-sopla_JM" },
+    { id: "prod_24", name: "Mini Báscula De Precisión De Bolsillo 0.01g/ 500g Peso", price: 9.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/QCXgd3a.png", description: "Mini báscula de precisión de bolsillo 0.01g/ 500g peso.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1019876724-mini-b-scula-de-precisin-de-bolsillo-001g-500g-peso_JM" },
+    { id: "prod_25", name: "Mini Peso Gramera Balanza Digital De Precisión 0.01g/500g", price: 10.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/from9hm.png", description: "Mini peso gramera balanza digital de precisión 0.01g/500g.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1024433524-mini-peso-gramera-balanza-digital-de-precisin-001g500g_JM" },
+    { id: "prod_26", name: "Probador De Batería Digital Para Vehículo Y Moto Diagnóstico", price: 12.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/wFijB5H.png", description: "Probador de batería digital para vehículo y moto diagnóstico.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1024466250-probador-de-batera-digital-para-vehculo-y-moto-diagnstico_JM" },
+    { id: "prod_27", name: "Forro Funda Asiento De Moto Protector Malla Ajustable Grande", price: 9.8, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/Mldnqj1.png", description: "Forro funda asiento de moto protector malla ajustable grande.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1026544642-forro-funda-asiento-de-moto-protector-malla-ajustable-grande_JM" },
+    { id: "prod_28", name: "Kit Reparación De Caucho Anti Pinchazo Carro Y Moto", price: 5.99, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/F3vzQQz.png", description: "Kit reparación de caucho anti pinchazo carro y moto.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1026726304-kit-reparacin-de-caucho-anti-pinchazo-carro-y-moto_JM" },
+    { id: "prod_29", name: "Espejos Punto Ciego 360 Grados Retrovisor Ojo De Pez 2 Pcs", price: 7.99, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/JUhggd0.png", description: "Espejos punto ciego 360 grados retrovisor ojo de pez 2 pcs.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1027789814-espejos-punto-ciego-360-grados-retrovisor-ojo-de-pez-2-pcs_JM" },
+    { id: "prod_30", name: "Multímetro Digital Sz308 Medidor De Corriente Ca/cc Tester", price: 12.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/GXzkmvi.png", description: "Multímetro digital Sz308 medidor de corriente ca/cc tester.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-778133341-multmetro-digital-sz308-medidor-de-corriente-cacc-tester_JM" },
+    { id: "prod_31", name: "Timbre Campana De Mesa Toque Restaurant Navideño Ring", price: 7.99, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/5p3WpVT.png", description: "Timbre campana de mesa toque restaurant navideño ring.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-780964197-timbre-campana-de-mesa-toque-restaurant-navideno-ring_JM" },
+    { id: "prod_32", name: "Auxiliar Bluetooth Para Vehículos Musica Carro Inalámbrico", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/DUuZgpc.png", description: "Auxiliar bluetooth para vehículos musica carro inalámbrico.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-813310442-auxiliar-bluetooth-para-vehculos-musica-carro-inalmbrico_JM" },
+    { id: "prod_33", name: "Adaptador Bluetooth Para Vehículos Auxiliar Inalámbrico Usb", price: 7, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/04EfNIO.png", description: "Adaptador bluetooth para vehículos auxiliar inalámbrico usb.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-817326762-adaptador-bluetooth-para-vehculos-auxiliar-inalmbrico-usb_JM" },
+    { id: "prod_34", name: "Pizarra Iluminación Luz Led Transparente Adorno", price: 10.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/p5AYdtY.png", description: "Pizarra iluminación luz led transparente adorno.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-817326812-pizarra-iluminacin-luz-led-transparente-adorno_JM" },
+    { id: "prod_35", name: "Kit Reloj Para Dama Blanco Pulsera De Flor Girasol Sin Caja Blanco", price: 15.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/zbUEX8G.png", description: "Kit reloj para dama blanco pulsera de flor girasol sin caja blanco.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-876758242-kit-reloj-para-dama-blanco-pulsera-de-flor-girasol-sin-caja-blanco_JM" },
+    { id: "prod_36", name: "Collar Para Dama Cerezas Con Sus Zarcillos", price: 8.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/k5XDabw.png", description: "Collar para dama cerezas con sus zarcillos.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-876866318-collar-para-dama-cerezas-con-sus-zarcillos_JM" },
+    { id: "prod_37", name: "Tapa Válvula Caucho Brilla En La Oscuridad Fluorescente 4 Pc", price: 4.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/FgoHqQ4.png", description: "Tapa válvula caucho brilla en la oscuridad fluorescente 4 pc.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-980275414-tapa-vlvula-caucho-brilla-en-la-oscuridad-fluorescente-4-pc_JM" },
+    { id: "prod_38", name: "Rodillo Guasha Masajeador Facial Cuidado De La Piel Y Salud Negro", price: 9.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/mNTzqHw.png", description: "Rodillo guasha masajeador facial cuidado de la piel y salud negro.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-994216756-rodillo-guasha-masajeador-facial-cuidado-de-la-piel-y-salud-negro_JM" },
+    { id: "prod_39", name: "Encendedor De Arco Eléctrico Cocina Usb Flexible Recargable", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/d0563BF.png", description: "Encendedor de arco eléctrico cocina usb flexible recargable.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-998853204-encendedor-de-arco-elctrico-cocina-usb-flexible-recargable_JM" },
+    { id: "prod_40", name: "Kit Destornillador 115 Piezas Para Piezas Pequeña Y Mediana", price: 12.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/z1G3TW5.png", description: "Kit destornillador 115 piezas para piezas pequeña y mediana.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1000777792-kit-destornillador-115-piezas-para-piezas-pequea-y-mediana_JM" },
+    { id: "prod_41", name: "Triangulo De Emergencia Recargable Luz Led/ Power Bank/solar", price: 18.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/HVCPpPt.png", description: "Triangulo de emergencia recargable luz led/ power bank/solar.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1006157514-triangulo-de-emergencia-recargable-luz-led-power-banksolar_JM" },
+    { id: "prod_42", name: "Kit De Mini Destornilladores De Alta Precisión 6 Piezas", price: 5.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/erWz8ua.png", description: "Kit de mini destornilladores de alta precisión 6 piezas.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1010954354-kit-de-mini-destornilladores-de-alta-precisin-6-piezas_JM" },
+    { id: "prod_43", name: "Llave Allen Grupo Llaves Hexagonal Set 10 Pcs Herramientas", price: 5.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/7YPt87c.png", description: "Llave allen grupo llaves hexagonal set 10 pcs herramientas.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1013395320-llave-allen-grupo-llaves-hexagonal-set-10-pcs-herramientas_JM" },
+    { id: "prod_44", name: "Smartwatch Reloj Inteligente T900 Ultra 2 Big Nfc Inalámbric Naranja Claro", price: 26.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/jIvwuUF.png", description: "Smartwatch reloj inteligente T900 Ultra 2 Big Nfc inalámbric naranja claro.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1013395446-smartwatch-reloj-inteligente-t900-ultra-2-big-nfc-inalambric-naranja-claro-_JM" },
+    { id: "prod_45", name: "Llave Herramienta Tigre 360 Grados Multifuncional 48 En 1", price: 11, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/E4lIzB0.png", description: "Llave herramienta tigre 360 grados multifuncional 48 en 1.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1013733818-llave-herramienta-tigre-360-grados-multifuncional-48-en-1_JM" },
+    { id: "prod_46", name: "X15 Tws Auriculares Inalámbricos Audífonos Con Luz Led", price: 10.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/cr7CsKL.png", description: "X15 Tws auriculares inalámbricos audífonos con luz led.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1013818224-x15-tws-auriculares-inalambricos-audifonos-con-luz-led-_JM" },
+    { id: "prod_47", name: "Hand Grip Ejercicio De Mano Muñeca Y Antebrazo Repetidor", price: 7.6, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/CG1sp7U.png", description: "Hand grip ejercicio de mano muñeca y antebrazo repetidor.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1013818264-hand-grip-ejercicio-de-mano-mueca-y-antebrazo-repetidor_JM" },
+    { id: "prod_48", name: "Lentes De Seguridad Protección Transparente 3 Unidades", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/axTOIiO.png", description: "Lentes de seguridad protección transparente 3 unidades.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1015020812-lentes-de-seguridad-proteccin-transparente-3-unidades_JM" },
+    { id: "prod_49", name: "Nivel De Burbujas 3 Posiciones 50 Cm Plástico Amarillo Pro", price: 5.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/chJKDpk.png", description: "Nivel de burbujas 3 posiciones 50 cm plástico amarillo pro.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1015334004-nivel-de-burbujas-3-posiciones-50-cm-plstico-amarillo-pro_JM" },
+    { id: "prod_50", name: "Termómetro Digital Para Cocina Temperatura Precisa Blanco", price: 5.99, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/mAcTVPz.png", description: "Termómetro digital para cocina temperatura precisa blanco.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1016132046-termmetro-digital-para-cocina-temperatura-precisa-blanco_JM" },
+    { id: "prod_51", name: "Linterna Frontal De Cabeza Potente Luz Led Recargable", price: 9, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/ogURflS.png", description: "Linterna frontal de cabeza potente luz led recargable.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1019863974-linterna-frontal-de-cabeza-potente-luz-led-recargable_JM" },
+    { id: "prod_52", name: "Bolsa De Desechos Para Mascotas Portátil Kit 6 Pack De 15und", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/bd5abwd.png", description: "Bolsa de desechos para mascotas portátil kit 6 pack de 15und.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1021445282-bolsa-de-desechos-para-mascotas-porttil-kit-6-pack-de-15und_JM" },
+    { id: "prod_53", name: "Sistema Venta Inventario Por Suscripción Escaner De Barra", price: 2.99, originalPrice: 0, stock: 20, inStock: true, image: "https://i.imgur.com/aaEJSnF.png", description: "Sistema venta inventario por suscripción escaner de barra.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1024451832-sistema-venta-inventario-por-suscripcin-escaner-de-barra_JM" },
+    { id: "prod_54", name: "Medidor De Presión De Aire Cauchos Neumáticos De Aguja", price: 8.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/iUTEtOR.png", description: "Medidor de presión de aire cauchos neumáticos de aguja.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1024465990-medidor-de-presin-de-aire-cauchos-neumticos-de-aguja_JM" },
+    { id: "prod_55", name: "Pinza Amperimétrica Multímetro Digital Ncv St181", price: 29.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/BXQG8JN.png", description: "Pinza amperimétrica multímetro digital Ncv St181.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1026544416-pinza-amperimtrica-multmetro-digital-ncv-st181_JM" },
+    { id: "prod_56", name: "Par Espejo Retrovisor Ojo De Pez Punto Ciego Cuadrado", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/uR4jiFf.png", description: "Par espejo retrovisor ojo de pez punto ciego cuadrado.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1026545040-par-espejo-retrovisor-ojo-de-pez-punto-ciego-cuadrado_JM" },
+    { id: "prod_57", name: "Multímetro Digital Tester Herramientas De Medición Voltaje", price: 12.99, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/SwFaz8L.png", description: "Multímetro digital tester herramientas de medición voltaje.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1027312732-multmetro-digital-tester-herramientas-de-in-de-voltaje_JM" },
+    { id: "prod_58", name: "Lentes Gafas De Sol Protección Rayos Uv Para Conductores", price: 8.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/rH7jQ0y.png", description: "Lentes gafas de sol protección rayos uv para conductores.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1028294414-lentes-gafas-de-sol-proteccin-rayos-uv-para-conductores_JM" },
+    { id: "prod_59", name: "Mini Encendedor Tipo C Portátil Enciende Con Soplido Portáti", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/cZfh4yi.png", description: "Mini encendedor tipo C portátil enciende con soplido portátil.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1028334608-mini-encendedor-tipo-c-porttil-enciende-con-soplido-portati_JM" },
+    { id: "prod_60", name: "Pinceles Liner Para Manicure Kit Arte Ultradelgado 5 Piezas", price: 7.99, originalPrice: 0, stock: 3, inStock: true, image: "https://i.imgur.com/f3aEPfv.png", description: "Pinceles liner para manicure kit arte ultradelgado 5 piezas.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1028368868-pinceles-liner-para-manicure-kit-arte-ultradelgado-5-piezas_JM" },
+    { id: "prod_61", name: "Guante Microfibra De Limpieza Manopla Para Lavar Absorbente", price: 5.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/aWxmrZN.png", description: "Guante microfibra de limpieza manopla para lavar absorbente.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029388406-guante-microfibra-de-limpieza-manopla-para-lavar-absorbente-_JM" },
+    { id: "prod_62", name: "Limpiador De Oido Kit Con Camara Y Luz Inalámbrico Portátil", price: 18.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/lJ86HYd.png", description: "Limpiador de oido kit con camara y luz inalámbrico portátil.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029450204-limpiador-de-oido-kit-con-camara-y-luz-inalmbrico-porttil_JM" },
+    { id: "prod_63", name: "Kit De Herramientas 1/4 Rachet 46 Piezas Destornilladores", price: 12.99, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/54joA0x.png", description: "Kit de herramientas 1/4 rachet 46 piezas destornilladores.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-768057003-kit-de-herramientas-14-rachet-46-piezas-destornilladores_JM" },
+    { id: "prod_64", name: "Auriculares Tws Pro 60 Inalambrico Bluetooth Audífonos", price: 12.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/p4K1vpd.png", description: "Auriculares Tws Pro 60 inalambrico bluetooth audífonos.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-774888377-auriculares-tws-pro-60-inalmbrico-bluetooth-audfonos_JM" },
+    { id: "prod_65", name: "Collar De Dama Dorado Estilo Cadena Cubano Moda", price: 9.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/eRAZR7l.png", description: "Collar de dama dorado estilo cadena cubano moda.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-774903675-collar-de-dama-dorado-estilo-cadena-cubano-moda_JM" },
+    { id: "prod_66", name: "Kit De Mini Pinceles Brochas Para Maquillaje 8 Piezas", price: 5.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/J5fqlB1.png", description: "Kit de mini pinceles brochas para maquillaje 8 piezas.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-774942519-kit-de-mini-pinceles-brochas-para-maquillaje-8-piezas_JM" },
+    { id: "prod_67", name: "Amolador De Cuchillos Y Tijera Profesional Afilador 22cm", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/GkWG6Rd.png", description: "Amolador de cuchillos y tijera profesional afilador 22cm.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-775486933-amolador-de-cuchillos-y-tijera-profesional-afilador-22cm-_JM" },
+    { id: "prod_68", name: "Audífonos Inalámbricos T2 Tws Auriculares Pantalla Digital Negro", price: 8.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/YYkARD8.png", description: "Audífonos inalámbricos T2 Tws auriculares pantalla digital negro.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-775884449-audfonos-inalmbricos-t2-tws-auriculares-pantalla-digital-negro_JM" },
+    { id: "prod_69", name: "Kit Mini Destornilladores De Alta Precisión 31 En 1", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/lAtOOdt.png", description: "Kit mini destornilladores de alta precisión 31 en 1.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-776331235-kit-mini-destornilladores-de-alta-precision-31-en-1-_JM" },
+    { id: "prod_70", name: "Kit De Llave Allen Y Destornillador Diferentes Piezas", price: 5, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/WDiHafD.png", description: "Kit de llave allen y destornillador diferentes piezas.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-778046837-kit-de-llave-allen-y-destornillador-diferentes-piezas_JM" },
+    { id: "prod_71", name: "Par Collar De Pareja Imantado Refleja Te Amo En 100 Idiomas", price: 11.99, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/tPoitF8.png", description: "Par collar de pareja imantado refleja te amo en 100 idiomas.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-778107565-par-collar-de-pareja-imantado-refleja-te-amo-en-100-idiomas_JM" },
+    { id: "prod_72", name: "Caja De Broma Sorpresa Juguete Pequeña Mano Dedo Medio R", price: 9.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/tCUWfqW.png", description: "Caja de broma sorpresa juguete pequeña mano dedo medio R.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-778120159-caja-de-broma-sorpresa-juguete-pequea-mano-dedo-medio-r_JM" },
+    { id: "prod_73", name: "Triturador De Ajo Manual Acero Inoxidable Para Cocina", price: 5.98, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/llvJUwS.png", description: "Triturador de ajo manual acero inoxidable para cocina.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-778133161-triturador-de-ajo-manual-acero-inoxidable-para-cocina_JM" },
+    { id: "prod_74", name: "Micrófono Inalámbrico Dual Lavalier Tipo C Cancelación Ruido", price: 10.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/biDG2nM.png", description: "Micrófono inalámbrico dual lavalier tipo C cancelación ruido.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-778133983-micrfono-inalmbrico-dual-lavalier-tipo-c-cancelacin-ruido_JM" },
+    { id: "prod_75", name: "Base Para Tubo Led T8 Luz Led Soporte 60 Cm", price: 5, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/O2BogRF.png", description: "Base para tubo led T8 luz led soporte 60 cm.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-778468457-base-para-tubo-led-t8-luz-led-soporte-60-cm-_JM" },
+    { id: "prod_76", name: "Red Elástica Para Moto Malla Para Carga Amarre 30 X 30 Cm", price: 5.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/aeZCl9l.png", description: "Red elástica para moto malla para carga amarre 30 x 30 cm.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-778673859-red-elstica-para-moto-malla-para-carga-amarre-30-x-30-cm_JM" },
+    { id: "prod_77", name: "Cinta Kinesióloga Vendaje Autoadhesivo Elástica 5cm X 5m", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/WolNaNO.png", description: "Cinta kinesióloga vendaje autoadhesivo elástica 5cm x 5m.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-778724639-cinta-kinesiloga-vendaje-autoadhesivo-elstica-5cm-x-5m_JM" },
+    { id: "prod_78", name: "Barra De Luz Led Recargable Con Sensor 50 Cm", price: 6.99, originalPrice: 0, stock: 10, inStock: true, image: "https://i.imgur.com/36X0Dnw.png", description: "Barra de luz led recargable con sensor 50 cm.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-779099869-barra-de-luz-led-recargable-con-sensor-30-cm_JM" },
+    { id: "prod_79", name: "Peso Digital Báscula De Cocina 10kg. 0.1g Precisión Blanco 10 Kg", price: 8.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/dbzz3E8.png", description: "Peso digital báscula de cocina 10kg. 0.1g precisión blanco 10 Kg.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-779115513-peso-digital-b-scula-de-cocina-10kg-01g-precisin-blanco-10-kg_JM" },
+    { id: "prod_80", name: "Lector De Tarjeta Memoria 5 En 1 Multifuncional", price: 8.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/B4qc8X6.png", description: "Lector de tarjeta memoria 5 en 1 multifuncional.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-779469001-lector-de-tarjeta-memoria-5-en-1-multifuncional_JM" },
+    { id: "prod_81", name: "Manometro Mini Medidor De Presión De Cauchos Portátil", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/dczp5pX.png", description: "Manometro mini medidor de presión de cauchos portátil.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-779505095-manometro-mini-medidor-de-presin-de-cauchos-porttil_JM" },
+    { id: "prod_82", name: "Separador Dedos De Pie De Silicona Goma 2 Pcs", price: 8.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/a1R0RSD.png", description: "Separador dedos de pie de silicona goma 2 pcs.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-779505223-separador-dedos-de-pie-de-silicona-goma-2-pcs_JM" },
+    { id: "prod_83", name: "Bomba De Succión Para Desoldar Estaño Herramienta Extraccion", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/1LQuASi.png", description: "Bomba de succión para desoldar estaño herramienta extraccion.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-779557171-bomba-de-succin-para-desoldar-esta-herramienta-extraccion_JM" },
+    { id: "prod_84", name: "Cautín Para Soldar Estaño 40w Herramienta", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/KDVuwY0.png", description: "Cautín para soldar estaño 40w herramienta.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-780490485-cautn-para-soldar-esta-40w-herramienta_JM" },
+    { id: "prod_85", name: "Bluetooth Para Pc Adaptador Usb 5.3 Teclado Y Mouse", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/m2ljkW3.png", description: "Bluetooth para pc adaptador usb 5.3 teclado y mouse.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-780494081-bluetooth-para-pc-adaptador-usb-53-teclado-y-mouse_JM" },
+    { id: "prod_86", name: "Kit Regalo Para Dama Reloj Piezas Zarcillos Anillo Pulsera", price: 12.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/UwTXr4i.png", description: "Kit regalo para dama reloj piezas zarcillos anillo pulsera.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-780873949-kit-regalo-para-dama-reloj-piezas-zarcillos-anillo-pulsera_JM" },
+    { id: "prod_87", name: "Balaclava Para Motorizado Antitranspiranble Ajustable", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/cN6dy8Q.png", description: "Balaclava para motorizado antitranspiranble ajustable.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-780886649-balaclava-para-motorizado-antitranspiranble-ajustable-_JM" },
+    { id: "prod_88", name: "Rompecabezas De Mario Juguete Antiestres Juego Armable", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/BPOCGnj.png", description: "Rompecabezas de mario juguete antiestres juego armable.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781207109-rompecabezas-de-mario-juguete-antiestres-juego-armable_JM" },
+    { id: "prod_89", name: "Peluche Conejo Que Respira Con Cierre Luz Led Y Musica", price: 48, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/bV625C1.png", description: "Peluche conejo que respira con cierre luz led y musica.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781219847-peluche-conejo-que-respira-con-cierre-luz-led-y-musica_JM" },
+    { id: "prod_90", name: "Collar De Pareja Sol Y Luna Refleja Brilla Te Amo 100 Idioma", price: 11.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/nwCf68r.png", description: "Collar de pareja sol y luna refleja brilla te amo 100 idioma.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781219871-collar-de-pareja-sol-y-luna-refleja-brilla-te-amo-100-idioma_JM" },
+    { id: "prod_91", name: "Mini Llavero Juego Funcional Clásico Retro", price: 8.88, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/LbMyU3F.png", description: "Mini llavero juego funcional clásico retro.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781232691-mini-llavero-juego-funcional-clsico-retro_JM" },
+    { id: "prod_92", name: "Scuishys Banana Cambur Juguete Flexible Antiestres Platano", price: 11.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/2Jwqs1G.png", description: "Scuishys banana cambur juguete flexible antiestres platano.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781245445-scuishys-banana-cambur-juguete-flexible-antiestres-platano_JM" },
+    { id: "prod_93", name: "Repetidor Wifi Usb Antena Inalámbrico Portátil 300mb 2.4g", price: 12.99, originalPrice: 0, stock: 0, inStock: false, image: "https://i.imgur.com/kjVuZZI.png", description: "Repetidor wifi usb antena inalámbrico portátil 300mb 2.4g.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781245729-repetidor-wifi-usb-antena-inalmbrico-porttil-300mb-24g_JM" },
+    { id: "prod_94", name: "Rompecabezas De Iron Hombre Juguete Antiestres Juego Armable", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/SEpdFkN.png", description: "Rompecabezas de iron hombre juguete antiestres juego armable.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781245783-rompecabezas-de-iron-hombre-juguete-antiestres-juego-armable_JM" },
+    { id: "prod_95", name: "Herramienta Manual Destornillador Bicicleta Desplegable", price: 7.99, originalPrice: 0, stock: 3, inStock: true, image: "https://i.imgur.com/45aYkay.png", description: "Herramienta manual destornillador bicicleta desplegable.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-813143250-herramienta-manual-destornillador-bicicleta-desplegable_JM" },
+    { id: "prod_96", name: "Collar Estiló Piel De Serpiente Plateado", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/JKr77m7.png", description: "Collar estiló piel de serpiente plateado.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-876836352-collar-estil-piel-de-serpiente-plateado_JM" },
+    { id: "prod_97", name: "Herramientas Juego De Dados 12 Piezas Ratchet 1/2", price: 29.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/6PVjRJc.png", description: "Herramientas juego de dados 12 piezas ratchet 1/2.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-964322552-herramientas-juego-de-dados-12-piezas-ratchet-12_JM" },
+    { id: "prod_98", name: "Herramientas Juego De Dados 12 Piezas Ratchet 1/2 Matraca", price: 19.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/JLXHJ41.png", description: "Herramientas juego de dados 12 piezas ratchet 1/2 matraca.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-965134216-herramientas-juego-de-dados-12-piezas-ratchet-12-matraca_JM" },
+    { id: "prod_99", name: "Juego De Llaves Herramientas 6 Piezas.6-17 Mm", price: 8.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/ChSros8.png", description: "Juego de llaves herramientas 6 piezas.6-17 mm.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-966709502-juego-de-llaves-herramientas-6-piezas6-17-mm_JM" },
+    { id: "prod_100", name: "Herramientas Juego De Dados 4 Piezas 3/8 Ratchet", price: 12.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/TzvaVfs.png", description: "Herramientas juego de dados 4 piezas 3/8 ratchet.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-966718086-herramientas-juego-de-dados-4-piezas-38-ratchet_JM" },
+    { id: "prod_101", name: "Tapa Valvula Para Caucho Moto/ Vehículo Luz Led Brillantes", price: 5.99, originalPrice: 0, stock: 5, inStock: true, image: "https://i.imgur.com/EJLWOhx.png", description: "Tapa valvula para caucho moto/ vehículo luz led brillantes.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-980288366-tapa-valvula-para-caucho-moto-vehiculo-luz-led-brillantes-_JM" },
+    { id: "prod_102", name: "Auriculares Inalámbricos Bluetooth F9 Tws Con Power Bank", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/itCU8qX.png", description: "Auriculares inalámbricos bluetooth F9 Tws con power bank.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-991064564-auriculares-inalmbricos-bluetooth-f9-tws-con-power-bank_JM" },
+    { id: "prod_103", name: "Balaclava Pasamontaña Máscara Facial Completa Motorizado", price: 7.99, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/xi3FqIC.png", description: "Balaclava pasamontaña máscara facial completa motorizado.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-994380746-balaclava-pasamontana-mscara-facial-completa-motorizado_JM" },
+    { id: "prod_104", name: "Anti Ronquido Clip Nasal Tratamiento Para Sueño Dormir", price: 5.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/kzMvAmu.png", description: "Anti ronquido clip nasal tratamiento para sueño dormir.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-995875716-anti-ronquido-clip-nasal-tratamiento-para-sueno-dormir_JM" },
+    { id: "prod_105", name: "Dispensador De Agua Eléctrico Para Botellon Negro", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/vI7WtyU.png", description: "Dispensador de agua eléctrico para botellon negro.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-998840226-dispensador-de-agua-elctrico-para-botellon-negro_JM" },
+    { id: "prod_106", name: "Destornillador Kit De 32 Piezas Manual Trabajo Pequeño", price: 8.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/xN95MZi.png", description: "Destornillador kit de 32 piezas manual trabajo pequeño.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-999202556-destornillador-kit-de-32-piezas-manual-trabajo-pequeo_JM" },  
+    { id: "prod_107", name: "Rompecabeza Juguete Antiestres Spiderman Armable 13 X 9 Cm", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/1YhR20n.png", description: "Este rompecabeza tridimensional de Spiderman, de la marca Duz, invita a disfrutar una actividad relajante y entretenida mientras se da forma a una figura llamativa de superhéroe. Con 498 elementos y orientación vertical, propone un desafío estimulante para niñas y niños desde 7 años.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781464119-rompecabeza-juguete-antiestres-spiderman-armable-13-x-9-cm-_JM" },
+    { id: "prod_108", name: "Scuishys Butter Mantequilla Viral Juguete Antiestres Olor", price: 9.99, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/DELgOje.png", description: "Butter es un squishy con personaje Mantequilla, pensado para quienes disfrutan de texturas suaves y una sensación relajante al apretarlo. Su efecto slow rising permite comprimirlo y ver cómo recupera lentamente su forma, aportando una experiencia agradable y satisfactoria ", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-780860741-scuishys-butter-mantequilla-viral-juguete-antiestres-olor-_JM" },
+    { id: "prod_109", name: "Reloj Caballero Set 4 Pcs Pulsera Elegante Clásico Regalo", price: 14.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/K110SVh.png", description: "Este reloj para hombre combina una presencia sobria con un diseño clásico que realza atuendos formales y casuales. Su movimiento analógico ofrece una lectura clara de la hora, mientras que el cierre de hebilla simple aporta un ajuste cómodo y seguro.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029910778-reloj-caballero-set-4-pcs-pulsera-elegante-clasico-regalo-_JM" },
+    { id: "prod_110", name: "Reloj Moda Caballero Maquina Mecánica Deportivo Elegante", price: 14.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/JJk9b3I.png", description: "Reloj de pulsera para hombre con diseño deportivo y presencia elegante, pensado para quienes buscan un accesorio versátil que combine estilo y personalidad", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029911026-reloj-moda-caballero-maquina-mecanica-deportivo-elegante-_JM" },  
+    { id: "prod_111", name: "Balaclava Pasamontañas Calavera Motorizado Protección Fresco", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/JcP1PmP.png", description: "El pasamontañas Calavera de New está pensado para adultos que buscan cobertura en cabeza y cuello durante recorridos en moto, bicicleta o actividades al aire libre ", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029921560-balaclava-pasamontanas-calavera-motorizado-proteccion-fresco-_JM" },  
+    { id: "prod_112", name: "Reloj Moda Caballero Estilo Mecánico Deportivo Elegante", price: 14.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/PjvZAHM.png", description: "Reloj de pulsera para hombre con diseño deportivo y presencia elegante, pensado para quienes buscan un accesorio versátil que combine estilo y personalidad. ", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781605193-reloj-moda-caballero-estilo-mecanico-deportivo-elegante-_JM" },  
+    { id: "prod_113", name: "Billetera Cartera Para Caballero Clasica Estampado De Aguila", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/5z9KeMo.png", description: "Billetera cartera para caballero con diseño clásico y estampado de águila, pensada para quienes buscan una pieza sobria con carácter. Su formato práctico permite llevar billetes, tarjetas y documentos de uso diario con orden y comodidad", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029884950-billetera-cartera-para-caballero-clasica-estampado-de-aguila-_JM" },  
+    { id: "prod_114", name: "Gorra Camuflaje Bandera America Moda De Maya Clásica Deporte", price: 9.99, originalPrice: 0, stock: 0, inStock: false, image: "https://i.imgur.com/BZN5LuL.png", description: "Gorra estilo americano con detalle de estrella, pensada para quienes buscan un look actual y versátil. Su diseño combina malla clásica con una estructura cómoda,", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029884412-gorra-camuflaje-bandera-america-moda-de-maya-clasica-deporte-_JM" },  
+    { id: "prod_115", name: "Gorra vinotinto Estilo Americano Bandera Moda De Maya Clásica Deporte", price: 9.99, originalPrice: 0, stock: 0, inStock: false, image: "https://i.imgur.com/3s0iPfu.png", description: "Gorra estilo americano con detalle de estrella, pensada para quienes buscan un look actual y versátil. Su diseño combina malla clásica con una estructura cómoda,", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029909994-gorra-estilo-americano-bandera-moda-de-maya-clasica-deporte-_JM" },  
+    { id: "prod_116", name: "Kit De 6 Pcs Corta Uñas Portátil Estuche Tijera Y Puntas", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/e2jg5nG.png", description: "Este cortauñas en estuche reúne seis herramientas pensadas para el arreglo diario con un formato práctico y fácil de llevar. Su fabricación en acero aporta resistencia y una sensación firme en cada uso, ,", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029912008-kit-de-6-pcs-corta-unas-portatil-estuche-tijera-y-puntas-_JM" },  
+    { id: "prod_117", name: "Gorra Estilo Americano Estrella Moda De Maya Clásica Deporte", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/kILivI5.png", description: "Gorra estilo americano con detalle de estrella, pensada para quienes buscan un look actual y versátil. Su diseño combina malla clásica con una estructura cómoda,", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029909860-gorra-estilo-americano-estrella-moda-de-maya-clasica-deporte-_JM" },  
+    { id: "prod_118", name: "Máquina De Afeitar Trimmer Patillera Recargable Diseño Unico Dorado", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/VLqndWE.png", description: "La máquina de afeitar patillera recargable inalámbrica modelo T9 está pensada para quienes buscan precisión y comodidad en el cuidado personal. Permite afeitar, recortar y perfilar con facilidad, ayudando a definir contornos y mantener un estilo prolijo en rostro y barba.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-778133259-maquina-de-afeitar-trimmer-patillera-recargable-diseno-unico-dorado-_JM" },  
+    { id: "prod_119", name: "Mini Lampara Panda Dormilon Luz Led Cálida Juguete Regalo", price: 12.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/11hSSDl.png", description: "Mini lámpara con forma de panda dormilón, pensada para aportar una iluminación LED cálida y suave en espacios infantiles.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781739079-mini-lampara-panda-dormilon-luz-led-calida-juguete-regalo-_JM" },  
+    { id: "prod_120", name: "Humidificador Ambiental Mini Cable Usb Luz Led Vaporizador", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/MTiMOXU.png", description: "Este humidificador ambiental mini con cable USB ayuda a mantener un ambiente más agradable en espacios pequeños como dormitorio, oficina o área de estudio. ", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1030217618-humidificador-ambiental-mini-cable-usb-luz-led-vaporizador-_JM" },  
+    { id: "prod_121", name: "Separador Dedos De Pie De Silicona 2 Pcs Correccion", price: 8.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/hZvwAdm.png", description: "Separador de dedos de pie en silicona, modelo HALLUX, diseñado para favorecer la corrección de dedos en juanetes y ayudar a mantener una postura más ordenada del antepié ", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-779489873-separador-dedos-de-pie-de-silicona-2-pcs-correccion-_JM" },  
+    { id: "prod_122", name: "Caja Con Rosa Eterna Para Regalo Incluye Collar Reflectorn", price: 19.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/gcnPyQr.png", description: "Sorprende a esa persona especial con un detalle que perdura en el tiempo. Esta caja con rosa eterna se convierte en un símbolo de amor y aprecio, ideal para cualquier ocasión significativa como San Valentín, aniversarios o cumpleaños ", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-876822814-caja-con-rosa-eterna-para-regalo-incluye-collar-reflector-_JM" },  
+    { id: "prod_123", name: "Caja De Regalo Con Flor Girasol Y Collar Sorpresa Detalle", price: 23.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/3qpQPNY.png", description: "Caja decorativa con flor de girasol y collar detalle, pensada para quienes buscan una presentación delicada y con encanto. La marca Mushu.ve propone un diseño de estilo floral con acabado esmaltado y material de oro chino ", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781977837-caja-de-regalo-con-flor-girasol-y-collar-sorpresa-detalle-_JM" },  
+    { id: "prod_124", name: "Máscara Con Lentes Goggles Desmontable Para Moto Y Paintball", price: 13.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/0rXHhYJ.png", description: "Máscara con lentes tipo goggles pensada para conducción urbana en moto y actividades de paintball, con un diseño que prioriza la protección y la comodidad en cada uso", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781978045-mascara-con-lentes-goggles-desmontable-para-moto-y-paintball-_JM" },  
+    { id: "prod_125", name: "Gorra De Béisbol Verde Bordada La Los Angeles Unisex Moda", price: 12.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/1eAITwP.png", description: "La gorra de béisbol LA en color verde aporta un estilo urbano y actual que combina con looks casuales y deportivos. ", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781965093-gorra-de-beisbol-verde-bordada-la-los-angeles-unisex-moda-_JM" },  
+    { id: "prod_126", name: "Pelotas Beisbol Profesional Blancas Costura Roja Deporte", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/PLHADBX.png", description: "La pelota de béisbol profesional Ibros ofrece una apariencia clásica con cuerpo blanco y costura roja", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-782102593-pelotas-beisbol-profesional-blancas-costura-roja-deporte-_JM" },  
+    { id: "prod_127", name: "Reloj Wokai Hombre Elegante Cuero Marrón Oro Rosa Mod", price: 13.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/M8xPTPw.png", description: "El reloj Wokai para hombre combina un estilo elegante con una presencia sobria y refinada, ideal para quienes buscan un accesorio que complemente atuendos formales o casuales con buen gusto", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781965273-reloj-wokai-hombre-elegante-cuero-marron-oro-rosa-moda-_JM" },  
+    { id: "prod_128", name: "Llavero De Palanca Caja De Cambios Carro Juguete Antiestres", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/96KzDAX.png", description: "Este llavero con diseño de palanca de cambios aporta un toque divertido y distintivo a tus llaves, mochila o bolso", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781977887-llavero-de-palanca-caja-de-cambios-carro-juguete-antiestres-_JM" },  
+
+];
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                loadCart();
+                renderProducts();
+                await fetchBcvRate();
+            } catch (err) {
+                console.error("Error al iniciar la aplicación:", err);
+            }
+        });
+
+        async function fetchBcvRate() {
+            try {
+                const response = await fetch('https://ve.dolarapi.com/v1/dolares/oficial');
+                const data = await response.json();
+                if (data && data.promedio) {
+                    currentBcvRate = parseFloat(data.promedio);
+                }
+            } catch (err) {
+                console.warn("Usando tasa por defecto BCV.");
+            }
+            document.getElementById('bcvStatusLabel').innerText = `Tasa BCV: Bs. ${currentBcvRate.toFixed(2)} / $`;
+            document.getElementById('heroRateDisplay').innerText = `BCV: Bs. ${currentBcvRate.toFixed(2)}`;
+            document.getElementById('footerBcvDisplay').innerText = `Bs. ${currentBcvRate.toFixed(2)} / $`;
+            renderCart();
+            renderProducts();
+        }
+
+        function formatBolivars(usdPrice) {
+            const bs = usdPrice * currentBcvRate;
+            return bs.toLocaleString('es-VE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function calculateDiscount(price, originalPrice) {
+            if (!originalPrice || originalPrice <= price) return 0;
+            return Math.round(((originalPrice - price) / originalPrice) * 100);
+        }
+
+        // Determina si un producto está realmente disponible (inStock boolean AND stock > 0)
+        function isProductAvailable(product) {
+            return (product.inStock !== false) && (product.stock > 0);
+        }
+
+        function loadCart() {
+            const savedCart = localStorage.getItem('mj_shopping_cart');
+            if (savedCart) {
+                try { cart = JSON.parse(savedCart); } catch(e) { cart = []; }
+            }
+            if (cart.length > 0) {
+                hasOpenedCartFirstTime = true;
+            }
+            renderCart();
+        }
+
+        function saveCart() {
+            localStorage.setItem('mj_shopping_cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        function addToCart(productId, qtyToAdd = 1) {
+            const product = products.find(p => p.id === productId);
+            if (!product || !isProductAvailable(product)) {
+                showToast("Producto agotado temporalmente");
+                return;
+            }
+
+            const existingIndex = cart.findIndex(item => item.id === productId);
+            const currentQtyInCart = existingIndex !== -1 ? cart[existingIndex].qty : 0;
+
+            if (currentQtyInCart + qtyToAdd > product.stock) {
+                showToast(`Solo quedan ${product.stock} unidades disponibles`);
+                return;
+            }
+
+            if (existingIndex !== -1) {
+                cart[existingIndex].qty += qtyToAdd;
+            } else {
+                cart.push({ 
+                    id: product.id, 
+                    name: product.name, 
+                    price: product.price, 
+                    originalPrice: product.originalPrice,
+                    image: product.image, 
+                    qty: qtyToAdd 
+                });
+            }
+
+            saveCart();
+            showToast(`¡${product.name} añadido al carrito!`);
+
+            if (!hasOpenedCartFirstTime) {
+                hasOpenedCartFirstTime = true;
+                setTimeout(() => { openCartDrawer(); }, 300);
+            }
+        }
+
+        function openCartDrawer() { document.getElementById('cartDrawer').classList.remove('hidden'); }
+        function toggleCartDrawer() { document.getElementById('cartDrawer').classList.toggle('hidden'); }
+        function openPaymentInfoModal() { document.getElementById('paymentInfoModal').classList.remove('hidden'); }
+        function closePaymentInfoModal() { document.getElementById('paymentInfoModal').classList.add('hidden'); }
+        function openPolicyModal() { document.getElementById('policyModal').classList.remove('hidden'); }
+        function closePolicyModal() { document.getElementById('policyModal').classList.add('hidden'); }
+
+        function clearCart() {
+            cart = [];
+            saveCart();
+            showToast("El carrito ha sido vaciado.");
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cartItemsContainer');
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cartBadge').innerText = totalQty;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fa-solid fa-basket-shopping text-neutral-300 text-3xl mb-2"></i>
+                        <p class="text-xs text-neutral-400 font-medium">El carrito está actualmente vacío.</p>
+                    </div>
+                `;
+                document.getElementById('cartSubtotalUsd').innerText = "$0.00";
+                document.getElementById('cartTotalBs').innerText = "Bs. 0,00";
+                document.getElementById('cartTotalUsd').innerText = "$0.00 USD";
+                return;
+            }
+
+            let subtotalUsd = 0;
+            container.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.qty;
+                subtotalUsd += itemTotal;
+                return `
+                    <div class="flex items-center justify-between gap-2 pt-3">
+                        <div class="w-12 h-12 rounded-xl bg-neutral-100 border border-neutral-200 overflow-hidden shrink-0 p-1 flex items-center justify-center">
+                            <img src="${item.image}" class="w-full h-full object-contain">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="text-xs font-bold text-neutral-900 truncate">${item.name}</h4>
+                            <div class="flex items-center gap-2 mt-0.5">
+                                <span class="text-xs font-extrabold text-neutral-800">$${item.price.toFixed(2)}</span>
+                                ${item.originalPrice ? `<span class="text-[10px] text-neutral-400 line-through">$${item.originalPrice.toFixed(2)}</span>` : ''}
+                            </div>
+                            <div class="text-[10px] text-emerald-600 font-bold truncate">Bs. ${formatBolivars(itemTotal)}</div>
+                        </div>
+                        <div class="flex items-center gap-1 bg-neutral-100 p-1 rounded-xl shrink-0">
+                            <button onclick="updateCartQty('${item.id}', -1)" class="w-6 h-6 bg-white rounded-lg text-xs font-bold shadow-xs hover:bg-neutral-200 flex items-center justify-center text-neutral-800">-</button>
+                            <span class="text-xs font-black min-w-[20px] text-center px-1 text-neutral-900">${item.qty}</span>
+                            <button onclick="updateCartQty('${item.id}', 1)" class="w-6 h-6 bg-white rounded-lg text-xs font-bold shadow-xs hover:bg-neutral-200 flex items-center justify-center text-neutral-800">+</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const totalBsFormatted = formatBolivars(subtotalUsd);
+            document.getElementById('cartSubtotalUsd').innerText = `$${subtotalUsd.toFixed(2)}`;
+            document.getElementById('cartTotalBs').innerText = `Bs. ${totalBsFormatted}`;
+            document.getElementById('cartTotalUsd').innerText = `$${subtotalUsd.toFixed(2)} USD`;
+        }
+
+        function updateCartQty(productId, delta) {
+            const index = cart.findIndex(item => item.id === productId);
+            if (index !== -1) {
+                const product = products.find(p => p.id === productId);
+                if (delta > 0 && product && cart[index].qty + delta > product.stock) {
+                    showToast(`Límite alcanzado (${product.stock} disponibles)`);
+                    return;
+                }
+                cart[index].qty += delta;
+                if (cart[index].qty <= 0) {
+                    cart.splice(index, 1);
+                }
+                saveCart();
+            }
+        }
+
+        function sendCartToWhatsapp(e) {
+            e.preventDefault();
+            if (cart.length === 0) {
+                showToast("Tu carrito está vacío.");
+                return;
+            }
+            let message = `¡Hola Market Junior! 👋 Deseo realizar el siguiente pedido:\n\n🛒 *RESUMEN DE MI COMPRA:*\n`;
+            let totalUsd = 0;
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.qty;
+                totalUsd += itemTotal;
+                message += `${index + 1}. *${item.name}* (x${item.qty}) - $${itemTotal.toFixed(2)}\n`;
+            });
+            message += `\n💰 *TOTAL A PAGAR:*\n• USD: *$${totalUsd.toFixed(2)}*\n• BCV: *Bs. ${formatBolivars(totalUsd)}*\n\nPor favor indiquen disponibilidad y confirmen datos de Pago Móvil BNC.`;
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function filterProducts() { searchQuery = document.getElementById('searchInput').value.toLowerCase(); renderProducts(); }
+        function syncMobileSearch() { document.getElementById('searchInput').value = document.getElementById('searchInputMobile').value; filterProducts(); }
+
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            const filtered = products.filter(p => p.name.toLowerCase().includes(searchQuery));
+            document.getElementById('productCount').innerText = filtered.length;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            grid.innerHTML = filtered.map(product => {
+                const discount = calculateDiscount(product.price, product.originalPrice);
+                const hasStock = isProductAvailable(product);
+
+                return `
+                    <div class="product-card bg-white rounded-2xl border border-neutral-200 overflow-hidden flex flex-col justify-between p-2.5 relative group">
+                        ${discount > 0 ? `
+                            <span class="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-md z-10 shadow-sm">
+                                -${discount}% OFF
+                            </span>
+                        ` : ''}
+
+                        <div class="cursor-pointer" onclick="openProductDetailModal('${product.id}')">
+                            <div class="overflow-hidden rounded-xl bg-neutral-50 mb-2.5 aspect-square relative border border-neutral-100 flex items-center justify-center p-2">
+                                <img src="${product.image}" alt="${product.name}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
+                            </div>
+                            
+                            <div class="flex items-center gap-1.5 mb-1">
+                                <span class="w-2 h-2 rounded-full ${hasStock ? 'bg-emerald-500' : 'bg-red-500'}"></span>
+                                <span class="text-[10px] font-bold ${hasStock ? 'text-neutral-500' : 'text-red-500'}">
+                                    ${hasStock ? `Stock: ${product.stock} unids.` : 'Agotado'}
+                                </span>
+                            </div>
+
+                            <h3 class="font-bold text-xs text-neutral-900 line-clamp-2 leading-snug">${product.name}</h3>
+                        </div>
+
+                        <div class="mt-3">
+                            <div class="mb-2">
+                                <div class="flex items-baseline gap-1.5">
+                                    <span class="text-sm font-black text-neutral-900">$${product.price.toFixed(2)}</span>
+                                    ${product.originalPrice > product.price ? `
+                                        <span class="text-[10px] font-bold text-neutral-400 line-through">$${product.originalPrice.toFixed(2)}</span>
+                                    ` : ''}
+                                </div>
+                                <div class="text-[11px] font-black text-emerald-600 truncate">
+                                    Bs. ${formatBolivars(product.price)}
+                                </div>
+                            </div>
+
+                            <div class="space-y-1.5">
+                                <button onclick="event.stopPropagation(); addToCart('${product.id}', 1)" ${!hasStock ? 'disabled' : ''} class="w-full py-2 ${hasStock ? 'bg-black hover:bg-neutral-800 text-white' : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'} font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-sm">
+                                    <i class="fa-solid fa-plus text-[10px]"></i> ${hasStock ? 'Agregar al Carrito' : 'Agotado'}
+                                </button>
+                                
+                                <a href="${product.mercadolibreUrl}" target="_blank" onclick="event.stopPropagation()" class="w-full py-1.5 btn-meli font-extrabold rounded-xl text-[11px] flex items-center justify-center gap-1.5 shadow-xs">
+                                    <i class="fa-solid fa-truck-fast text-[11px]"></i> Mercado Libre
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openProductDetailModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const discount = calculateDiscount(product.price, product.originalPrice);
+            const content = document.getElementById('detailModalContent');
+            const hasStock = isProductAvailable(product);
+
+            content.innerHTML = `
+                <div class="flex flex-col sm:flex-row gap-5">
+                    <div class="w-full sm:w-1/2 h-56 sm:h-72 bg-neutral-50 rounded-2xl border border-neutral-200 p-3 flex items-center justify-center overflow-hidden shrink-0">
+                        <img src="${product.image}" alt="${product.name}" class="max-w-full max-h-full object-contain rounded-xl hover:scale-105 transition-transform duration-300">
+                    </div>
+                    <div class="flex-1 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-full ${hasStock ? 'bg-emerald-500' : 'bg-red-500'}"></span>
+                                    <span class="text-xs font-extrabold uppercase ${hasStock ? 'text-emerald-700 bg-emerald-50' : 'text-red-700 bg-red-50'} px-2.5 py-1 rounded-md">
+                                        ${hasStock ? `Disponible (${product.stock} en stock)` : 'Agotado'}
+                                    </span>
+                                </div>
+                                <button onclick="shareProduct('${product.id}')" class="text-xs font-bold px-2.5 py-1.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 rounded-xl transition flex items-center gap-1.5">
+                                    <i class="fa-solid fa-share-nodes"></i> Compartir
+                                </button>
+                            </div>
+                            <h2 class="text-base sm:text-lg font-black text-neutral-900 leading-snug mb-2">${product.name}</h2>
+                            <p class="text-xs text-neutral-500 leading-relaxed mb-4">${product.description || 'Producto original con garantía de calidad y el mejor precio del mercado.'}</p>
+                        </div>
+
+                        <div>
+                            <div class="bg-neutral-50 p-3 rounded-2xl border border-neutral-200 mb-4">
+                                <div class="flex items-baseline gap-2">
+                                    <span class="text-xl sm:text-2xl font-black text-black">$${product.price.toFixed(2)}</span>
+                                    ${product.originalPrice > product.price ? `<span class="text-xs text-neutral-400 line-through">$${product.originalPrice.toFixed(2)}</span>` : ''}
+                                    ${discount > 0 ? `<span class="text-xs font-black text-red-600 bg-red-50 px-2 py-0.5 rounded-md">-${discount}% OFF</span>` : ''}
+                                </div>
+                                <div class="text-xs sm:text-sm font-black text-emerald-600 mt-1">
+                                    Bs. ${formatBolivars(product.price)} <span class="text-[10px] font-semibold text-neutral-400">(Tasa BCV)</span>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col gap-2">
+                                <button onclick="addToCart('${product.id}', 1); closeProductDetailModal();" ${!hasStock ? 'disabled' : ''} class="w-full py-3 ${hasStock ? 'bg-emerald-500 hover:bg-emerald-600 text-white' : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'} font-black rounded-xl text-xs sm:text-sm transition shadow-md flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-cart-plus text-sm"></i> ${hasStock ? 'Añadir al Carrito' : 'Sin Stock'}
+                                </button>
+                                
+                                <a href="${product.mercadolibreUrl}" target="_blank" class="w-full py-2.5 btn-meli font-extrabold rounded-xl text-xs transition text-center flex items-center justify-center gap-2 shadow-xs">
+                                    <i class="fa-solid fa-truck-fast text-sm"></i> Comprar en Mercado Libre con Envio Gratis
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('productDetailModal').classList.remove('hidden');
+        }
+
+        function closeProductDetailModal() {
+            document.getElementById('productDetailModal').classList.add('hidden');
+        }
+
+        function shareStore() {
+            const shareData = {
+                title: 'Market Junior - Tienda Online Venezuela',
+                text: '¡Echa un vistazo al catálogo de Market Junior con precios en Bolívares a Tasa BCV Oficial!',
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData).catch(() => {});
+            } else {
+                copyToClipboard(window.location.href);
+                showToast("¡Enlace de la tienda copiado!");
+            }
+        }
+
+        function shareProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const priceBs = formatBolivars(product.price);
+            const shareData = {
+                title: product.name,
+                text: `¡MIRA ESTE PRODUCTO EN MARKET JUNIOR!\n📦 ${product.name}\n💰 $${product.price.toFixed(2)} (Bs. ${priceBs})\n`,
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData).catch(() => {});
+            } else {
+                copyToClipboard(`${shareData.text} Ver aquí: ${window.location.href}`);
+                showToast("¡Información del producto copiada!");
+            }
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text);
+            } else {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => { toast.classList.add('translate-y-20', 'opacity-0'); }, 3200);
+        }
+
+        function copiarTodoPagoMovil(boton) {
+            const cedula = document.getElementById('pago-cedula').innerText.trim();
+            const banco = document.getElementById('pago-banco').innerText.trim();
+            const telefono = document.getElementById('pago-telefono').innerText.trim();
+
+            const textoCompleto = `Datos de Pago Móvil:\n- Banco: ${banco}\n- Cédula: ${cedula}\n- Teléfono: ${telefono}`;
+
+            navigator.clipboard.writeText(textoCompleto).then(() => {
+                const textoOriginal = boton.innerHTML;
+                boton.innerHTML = "✅ ¡Copiado Todo!";
+                boton.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+                boton.classList.add('bg-neutral-800');
+
+                setTimeout(() => {
+                    boton.innerHTML = textoOriginal;
+                    boton.classList.remove('bg-neutral-800');
+                    boton.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
+                }, 2000);
+            }).catch(err => {
+                console.error("Error al copiar: ", err);
+                alert("No se pudo copiar automáticamente.");
+            });
+        }
+    </script>
+
+    <!-- Botón flotante sutil para instalar la App -->
+    <button id="install-pwa-btn" class="subtle-floating-btn" style="display: none;" aria-label="Instalar aplicación">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="7 10 12 15 17 10"></polyline>
+        <line x1="12" y1="15" x2="12" y2="3"></line>
+      </svg>
+      <span>Instalar App</span>
+    </button>
+
+    <script>
+      let deferredPrompt;
+      const installBtn = document.getElementById('install-pwa-btn');
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installBtn.style.display = 'flex';
+      });
+
+      installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          console.log('El usuario aceptó instalar la PWA');
+        }
+        deferredPrompt = null;
+        installBtn.style.display = 'none';
+      });
+
+      window.addEventListener('appinstalled', () => {
+        installBtn.style.display = 'none';
+        deferredPrompt = null;
+        console.log('PWA instalada correctamente');
+      });
+    </script>
+</body>
+</html>
