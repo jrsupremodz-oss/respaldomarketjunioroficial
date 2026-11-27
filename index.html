@@ -247,6 +247,28 @@
         </div>
     </header>
 
+    <!-- BANNER CARRUSEL PROMOCIONAL (JUSTO DEBAJO DEL BUSCADOR) -->
+    <section id="promoCarouselSection" class="hidden max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 pt-3 sm:pt-4 pb-2 w-full">
+        <div id="promoCarouselWrapper" class="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-md border border-neutral-200 bg-neutral-950 select-none group">
+            <!-- Pista de diapositivas -->
+            <div id="promoCarouselTrack" class="flex transition-transform duration-500 ease-out">
+                <!-- Diapositivas generadas dinámicamente vía JS -->
+            </div>
+
+            <!-- Flechas de navegación (se ocultan automáticamente si solo hay 1 imagen activa) -->
+            <button id="promoPrevBtn" type="button" onclick="movePromoSlide(-1)" aria-label="Anterior" class="hidden absolute left-2.5 sm:left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-white text-neutral-900 shadow-md flex items-center justify-center transition opacity-90 sm:opacity-0 sm:group-hover:opacity-100 z-10">
+                <i class="fa-solid fa-chevron-left text-xs sm:text-sm"></i>
+            </button>
+            <button id="promoNextBtn" type="button" onclick="movePromoSlide(1)" aria-label="Siguiente" class="hidden absolute right-2.5 sm:right-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-white text-neutral-900 shadow-md flex items-center justify-center transition opacity-90 sm:opacity-0 sm:group-hover:opacity-100 z-10">
+                <i class="fa-solid fa-chevron-right text-xs sm:text-sm"></i>
+            </button>
+
+            <!-- Indicadores inferiores (puntitos) -->
+            <div id="promoCarouselDots" class="hidden absolute bottom-2.5 sm:bottom-3.5 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-black/45 backdrop-blur-xs px-2.5 py-1 rounded-full z-10">
+            </div>
+        </div>
+    </section>
+
     <!-- Hero Banner Promocional -->
     <section class="bg-black text-white py-8 sm:py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -723,7 +745,168 @@
         // Cambia a `true` para mostrar los botones de Mercado Libre en toda la tienda
         // Cambia a `false` para ocultarlos por completo cuando lo necesites
         // =========================================================================
-        const SHOW_MERCADOLIBRE_BUTTONS = false;
+        const SHOW_MERCADOLIBRE_BUTTONS = true;
+        // =========================================================================
+
+        // =========================================================================
+        // CONFIGURACIÓN DEL BANNER CARRUSEL PROMOCIONAL (BLACK FRIDAY / OFERTAS)
+        // 1. Cambia SHOW_PROMO_CAROUSEL a `true` (visible) o `false` (oculto total).
+        // 2. En PROMO_CAROUSEL_SLIDES puedes activar (active: true) o desactivar
+        //    (active: false) cada imagen individualmente y pegar tu URL de imagen.
+        // =========================================================================
+        const SHOW_PROMO_CAROUSEL = true;
+        const PROMO_CAROUSEL_AUTOPLAY_MS = 4500; // Tiempo entre cambios (4.5 segundos)
+
+        const PROMO_CAROUSEL_SLIDES = [
+            {
+                active: true, // Pon `false` para ocultar esta imagen
+                imageUrl: "https://placehold.co/1200x450/0a0a0a/FFE600?text=HOY+ES+BLACK+FRIDAY+%E2%80%A2+HASTA+50%25+OFF",
+                alt: "Ofertas Black Friday Market Junior",
+                link: "" // Opcional: URL externa, "#slug-del-producto", o "search:reloj" para filtrar al tocar
+            },
+            {
+                active: false, // Pon `true` para activar esta 2da imagen
+                imageUrl: "https://placehold.co/1200x450/111827/34d399?text=ENVIOS+NACIONALES+MRW+%E2%80%A2+ZOOM+%E2%80%A2+TEALCA",
+                alt: "Envíos Nacionales Cobro a Destino",
+                link: ""
+            },
+            {
+                active: false, // Pon `true` para activar esta 3ra imagen
+                imageUrl: "https://placehold.co/1200x450/171717/38bdf8?text=PAGO+MOVIL+TASA+BCV+OFICIAL",
+                alt: "Paga en Bolívares a Tasa BCV",
+                link: ""
+            },
+            {
+                active: false, // Pon `true` para activar esta 4ta imagen
+                imageUrl: "https://placehold.co/1200x450/1f2937/f59e0b?text=NUEVOS+PRODUCTOS+VIRALES+DISPONIBLES",
+                alt: "Nuevos Productos Virales",
+                link: ""
+            }
+        ];
+
+        let promoSlideIndex = 0;
+        let promoCarouselTimer = null;
+
+        function initPromoCarousel() {
+            const section = document.getElementById("promoCarouselSection");
+            const track = document.getElementById("promoCarouselTrack");
+            const dotsContainer = document.getElementById("promoCarouselDots");
+            const prevBtn = document.getElementById("promoPrevBtn");
+            const nextBtn = document.getElementById("promoNextBtn");
+            const wrapper = document.getElementById("promoCarouselWrapper");
+
+            if (!section || !track) return;
+
+            const activeSlides = PROMO_CAROUSEL_SLIDES.filter(s => s.active && s.imageUrl && s.imageUrl.trim() !== "");
+
+            if (!SHOW_PROMO_CAROUSEL || activeSlides.length === 0) {
+                section.classList.add("hidden");
+                return;
+            }
+
+            section.classList.remove("hidden");
+            promoSlideIndex = 0;
+
+            track.innerHTML = activeSlides.map((slide, idx) => {
+                const clickableClass = slide.link ? "cursor-pointer" : "";
+                return `
+                    <div class="w-full shrink-0 relative ${clickableClass}" onclick="handlePromoSlideClick(${idx})">
+                        <img src="${slide.imageUrl}" alt="${slide.alt || 'Promoción Market Junior'}" class="w-full aspect-[16/6] sm:aspect-[16/5] max-h-[340px] object-cover block">
+                    </div>
+                `;
+            }).join("");
+
+            if (activeSlides.length > 1) {
+                prevBtn.classList.remove("hidden");
+                nextBtn.classList.remove("hidden");
+                dotsContainer.classList.remove("hidden");
+
+                dotsContainer.innerHTML = activeSlides.map((_, idx) => `
+                    <button type="button" onclick="goToPromoSlide(${idx})" aria-label="Ir a imagen ${idx + 1}" class="promo-dot h-2 rounded-full transition-all ${idx === 0 ? 'w-5 bg-white' : 'w-2 bg-white/50 hover:bg-white/80'}"></button>
+                `).join("");
+
+                startPromoAutoplay(activeSlides.length);
+            } else {
+                prevBtn.classList.add("hidden");
+                nextBtn.classList.add("hidden");
+                dotsContainer.classList.add("hidden");
+            }
+
+            // Soporte deslizar con el dedo (Touch Swipe) en móviles
+            let touchStartX = 0;
+            wrapper.ontouchstart = (e) => {
+                touchStartX = e.touches[0].clientX;
+                clearInterval(promoCarouselTimer);
+            };
+            wrapper.ontouchend = (e) => {
+                const diff = touchStartX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 40 && activeSlides.length > 1) {
+                    movePromoSlide(diff > 0 ? 1 : -1);
+                }
+                if (activeSlides.length > 1) startPromoAutoplay(activeSlides.length);
+            };
+        }
+
+        function updatePromoCarouselUI(total) {
+            const track = document.getElementById("promoCarouselTrack");
+            if (!track) return;
+            track.style.transform = `translateX(-${promoSlideIndex * 100}%)`;
+
+            const dots = document.querySelectorAll(".promo-dot");
+            dots.forEach((dot, idx) => {
+                if (idx === promoSlideIndex) {
+                    dot.className = "promo-dot h-2 w-5 rounded-full bg-white transition-all";
+                } else {
+                    dot.className = "promo-dot h-2 w-2 rounded-full bg-white/50 hover:bg-white/80 transition-all";
+                }
+            });
+        }
+
+        function movePromoSlide(step) {
+            const activeSlides = PROMO_CAROUSEL_SLIDES.filter(s => s.active && s.imageUrl && s.imageUrl.trim() !== "");
+            if (activeSlides.length <= 1) return;
+            promoSlideIndex = (promoSlideIndex + step + activeSlides.length) % activeSlides.length;
+            updatePromoCarouselUI(activeSlides.length);
+            startPromoAutoplay(activeSlides.length);
+        }
+
+        function goToPromoSlide(index) {
+            const activeSlides = PROMO_CAROUSEL_SLIDES.filter(s => s.active && s.imageUrl && s.imageUrl.trim() !== "");
+            if (activeSlides.length <= 1) return;
+            promoSlideIndex = index;
+            updatePromoCarouselUI(activeSlides.length);
+            startPromoAutoplay(activeSlides.length);
+        }
+
+        function startPromoAutoplay(total) {
+            clearInterval(promoCarouselTimer);
+            if (total <= 1) return;
+            promoCarouselTimer = setInterval(() => {
+                promoSlideIndex = (promoSlideIndex + 1) % total;
+                updatePromoCarouselUI(total);
+            }, PROMO_CAROUSEL_AUTOPLAY_MS);
+        }
+
+        function handlePromoSlideClick(index) {
+            const activeSlides = PROMO_CAROUSEL_SLIDES.filter(s => s.active && s.imageUrl && s.imageUrl.trim() !== "");
+            const slide = activeSlides[index];
+            if (!slide || !slide.link) return;
+
+            const link = slide.link.trim();
+            if (link.startsWith("search:")) {
+                const term = link.replace("search:", "").trim();
+                const desktopInput = document.getElementById("searchInput");
+                const mobileInput = document.getElementById("searchInputMobile");
+                if (desktopInput) desktopInput.value = term;
+                if (mobileInput) mobileInput.value = term;
+                filterProducts();
+                document.getElementById("productGrid")?.scrollIntoView({ behavior: "smooth" });
+            } else if (link.startsWith("#")) {
+                window.location.hash = link;
+            } else {
+                window.open(link, "_blank", "noopener,noreferrer");
+            }
+        }
         // =========================================================================
 
         // =========================================================================
@@ -1578,7 +1761,7 @@
             { id: "prod_5", name: "Bolígrafo De Broma Choque Eléctrico Lapicero Juguete", price: 9.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/tWTNeYM.jpeg", description: "La diversión y la risa llegan con este bolígrafo de broma que provoca un ligero choque eléctrico. Diseñado específicamente para los más jóvenes, este juguete es perfecto para hacer chascos a amigos y familiares...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-777159703-bolgrafo-de-broma-choque-elctrico-lapicero-juguete_JM" },
             { id: "prod_6", name: "Pasamontañas Balaclava Para Motorizado Ajustable Elástica", price: 6.99, originalPrice: 0, stock: 4, inStock: true, image: "https://i.imgur.com/BtX5ZSD.png", description: "La balaclava ajustable elástica es la elección perfecta para quienes disfrutan de actividades al aire libre y motociclismo. Diseñada para ofrecer comodidad y funcionalidad, este pasamontañas se adapta a diferentes formas de rostro...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-997163444-pasamontaas-balaclava-para-motorizado-ajustable-elstica_JM" },
             { id: "prod_7", name: "Funda Protectora Para Moto Forro Impermeable Contra El Sol Gris", price: 8.99, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/xn6kHQs.jpeg", description: "La funda protectora está pensada para resguardar tu moto o cuatriciclo frente a las condiciones del día a día, como el sol, la humedad y el polvo. Fabricada en polietileno y con protección UV...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1020880180-funda-protectora-para-moto-forro-impermeable-contra-el-sol-gris_JM" },
-            { id: "prod_8", name: "Máscara Antifaz Con Auriculares Inalámbricos Bluetooth", price: 14.99, originalPrice: 0, stock: 1, inStock: false, image: "https://i.imgur.com/Mr7RsDU.png", description: "Descubre la experiencia única de relajación y desconexión con la Máscara Antifaz con Auriculares inalámbricos Bluetooth. Combina la comodidad de un antifaz suave con audio integrado...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-774992303-mscara-antifaz-con-auriculares-inalambricos-bluetooth_JM" },
+            { id: "prod_8", name: "Máscara Antifaz Con Auriculares Inalámbricos Bluetooth", price: 14.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/Mr7RsDU.png", description: "Descubre la experiencia única de relajación y desconexión con la Máscara Antifaz con Auriculares inalámbricos Bluetooth. Combina la comodidad de un antifaz suave con audio integrado...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-774992303-mscara-antifaz-con-auriculares-inalambricos-bluetooth_JM" },
             { id: "prod_9", name: "Banda Elástica Con Auriculares Bluetooth Descanso Y Deportes", price: 15.99, originalPrice: 0, stock: 3, inStock: true, image: "https://i.imgur.com/dKOkIJb.png", description: "Experimenta la libertad de movimiento con la banda elástica con auriculares Bluetooth, diseñada para aquellos que buscan comodidad y un sonido excepcional durante el descanso o el deporte...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-876770988-banda-elstica-con-auriculares-bluetooth-descanso-y-deportes_JM" },
             { id: "prod_10", name: "Juguete Antiestres 4 Teclas Botonera Iluminación Led Llavero", price: 8.99, originalPrice: 0, stock: 4, inStock: true, image: "https://i.imgur.com/OPw4BBj.jpeg", description: "El juguete antiestrés de 4 teclas con iluminación led y formato llavero permite llevarlo en mochilas, bolsos o junto a las llaves para liberar estrés en cualquier momento...", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1019851294-juguete-antiestres-4-teclas-botonera-iluminacin-led-llavero_JM" },
             { id: "prod_11", name: "Collar Elegante Para Dama Estilo Gargantilla Cuadrado", price: 6.99, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/6S5n7Nd.png", description: "Collar elegante para dama estilo gargantilla cuadrado con acabado brillante y cómodo para uso diario o regalos.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-768108285-collar-elegante-para-dama-estilo-gargantilla-cuadrado_JM" },
@@ -1662,7 +1845,7 @@
             { id: "prod_89", name: "Peluche Conejo Que Respira Con Cierre Luz Led Y Musica", price: 48, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/bV625C1.png", description: "Peluche conejo que respira con cierre, luz LED suave y sonidos relajantes.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781219847-peluche-conejo-que-respira-con-cierre-luz-led-y-musica_JM" },
             { id: "prod_90", name: "Collar De Pareja Sol Y Luna Refleja Brilla Te Amo 100 Idioma", price: 11.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/nwCf68r.png", description: "Collar de pareja diseño Sol y Luna con detalle especial para regalar.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781219871-collar-de-pareja-sol-y-luna-refleja-brilla-te-amo-100-idioma_JM" },
             { id: "prod_91", name: "Mini Llavero Juego Funcional Clásico Retro", price: 8.88, originalPrice: 0, stock: 2, inStock: true, image: "https://i.imgur.com/LbMyU3F.png", description: "Mini llavero consola con juegos clásicos retro funcionales para llevar a todas partes.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781232691-mini-llavero-juego-funcional-clsico-retro_JM" },
-            { id: "prod_92", name: "Scuishys Banana Cambur Juguete Flexible Antiestres Platano", price: 11.99, originalPrice: 0, stock: 1, inStock: false, image: "https://i.imgur.com/2Jwqs1G.png", description: "Squishy flexible antiestrés en forma de cambur/banana de textura suave.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781245445-scuishys-banana-cambur-juguete-flexible-antiestres-platano_JM" },
+            { id: "prod_92", name: "Scuishys Banana Cambur Juguete Flexible Antiestres Platano", price: 11.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/2Jwqs1G.png", description: "Squishy flexible antiestrés en forma de cambur/banana de textura suave.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781245445-scuishys-banana-cambur-juguete-flexible-antiestres-platano_JM" },
             { id: "prod_93", name: "Repetidor Wifi Usb Antena Inalámbrico Portátil 300mb 2.4g", price: 12.99, originalPrice: 0, stock: 0, inStock: false, image: "https://i.imgur.com/kjVuZZI.png", description: "Repetidor WiFi USB con antena inalámbrica portátil de 300 Mbps banda 2.4G.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781245729-repetidor-wifi-usb-antena-inalmbrico-porttil-300mb-24g_JM" },
             { id: "prod_94", name: "Rompecabezas De Iron Hombre Juguete Antiestres Juego Armable", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/SEpdFkN.png", description: "Rompecabezas armable de superhéroe ideal para pasar el tiempo y coleccionar.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781245783-rompecabezas-de-iron-hombre-juguete-antiestres-juego-armable_JM" },
             { id: "prod_95", name: "Herramienta Manual Destornillador Bicicleta Desplegable", price: 7.99, originalPrice: 0, stock: 3, inStock: true, image: "https://i.imgur.com/45aYkay.png", description: "Herramienta manual plegable multiuso para ajustes rápidos en bicicleta.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-813143250-herramienta-manual-destornillador-bicicleta-desplegable_JM" },
@@ -1684,7 +1867,7 @@
             { id: "prod_111", name: "Balaclava Pasamontañas Calavera Motorizado Protección Fresco", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/JcP1PmP.png", description: "Pasamontañas con diseño calavera para motorizados con tela fresca y cómoda.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029921560-balaclava-pasamontanas-calavera-motorizado-proteccion-fresco-_JM" },  
             { id: "prod_112", name: "Reloj Moda Caballero Estilo Mecánico Deportivo Elegante", price: 14.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/PjvZAHM.png", description: "Reloj de pulsera para hombre con presencia elegante y estilo versátil.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781605193-reloj-moda-caballero-estilo-mecanico-deportivo-elegante-_JM" },  
             { id: "prod_113", name: "Billetera Cartera Para Caballero Clasica Estampado De Aguila", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/5z9KeMo.png", description: "Billetera clásica para caballero con compartimentos para billetes y tarjetas.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029884950-billetera-cartera-para-caballero-clasica-estampado-de-aguila-_JM" },  
-            { id: "prod_114", name: "Gorra Camuflaje Bandera America Moda De Maya Clásica Deporte", price: 11.99, originalPrice: 15.99, stock: 1, inStock: true, image: "https://i.imgur.com/BZN5LuL.png", description: "Gorra estilo camuflaje con malla clásica para uso casual o deportivo.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029884412-gorra-camuflaje-bandera-america-moda-de-maya-clasica-deporte-_JM" },  
+            { id: "prod_114", name: "Gorra Camuflaje Bandera America Moda De Maya Clásica Deporte", price: 9.99, originalPrice: 0, stock: 0, inStock: false, image: "https://i.imgur.com/BZN5LuL.png", description: "Gorra estilo camuflaje con malla clásica para uso casual o deportivo.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029884412-gorra-camuflaje-bandera-america-moda-de-maya-clasica-deporte-_JM" },  
             { id: "prod_115", name: "Gorra vinotinto Estilo Americano Bandera Moda De Maya Clásica Deporte", price: 9.99, originalPrice: 0, stock: 0, inStock: false, image: "https://i.imgur.com/3s0iPfu.png", description: "Gorra vinotinto con malla clásica ajustable para uso diario.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029909994-gorra-estilo-americano-bandera-moda-de-maya-clasica-deporte-_JM" },  
             { id: "prod_116", name: "Kit De 6 Pcs Corta Uñas Portátil Estuche Tijera Y Puntas", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/e2jg5nG.png", description: "Estuche portátil de 6 piezas para cuidado personal con cortaúñas y herramientas.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029912008-kit-de-6-pcs-corta-unas-portatil-estuche-tijera-y-puntas-_JM" },  
             { id: "prod_117", name: "Gorra Estilo Americano Estrella Moda De Maya Clásica Deporte", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/kILivI5.png", description: "Gorra con malla clásica y detalle de estrella de estilo casual.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029909860-gorra-estilo-americano-estrella-moda-de-maya-clasica-deporte-_JM" },  
@@ -1698,11 +1881,7 @@
             { id: "prod_125", name: "Gorra De Béisbol Verde Bordada La Los Angeles Unisex Moda", price: 12.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/1eAITwP.png", description: "Gorra de béisbol color verde bordada unisex de estilo urbano.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781965093-gorra-de-beisbol-verde-bordada-la-los-angeles-unisex-moda-_JM" },  
             { id: "prod_126", name: "Pelotas Beisbol Profesional Blancas Costura Roja Deporte", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/PLHADBX.png", description: "Pelota de béisbol blanca con costura roja ideal para prácticas o recreación.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-782102593-pelotas-beisbol-profesional-blancas-costura-roja-deporte-_JM" },  
             { id: "prod_127", name: "Reloj Wokai Hombre Elegante Cuero Marrón Oro Rosa Mod", price: 13.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/M8xPTPw.png", description: "Reloj para caballero con correa tipo cuero marrón y detalles en tono oro rosa.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781965273-reloj-wokai-hombre-elegante-cuero-marron-oro-rosa-moda-_JM" },  
-            { id: "prod_128", name: "Llavero De Palanca Caja De Cambios Carro Juguete Antiestres", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/96KzDAX.png", description: "Llavero metálico con palanca de cambios funcional ideal como detalle o antiestrés.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781977887-llavero-de-palanca-caja-de-cambios-carro-juguete-antiestres-_JM" },
-            { id: "prod_129", name: "Caja De Broma Sorpresa Con Araña Juguete Pequeño Susto", price: 13.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/e6IEula.png", description: "Esta caja de broma con araña dedo medio está pensada para quienes disfrutan del humor visual y las reacciones inesperadas. Su formato compacto la hace práctica para animar reuniones, momentos entre amigos o instantes de diversión con un toque irreverente.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781990451-caja-de-broma-sorpresa-con-arana-juguete-pequeno-susto-_JM" },  
-            { id: "prod_130", name: "Multímetro Digital Tester Incluye Batería", price: 12.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/pFKcWrQ.png", description: "El multímetro digital DT830B de la marca V-teg es una herramienta esencial para profesionales y aficionados a la electrónica. Con su pantalla LCD clara y fácil de leer,", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-776725081-multimetro-digital-tester-incluye-bateria-_JM" },  
-    
-        
+            { id: "prod_128", name: "Llavero De Palanca Caja De Cambios Carro Juguete Antiestres", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/96KzDAX.png", description: "Llavero metálico con palanca de cambios funcional ideal como detalle o antiestrés.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781977887-llavero-de-palanca-caja-de-cambios-carro-juguete-antiestres-_JM" }
         ];
 
         const reviewPool = [
@@ -1711,9 +1890,7 @@
             { author: "Jesús D.", city: "Barquisimeto", rating: 5, text: "Todo muy claro y confiable. Pedí por la página y en pocos minutos me atendieron para cerrar el pago." },
             { author: "Paola G.", city: "Caracas", rating: 5, text: "Muy buena calidad por el precio. Volvería a comprar sin pensarlo." },
             { author: "Luis A.", city: "Maracaibo", rating: 4, text: "Buen producto, llegó sin novedades a la agencia que indiqué. Recomendados." },
-            { author: "Dayana C.", city: "Puerto Ordaz", rating: 5, text: "Súper fácil pedir desde el teléfono y te ayudan con todo el proceso." },
-            { author: "Sofia R.", city: "Turmero", rating: 5, text: "Me encanta esta pagina. son confiable" },
-
+            { author: "Dayana C.", city: "Puerto Ordaz", rating: 5, text: "Súper fácil pedir desde el teléfono y te ayudan con todo el proceso." }
         ];
 
         function getReviewsForProduct(product) {
@@ -1771,6 +1948,7 @@
 
         window.addEventListener('DOMContentLoaded', async () => {
             try {
+                initPromoCarousel();
                 loadInterestProfile();
                 loadCart();
                 renderProducts();
@@ -2477,7 +2655,7 @@
 
                                     ${(SHOW_MERCADOLIBRE_BUTTONS && product.mercadolibreUrl) ? `
                                         <a href="${product.mercadolibreUrl}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 bg-meli-yellow hover:bg-meli-hover text-meli-blue font-black rounded-xl text-xs transition shadow-xs flex items-center justify-center gap-2">
-                                            <i class="fa-solid fa-handshake-simple text-sm"></i> Comprar en Mercado Libre (Envio Gratis)
+                                            <i class="fa-solid fa-handshake-simple text-sm"></i> Comprar en Mercado Libre
                                         </a>
                                     ` : ''}
 
