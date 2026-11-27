@@ -82,9 +82,10 @@
         }
     </script>
     <style>
+        html { scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #0a0a0a; }
         .glass-nav { backdrop-filter: blur(12px); background-color: rgba(255, 255, 255, 0.92); }
-        .product-card { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+        .product-card { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); scroll-margin-top: 100px; }
         .product-card:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
@@ -93,6 +94,29 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
+        /* Efecto de resaltado breve al navegar mediante enlace directo #id */
+        @keyframes highlightTargetPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.85), 0 12px 28px rgba(16, 185, 129, 0.25);
+                border-color: #10b981;
+                transform: translateY(-4px) scale(1.015);
+            }
+            35% {
+                box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.35), 0 12px 28px rgba(16, 185, 129, 0.2);
+                border-color: #10b981;
+                transform: translateY(-4px) scale(1.015);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+                border-color: #e5e5e5;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .product-highlight {
+            animation: highlightTargetPulse 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            z-index: 20;
+        }
+
         .btn-meli {
             background: linear-gradient(135deg, #FFE600 0%, #FFD000 100%);
             color: #2D3277;
@@ -138,6 +162,23 @@
             transform: translateY(0);
         }
     </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1196814618515553');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1196814618515553&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-black selection:text-white">
 
@@ -586,7 +627,7 @@
     { id: "prod_111", name: "Balaclava Pasamontañas Calavera Motorizado Protección Fresco", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/JcP1PmP.png", description: "El pasamontañas Calavera de New está pensado para adultos que buscan cobertura en cabeza y cuello durante recorridos en moto, bicicleta o actividades al aire libre ", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029921560-balaclava-pasamontanas-calavera-motorizado-proteccion-fresco-_JM" },  
     { id: "prod_112", name: "Reloj Moda Caballero Estilo Mecánico Deportivo Elegante", price: 14.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/PjvZAHM.png", description: "Reloj de pulsera para hombre con diseño deportivo y presencia elegante, pensado para quienes buscan un accesorio versátil que combine estilo y personalidad. ", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781605193-reloj-moda-caballero-estilo-mecanico-deportivo-elegante-_JM" },  
     { id: "prod_113", name: "Billetera Cartera Para Caballero Clasica Estampado De Aguila", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/5z9KeMo.png", description: "Billetera cartera para caballero con diseño clásico y estampado de águila, pensada para quienes buscan una pieza sobria con carácter. Su formato práctico permite llevar billetes, tarjetas y documentos de uso diario con orden y comodidad", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029884950-billetera-cartera-para-caballero-clasica-estampado-de-aguila-_JM" },  
-    { id: "prod_114", name: "Gorra Camuflaje Bandera America Moda De Maya Clásica Deporte", price: 9.99, originalPrice: 0, stock: 0, inStock: false, image: "https://i.imgur.com/BZN5LuL.png", description: "Gorra estilo americano con detalle de estrella, pensada para quienes buscan un look actual y versátil. Su diseño combina malla clásica con una estructura cómoda,", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029884412-gorra-camuflaje-bandera-america-moda-de-maya-clasica-deporte-_JM" },  
+    { id: "prod_114", name: "Gorra Camuflaje Bandera America Moda De Maya Clásica Deporte", price: 12.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/BZN5LuL.png", description: "Gorra estilo americano con detalle de estrella, pensada para quienes buscan un look actual y versátil. Su diseño combina malla clásica con una estructura cómoda,", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029884412-gorra-camuflaje-bandera-america-moda-de-maya-clasica-deporte-_JM" },  
     { id: "prod_115", name: "Gorra vinotinto Estilo Americano Bandera Moda De Maya Clásica Deporte", price: 9.99, originalPrice: 0, stock: 0, inStock: false, image: "https://i.imgur.com/3s0iPfu.png", description: "Gorra estilo americano con detalle de estrella, pensada para quienes buscan un look actual y versátil. Su diseño combina malla clásica con una estructura cómoda,", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029909994-gorra-estilo-americano-bandera-moda-de-maya-clasica-deporte-_JM" },  
     { id: "prod_116", name: "Kit De 6 Pcs Corta Uñas Portátil Estuche Tijera Y Puntas", price: 6.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/e2jg5nG.png", description: "Este cortauñas en estuche reúne seis herramientas pensadas para el arreglo diario con un formato práctico y fácil de llevar. Su fabricación en acero aporta resistencia y una sensación firme en cada uso, ,", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029912008-kit-de-6-pcs-corta-unas-portatil-estuche-tijera-y-puntas-_JM" },  
     { id: "prod_117", name: "Gorra Estilo Americano Estrella Moda De Maya Clásica Deporte", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/kILivI5.png", description: "Gorra estilo americano con detalle de estrella, pensada para quienes buscan un look actual y versátil. Su diseño combina malla clásica con una estructura cómoda,", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-1029909860-gorra-estilo-americano-estrella-moda-de-maya-clasica-deporte-_JM" },  
@@ -601,13 +642,73 @@
     { id: "prod_126", name: "Pelotas Beisbol Profesional Blancas Costura Roja Deporte", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/PLHADBX.png", description: "La pelota de béisbol profesional Ibros ofrece una apariencia clásica con cuerpo blanco y costura roja", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-782102593-pelotas-beisbol-profesional-blancas-costura-roja-deporte-_JM" },  
     { id: "prod_127", name: "Reloj Wokai Hombre Elegante Cuero Marrón Oro Rosa Mod", price: 13.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/M8xPTPw.png", description: "El reloj Wokai para hombre combina un estilo elegante con una presencia sobria y refinada, ideal para quienes buscan un accesorio que complemente atuendos formales o casuales con buen gusto", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781965273-reloj-wokai-hombre-elegante-cuero-marron-oro-rosa-moda-_JM" },  
     { id: "prod_128", name: "Llavero De Palanca Caja De Cambios Carro Juguete Antiestres", price: 7.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/96KzDAX.png", description: "Este llavero con diseño de palanca de cambios aporta un toque divertido y distintivo a tus llaves, mochila o bolso", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781977887-llavero-de-palanca-caja-de-cambios-carro-juguete-antiestres-_JM" },  
+    { id: "prod_129", name: "Caja De Broma Sorpresa Con Araña Juguete Pequeño Susto", price: 13.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/e6IEula.png", description: "Esta caja de broma con araña dedo medio está pensada para quienes disfrutan del humor visual y las reacciones inesperadas. Su formato compacto la hace práctica para animar reuniones, momentos entre amigos o instantes de diversión con un toque irreverente.", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-781990451-caja-de-broma-sorpresa-con-arana-juguete-pequeno-susto-_JM" },  
+    { id: "prod_130", name: "Multímetro Digital Tester Incluye Batería", price: 12.99, originalPrice: 0, stock: 1, inStock: true, image: "https://i.imgur.com/pFKcWrQ.png", description: "El multímetro digital DT830B de la marca V-teg es una herramienta esencial para profesionales y aficionados a la electrónica. Con su pantalla LCD clara y fácil de leer,", mercadolibreUrl: "https://articulo.mercadolibre.com.ve/MLV-776725081-multimetro-digital-tester-incluye-bateria-_JM" },  
 
 ];
+
+        // Generar slugs únicos y limpios (minúsculas y guiones) para enlaces directos #id
+        function slugifyProductName(text) {
+            return text
+                .toString()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
+                .trim()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+
+        const usedSlugs = new Set();
+        products.forEach((product) => {
+            let baseSlug = slugifyProductName(product.name) || product.id;
+            let uniqueSlug = baseSlug;
+            let counter = 2;
+            while (usedSlugs.has(uniqueSlug)) {
+                uniqueSlug = `${baseSlug}-${counter}`;
+                counter++;
+            }
+            usedSlugs.add(uniqueSlug);
+            product.slug = uniqueSlug;
+        });
+
+        // Compartir enlace directo de un producto por WhatsApp
+        function shareProductOnWhatsapp(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const directUrl = `https://marketjunior.com/#${product.slug}`;
+            const message = `Mira este producto que vi en Market Junior: ${product.name} - ${directUrl}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // Navegación suave y resaltado breve si la URL contiene un #id
+        function scrollToAndHighlightHash() {
+            const rawHash = window.location.hash;
+            if (!rawHash || rawHash.length <= 1) return;
+
+            const targetId = decodeURIComponent(rawHash.substring(1));
+            const targetEl = document.getElementById(targetId);
+            if (!targetEl) return;
+
+            setTimeout(() => {
+                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                targetEl.classList.remove('product-highlight');
+                void targetEl.offsetWidth; // Reiniciar animación si ya existía
+                targetEl.classList.add('product-highlight');
+                setTimeout(() => {
+                    targetEl.classList.remove('product-highlight');
+                }, 2500);
+            }, 120);
+        }
+
+        window.addEventListener('hashchange', scrollToAndHighlightHash);
 
         window.addEventListener('DOMContentLoaded', async () => {
             try {
                 loadCart();
                 renderProducts();
+                scrollToAndHighlightHash();
                 await fetchBcvRate();
             } catch (err) {
                 console.error("Error al iniciar la aplicación:", err);
@@ -818,12 +919,17 @@
                 const hasStock = isProductAvailable(product);
 
                 return `
-                    <div class="product-card bg-white rounded-2xl border border-neutral-200 overflow-hidden flex flex-col justify-between p-2.5 relative group">
+                    <div id="${product.slug}" class="product-card bg-white rounded-2xl border border-neutral-200 overflow-hidden flex flex-col justify-between p-2.5 relative group">
                         ${discount > 0 ? `
                             <span class="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-md z-10 shadow-sm">
                                 -${discount}% OFF
                             </span>
                         ` : ''}
+
+                        <!-- Botón discreto de Compartir por WhatsApp -->
+                        <button type="button" onclick="event.stopPropagation(); shareProductOnWhatsapp('${product.id}')" title="Compartir producto por WhatsApp" aria-label="Compartir ${product.name} por WhatsApp" class="absolute top-3.5 right-3.5 z-10 w-7 h-7 rounded-full bg-white/90 hover:bg-emerald-500 text-neutral-600 hover:text-white border border-neutral-200/80 shadow-xs flex items-center justify-center transition-all">
+                            <i class="fa-brands fa-whatsapp text-xs"></i>
+                        </button>
 
                         <div class="cursor-pointer" onclick="openProductDetailModal('${product.id}')">
                             <div class="overflow-hidden rounded-xl bg-neutral-50 mb-2.5 aspect-square relative border border-neutral-100 flex items-center justify-center p-2">
@@ -890,8 +996,8 @@
                                         ${hasStock ? `Disponible (${product.stock} en stock)` : 'Agotado'}
                                     </span>
                                 </div>
-                                <button onclick="shareProduct('${product.id}')" class="text-xs font-bold px-2.5 py-1.5 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 rounded-xl transition flex items-center gap-1.5">
-                                    <i class="fa-solid fa-share-nodes"></i> Compartir
+                                <button onclick="shareProductOnWhatsapp('${product.id}')" class="text-xs font-bold px-2.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl transition flex items-center gap-1.5">
+                                    <i class="fa-brands fa-whatsapp"></i> Compartir
                                 </button>
                             </div>
                             <h2 class="text-base sm:text-lg font-black text-neutral-900 leading-snug mb-2">${product.name}</h2>
@@ -949,17 +1055,18 @@
             const product = products.find(p => p.id === productId);
             if (!product) return;
 
+            const directUrl = `https://marketjunior.com/#${product.slug}`;
             const priceBs = formatBolivars(product.price);
             const shareData = {
                 title: product.name,
-                text: `¡MIRA ESTE PRODUCTO EN MARKET JUNIOR!\n📦 ${product.name}\n💰 $${product.price.toFixed(2)} (Bs. ${priceBs})\n`,
-                url: window.location.href
+                text: `Mira este producto que vi en Market Junior: ${product.name} - ${directUrl}\n💰 $${product.price.toFixed(2)} (Bs. ${priceBs})`,
+                url: directUrl
             };
 
             if (navigator.share) {
                 navigator.share(shareData).catch(() => {});
             } else {
-                copyToClipboard(`${shareData.text} Ver aquí: ${window.location.href}`);
+                copyToClipboard(shareData.text);
                 showToast("¡Información del producto copiada!");
             }
         }
@@ -1004,7 +1111,7 @@
                 }, 2000);
             }).catch(err => {
                 console.error("Error al copiar: ", err);
-                alert("No se pudo copiar automáticamente.");
+                showToast("No se pudo copiar automáticamente.");
             });
         }
     </script>
